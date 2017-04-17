@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import Draggable from 'react-draggable';
-import { bindActionCreators } from 'redux'
 
 const CorkboardElement = (props) => {
 

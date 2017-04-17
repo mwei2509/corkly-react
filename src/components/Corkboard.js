@@ -9,13 +9,24 @@ class Corkboard extends React.Component {
   constructor(){
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.handleElementClick = this.handleElementClick.bind(this)
   }
 
   handleClick(e){
     this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts"})
   }
 
+  handleElementClick(){
+
+  }
+
   render() {
+
+    let showElements = this.props.boardElements.map((element, index) => {
+
+      <CorkboardElement key={index} element={element} handleElementClick={this.handleElementClick} />
+    })
+
     const corkboardStyle={
       width: "100vw",
       height: "100vh",
@@ -25,11 +36,12 @@ class Corkboard extends React.Component {
       margin: 0,
       padding: 0,
       background: `url(${corkboardImage})`,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      userSelect: 'none'
     }
     return (
       <div onDoubleClick={this.handleClick} style={corkboardStyle} className="corkboard-container">
-        {this.props.boardElements.map((element, index) =>  <CorkboardElement key={index} element={element} />)}
+        {showElements}
       </div>
     );
   }
