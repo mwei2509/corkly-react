@@ -11,3 +11,10 @@ export const updateElementContent = (payload) => {
     payload: payload
   }
 }
+
+export const updateElementPosition = (payload) => {
+  return {
+    type: "UPDATE_ELEMENT_POSITION",
+    payload: payload
+  }
+}

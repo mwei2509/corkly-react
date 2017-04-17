@@ -4,13 +4,14 @@ import CorkboardElement from './CorkboardElement'
 import TextBox from './TextBox'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElementContent } from '../actions'
+import { addBoardElement, updateElementContent, updateElementPosition } from '../actions'
 
 class Corkboard extends React.Component {
   constructor(){
     super()
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.onStop = this.onStop.bind(this)
   }
 
   handleClick(e){
@@ -21,10 +22,14 @@ class Corkboard extends React.Component {
     this.props.updateElementContent({id: id, content: e.target.value})
   }
 
+  onStop(e, id){
+    this.props.updateElementPosition({id: id, x: e.clientX, y: e.clientY})
+  }
+
   render() {
 
     let showElements = this.props.boardElements.map((element) => {
-        return <CorkboardElement key={element.id} element={element} handleChange={this.handleChange} />
+        return <CorkboardElement key={element.id} element={element} onStop={(e) => this.onStop(e, element.id)} handleChange={this.handleChange} />
     })
 
     const corkboardStyle={
@@ -56,7 +61,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     addBoardElement: addBoardElement,
-    updateElementContent: updateElementContent
+    updateElementContent: updateElementContent,
+    updateElementPosition: updateElementPosition
   }, dispatch)
 }
 
