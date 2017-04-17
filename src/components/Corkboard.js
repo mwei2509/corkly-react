@@ -1,30 +1,30 @@
 import React, {PropTypes} from 'react';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CorkboardElement from './CorkboardElement'
+import TextBox from './TextBox'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement } from '../actions'
+import { addBoardElement, updateElementContent } from '../actions'
 
 class Corkboard extends React.Component {
   constructor(){
     super()
     this.handleClick = this.handleClick.bind(this)
-    this.handleElementClick = this.handleElementClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleClick(e){
-    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts"})
+    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts", id: this.props.boardElements.length})
   }
 
-  handleElementClick(){
-
+  handleChange(e, id){
+    this.props.updateElementContent({id: id, content: e.target.value})
   }
 
   render() {
 
-    let showElements = this.props.boardElements.map((element, index) => {
-
-      <CorkboardElement key={index} element={element} handleElementClick={this.handleElementClick} />
+    let showElements = this.props.boardElements.map((element) => {
+        return <CorkboardElement key={element.id} element={element} handleChange={this.handleChange} />
     })
 
     const corkboardStyle={
@@ -55,7 +55,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    addBoardElement: addBoardElement
+    addBoardElement: addBoardElement,
+    updateElementContent: updateElementContent
   }, dispatch)
 }
 
