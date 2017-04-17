@@ -12,7 +12,7 @@ class Corkboard extends React.Component {
   }
 
   handleClick(e){
-    this.props.addBoardElement()
+    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts"})
   }
 
   render() {
