@@ -24,7 +24,7 @@ class Corkboard extends React.Component {
     return (
       <div onDoubleClick={this.handleClick} style={corkboardStyle} className="corkboard-container">
         <h1>I am a cockbard. Love me. Or not. It's up to you</h1>
-
+        {this.props.boardElements.map((element) => {return <CorkboardElement/>})}
       </div>
     );
   }

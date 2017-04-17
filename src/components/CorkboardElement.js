@@ -9,10 +9,19 @@ const CorkboardElement = (props) => {
     top: props.posY
   }
   return (
-          <div style={elementStyle} className="boardElement">
-            {props.content}
-          </div>
-  );
+  <Draggable
+    axis="both"
+    handle=".handle"
+    defaultPosition={{x: 0, y: 0}}
+    position={{x: 200, y: 200}}
+    grid={[1, 1]}
+    zIndex={100}>
+    <div>
+      <div className="handle">Drag from here</div>
+      <div>This readme is really dragging on...</div>
+    </div>
+  </Draggable>
+);
 }
 
 export default CorkboardElement
