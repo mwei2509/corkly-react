@@ -26,9 +26,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <Link to="/accounts">Accounts</Link>
-          <Link to="/corkboard">Corkboard</Link>
+          <Link to="/">Corkboard</Link>
           <Route path="/accounts" component={Account}/>
-          <Route path="/corkboard" component={Corkboard}/>
+          <Route exact path="/" component={Corkboard}/>
         </div>
       </Router>
     );
