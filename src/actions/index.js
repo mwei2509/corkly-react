@@ -7,6 +7,19 @@ export const addBoardElement = (element) => {
   }
 }
 
+export const updateElementContent = (payload) => {
+  return {
+    type: "UPDATE_ELEMENT_CONTENT",
+    payload: payload
+  }
+}
+
+export const updateElementPosition = (payload) => {
+  return {
+    type: "UPDATE_ELEMENT_POSITION",
+    payload: payload
+    
+
 
 //account
 export function getBoards(){

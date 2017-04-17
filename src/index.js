@@ -7,9 +7,13 @@ import thunk from 'redux-thunk'
 
 import App from './App';
 import './index.css';
-import { manageBoard } from './reducers/manageBoard'
+import { manageElements } from './reducers/manageElements'
+
+
+//window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 let store = createStore(manageBoard, applyMiddleware(thunk))
+
 
 ReactDOM.render(
   <Provider store={store}>
