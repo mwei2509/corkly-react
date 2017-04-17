@@ -7,9 +7,9 @@ import { createStore, applyMiddleware } from 'redux'
 
 import App from './App';
 import './index.css';
-import { manageBoard } from './reducers/manageBoard'
+import { manageElements } from './reducers/manageElements'
 
-let store = createStore(manageBoard, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+let store = createStore(manageElements, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
   <Provider store={store}>

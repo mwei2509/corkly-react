@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import Draggable from 'react-draggable';
-import { bindActionCreators } from 'redux'
 
 const CorkboardElement = (props) => {
 
@@ -14,7 +13,7 @@ const CorkboardElement = (props) => {
     zIndex={100}>
     <div style={{position: "absolute", top: props.element.y, left: props.element.x}}>
       <div className="handle">
-        <h1>{props.element.content}</h1>
+        <textarea value={props.element.content} onChange={(e) => {props.handleChange(e, props.element.id)}}></textarea>
       </div>
     </div>
   </Draggable>

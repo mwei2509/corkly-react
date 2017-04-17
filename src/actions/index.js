@@ -4,3 +4,10 @@ export const addBoardElement = (element) => {
     payload: element
   }
 }
+
+export const updateElementContent = (payload) => {
+  return {
+    type: "UPDATE_ELEMENT_CONTENT",
+    payload: payload
+  }
+}
