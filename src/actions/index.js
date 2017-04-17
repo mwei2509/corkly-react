@@ -1,9 +1,6 @@
-function addBoardElement(){
-  debugger
-}
-
-export const actions = {
-  addBoardElement: addBoardElement
-
-
+export const addBoardElement = (element) => {
+  return {
+    type: "ADD_ELEMENT",
+    payload: element
+  }
 }
