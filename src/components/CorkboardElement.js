@@ -10,11 +10,13 @@ const CorkboardElement = (props) => {
     defaultPosition={{x: 0, y: 0}}
     position={null}
     grid={[1, 1]}
-    zIndex={100}>
+    zIndex={100}
+    onStop={props.onStop}>
     <div style={{position: "absolute", top: props.element.y, left: props.element.x}}>
-      <div className="handle">
-        <textarea value={props.element.content} onChange={(e) => {props.handleChange(e, props.element.id)}}></textarea>
+      <div className="handle" style={{minHeight: 20, padding: 10}}>
+        HANDLE
       </div>
+      <textarea value={props.element.content} onChange={(e) => {props.handleChange(e, props.element.id)}}></textarea>
     </div>
   </Draggable>
 );
