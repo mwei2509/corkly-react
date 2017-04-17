@@ -19,12 +19,17 @@ class Corkboard extends React.Component {
     const corkboardStyle={
       width: "100vw",
       height: "100vh",
-      background: `url(${corkboardImage})`
+      position: "relative",
+      top: 0,
+      bottom: 0,
+      margin: 0,
+      padding: 0,
+      background: `url(${corkboardImage})`,
+      overflow: 'hidden'
     }
     return (
       <div onDoubleClick={this.handleClick} style={corkboardStyle} className="corkboard-container">
-        <h1>I am a cockbard. Love me. Or not. It's up to you</h1>
-        {this.props.boardElements.map((element) => {return <CorkboardElement/>})}
+        {this.props.boardElements.map((element, index) =>  <CorkboardElement key={index} element={element} />)}
       </div>
     );
   }

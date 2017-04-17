@@ -1,24 +1,21 @@
 import React, {PropTypes} from 'react';
 import Draggable from 'react-draggable';
+import { bindActionCreators } from 'redux'
 
 const CorkboardElement = (props) => {
-  const elementStyle = {
-    color: "#fff",
-    position: "absolute",
-    left: props.posX,
-    top: props.posY
-  }
+
   return (
   <Draggable
     axis="both"
     handle=".handle"
     defaultPosition={{x: 0, y: 0}}
-    position={{x: 200, y: 200}}
+    position={null}
     grid={[1, 1]}
     zIndex={100}>
-    <div>
-      <div className="handle">Drag from here</div>
-      <div>This readme is really dragging on...</div>
+    <div style={{position: "absolute", top: props.element.y, left: props.element.x}}>
+      <div className="handle">
+        <h1>{props.element.content}</h1>
+      </div>
     </div>
   </Draggable>
 );
