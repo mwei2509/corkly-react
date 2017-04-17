@@ -1,13 +1,22 @@
 import React, {PropTypes} from 'react';
 import axios from 'axios'
 import AccountInput from './AccountInput'
+import {  bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getBoards } from '../actions'
 
-export default class Account extends React.Component {
+class Account extends React.Component {
   constructor(props) {
     super(props);
 
     this.state={
       token: window.localStorage.getItem('current user')
+    }
+  }
+
+  componentWillMount(){
+    if (window.localStorage.getItem('current user')){
+      this.props.getBoards()
     }
   }
 
@@ -25,3 +34,21 @@ export default class Account extends React.Component {
       </div>);
   }
 }
+
+
+
+// const mapStateToProps = (state) => {
+//   return ({
+//     account: state.account
+//   })
+// }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    getBoards: getBoards
+  }, dispatch)
+}
+
+const ConnectedAccount = connect(null, mapDispatchToProps)(Account)
+
+export default ConnectedAccount
