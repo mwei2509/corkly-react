@@ -1,8 +1,19 @@
 import React, {PropTypes} from 'react';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CorkboardElement from './CorkboardElement'
+import {  bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { addBoardElement } from '../actions'
 
-export default class Corkboard extends React.Component {
+class Corkboard extends React.Component {
+  constructor(){
+    super()
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(e){
+    this.props.addBoardElement()
+  }
 
   render() {
     const corkboardStyle={
@@ -11,10 +22,26 @@ export default class Corkboard extends React.Component {
       background: `url(${corkboardImage})`
     }
     return (
-      <div style={corkboardStyle} className="corkboard-container">
+      <div onDoubleClick={this.handleClick} style={corkboardStyle} className="corkboard-container">
         <h1>I am a cockbard. Love me. Or not. It's up to you</h1>
-        
+
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return ({
+    boardElements: state.boardElements
+  })
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    addBoardElement: addBoardElement
+  }, dispatch)
+}
+
+const ConnectedCorkboard = connect(mapStateToProps, mapDispatchToProps)(Corkboard)
+
+export default ConnectedCorkboard
