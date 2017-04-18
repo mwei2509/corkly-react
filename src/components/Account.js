@@ -4,7 +4,7 @@ import AccountInput from './AccountInput'
 import Login from './Login'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getBoards, createBoard } from '../actions'
+import { getBoards, createBoard, setCurrentBoard } from '../actions'
 
 class Account extends React.Component {
   constructor(props) {
@@ -35,6 +35,10 @@ class Account extends React.Component {
     })
   }
 
+  handleButtonClick(id, e){
+    this.props.setCurrentBoard(id)
+  }
+
   createBoard(event){
     event.preventDefault()
     this.props.createBoard({title: this.state.boardTitle})
@@ -51,7 +55,7 @@ class Account extends React.Component {
       id: {account.id}, email: {account.email}
       <hr />
         {account.boards.map((board, index)=>{
-          return <li key={index}>{board.title}</li>
+          return <li key={index}>{board.title}<button onClick={this.handleButtonClick.bind(this, board.id)}>RANDOM BUTTON</button></li>
         })}
       </div>
 
@@ -82,7 +86,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     getBoards: getBoards,
-    createBoard: createBoard
+    createBoard: createBoard,
+    setCurrentBoard: setCurrentBoard
   }, dispatch)
 }
 
