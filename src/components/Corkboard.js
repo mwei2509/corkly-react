@@ -1,19 +1,21 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CorkboardElement from './CorkboardElement'
-import TextBox from './TextBox'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {
+  Link
+} from 'react-router-dom'
 import { addBoardElement, updateElement, createBoard, deleteElement } from '../actions'
 
 
 class Corkboard extends React.Component {
   constructor(){
     super()
-    this.handleElementClick = this.handleElementClick.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.onStop = this.onStop.bind(this)
+    this.deleteSticky = this.deleteSticky.bind(this)
+    this.resizeSticky = this.resizeSticky.bind(this)
+    this.addSticky = this.addSticky.bind(this)
+    this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
 
     this.state={
@@ -21,15 +23,34 @@ class Corkboard extends React.Component {
     }
   }
 
-  handleElementClick(EID){
+  deleteSticky(EID){
     this.props.deleteElement(EID)
   }
 
-  handleClick(e){
-    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts", EID: this.props.boardElements.length})
+  resizeSticky(e, EID){
+    let textarea = document.getElementById(`textarea-${EID}`)
+    console.log(textarea.offsetWidth)
+    this.props.updateElement({
+      element:{
+        EID: EID,
+        width: textarea.offsetWidth,
+        height: textarea.offsetHeight
+      }
+    })
   }
 
-  handleChange(e, EID){
+  addSticky(e){
+    this.props.addBoardElement({
+      x: e.clientX,
+      y: e.clientY,
+      width: 150,
+      height: 100,
+      bgcolor: "#eee",
+      EID: this.props.boardElements.length
+    })
+  }
+
+  contentChange(e, EID){
     this.props.updateElement({element: {EID: EID, content: e.target.value}})
   }
 
@@ -38,6 +59,7 @@ class Corkboard extends React.Component {
       boardTitle: event.target.value
     })
   }
+
   createBoard(event){
     event.preventDefault()
     this.props.createBoard({board: {title: this.state.boardTitle, elements_attributes: this.props.boardElements, id: this.props.boardId}})
@@ -46,34 +68,29 @@ class Corkboard extends React.Component {
     })
   }
 
-  onStop(e, EID){
-    // let div = this.refs[EID]
-    // debugger
-    let div = document.getElementById(`element-${EID}`)
-
-    this.props.updateElement({element: {EID: EID, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}})
-  }
-
   render() {
 
     let showElements = this.props.boardElements.map((element) => {
-        return <CorkboardElement key={element.EID} element={element} onStop={(e) => this.onStop(e, element.EID)} handleClick={() => this.handleElementClick(element.EID)} handleChange={this.handleChange} />
+        return(<CorkboardElement
+            key={element.EID}
+            element={element}
+            resizeSticky={this.resizeSticky}
+            deleteSticky={() => this.deleteSticky(element.EID)}
+            contentChange={this.contentChange} />)
     })
 
     const corkboardStyle={
-      wEIDth: "100vw",
+      width: "100vw",
       height: "100vh",
-      position: "relative",
-      top: 0,
-      bottom: 0,
-      margin: 0,
-      padding: 0,
+      position: "absolute",
       background: `url(${corkboardImage})`,
       overflow: 'hidden',
       userSelect: 'none'
     }
     return (
-      <div onDoubleClick={this.handleClick} style={corkboardStyle} className="corkboard-container">
+      <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
+        <Link to="/accounts">Accounts</Link>
+        <Link to="/">Corkboard</Link>
         <form onSubmit={this.createBoard}>
           Title: <input type="text" value={this.state.boardTitle} onChange={this.titleChange.bind(this)}/>
           <button type="submit">Create Board</button>
