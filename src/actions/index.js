@@ -18,21 +18,40 @@ export const updateElementPosition = (payload) => {
   return {
     type: "UPDATE_ELEMENT_POSITION",
     payload: payload
-    
-
+  }
+}
 
 //account
+const config=
+{
+  headers:
+  {token: window.localStorage.getItem("current user")}
+}
 export function getBoards(){
-  let config = {
-    headers: {token: window.localStorage.getItem("current user")}
-  }
   return (dispatch) => {
     axios
       .get(`http://localhost:4000/account`, config)
       .then(({data}) => {
         dispatch({
           type: "LOAD_USER",
-          data
+          data: data
+        })
+      })
+      .catch((error)=>{
+        debugger
+      })
+  }
+}
+
+export function createBoard(board){
+
+  return (dispatch) => {
+    axios
+      .post(`http://localhost:4000/boards`, {board: board}, config)
+      .then(({data}) => {
+        dispatch({
+          type: "ADD_BOARD",
+          data: data
         })
       })
       .catch((error)=>{

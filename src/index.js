@@ -7,12 +7,12 @@ import thunk from 'redux-thunk'
 
 import App from './App';
 import './index.css';
-import { manageElements } from './reducers/manageElements'
+import rootReducer from './reducers'
 
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-let store = createStore(manageBoard, applyMiddleware(thunk))
+let store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 ReactDOM.render(

@@ -54,7 +54,7 @@ class Corkboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
-    boardElements: state.boardElements
+    boardElements: state.board.boardElements
   })
 }
 
