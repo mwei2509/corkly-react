@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import {
   Link
 } from 'react-router-dom'
-import { addBoardElement, updateElement, createBoard, deleteElement } from '../actions'
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard } from '../actions'
 
 
 class Corkboard extends React.Component {
@@ -17,6 +17,7 @@ class Corkboard extends React.Component {
     this.addSticky = this.addSticky.bind(this)
     this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
+    this.saveBoard = this.saveBoard.bind(this)
 
     this.state={
       boardTitle: ''
@@ -68,6 +69,10 @@ class Corkboard extends React.Component {
     })
   }
 
+  saveBoard(){
+    this.props.updateBoard({board: {id: this.props.boardId, elements_attributes: this.props.boardElements}})
+  }
+
   render() {
 
     let showElements = this.props.boardElements.map((element) => {
@@ -95,6 +100,7 @@ class Corkboard extends React.Component {
           Title: <input type="text" value={this.state.boardTitle} onChange={this.titleChange.bind(this)}/>
           <button type="submit">Create Board</button>
         </form>
+        <button onClick={this.saveBoard}>Save Bard</button>
         {showElements}
       </div>
     );
@@ -113,7 +119,8 @@ const mapDispatchToProps = (dispatch) => {
     addBoardElement: addBoardElement,
     updateElement: updateElement,
     createBoard: createBoard,
-    deleteElement: deleteElement
+    deleteElement: deleteElement,
+    updateBoard: updateBoard
   }, dispatch)
 }
 

@@ -63,7 +63,6 @@ export function getBoards(){
 }
 
 export function createBoard(board){
-
   return (dispatch) => {
     axios
       .post(`http://localhost:4000/boards`, board, config)
@@ -76,5 +75,20 @@ export function createBoard(board){
       .catch((error)=>{
         debugger
       })
+  }
+}
+
+export const updateBoard = (payload) => {
+  return (dispatch) => {
+    axios
+    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, config)
+    .then(({data}) => {
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
+    }).catch((error) => {
+      debugger
+    })
   }
 }

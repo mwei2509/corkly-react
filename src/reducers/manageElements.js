@@ -11,15 +11,14 @@ export const manageElements = (state={boardElements: [], boardId: null}, action)
         }
       })})
     case "SET_CURRENT_BOARD":
-      return Object.assign({}, state, {boardID: action.data.id, boardElements: action.data.elements})
+      return Object.assign({}, state, {
+        boardId: action.data.id,
+        boardElements: action.data.elements
+     })
     case "ASSIGN_TO_BOARD":
       return Object.assign({}, state, {boardId: action.payload})
-    // case "CHANGE_POSITION":
-    //   let newState = [...state.boardElements, action.newElement]
-    //   return {baordElements: newState}
-
     case "DELETE_ELEMENT":
-      return {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)}
+      return Object.assign({}, state, {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)})
 
     default:
       return state
