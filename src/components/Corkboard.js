@@ -26,7 +26,11 @@ class Corkboard extends React.Component {
   }
 
   handleClick(e){
-    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts", EID: this.props.boardElements.length})
+    const max = this.props.boardElements.reduce(function(prev, current) {
+    return (prev.EID > current.EID) ? prev.EID : current.EID
+  }, 0)
+    console.log(max+1)
+    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts", EID: (max+1)})
   }
 
   handleChange(e, EID){
@@ -47,8 +51,6 @@ class Corkboard extends React.Component {
   }
 
   onStop(e, EID){
-    // let div = this.refs[EID]
-    // debugger
     let div = document.getElementById(`element-${EID}`)
 
     this.props.updateElement({element: {EID: EID, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}})
@@ -61,7 +63,7 @@ class Corkboard extends React.Component {
     })
 
     const corkboardStyle={
-      wEIDth: "100vw",
+      width: "100vw",
       height: "100vh",
       position: "relative",
       top: 0,
