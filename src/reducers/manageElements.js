@@ -4,7 +4,7 @@ export const manageElements = (state={boardElements: [], boardId: null}, action)
       return Object.assign({}, state, {boardElements: [...state.boardElements, action.payload]})
     case "UPDATE_ELEMENT":
       return Object.assign({}, state, {boardElements: state.boardElements.map((element) => {
-        if(element.id === action.payload.element.id){
+        if(element.EID === action.payload.element.EID){
           return Object.assign({}, element, action.payload.element)
         } else {
           return element
@@ -19,8 +19,7 @@ export const manageElements = (state={boardElements: [], boardId: null}, action)
     //   return {baordElements: newState}
 
     case "DELETE_ELEMENT":
-      return {boardElements: state.boardElements.filter(bE => bE.id !== action.payload)}
-
+      return {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)}
 
     default:
       return state

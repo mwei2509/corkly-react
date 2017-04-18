@@ -38,10 +38,10 @@ export const updateElement = (payload) => {
   }
 }
 
-export function deleteElement(id) {
+export function deleteElement(EID) {
   return {
     type: "DELETE_ELEMENT",
-    payload: id
+    payload: EID
   }
 }
 
