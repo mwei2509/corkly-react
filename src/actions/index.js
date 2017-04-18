@@ -83,7 +83,10 @@ export const updateBoard = (payload) => {
     axios
     .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, config)
     .then(({data}) => {
-      debugger
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
     }).catch((error) => {
       debugger
     })
