@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import axios from 'axios'
 import AccountInput from './AccountInput'
+import Login from './Login'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getBoards, createBoard } from '../actions'
@@ -37,6 +38,9 @@ class Account extends React.Component {
   createBoard(event){
     event.preventDefault()
     this.props.createBoard({title: this.state.boardTitle})
+    this.setState({
+      boardTitle: ''
+    })
   }
 
   render() {
@@ -53,7 +57,12 @@ class Account extends React.Component {
 
     return (
       <div>
-        {(!!window.localStorage.getItem("current user")) ? AccountInfo : <AccountInput onSubmit={this.props.getBoards.bind(this)}  />}
+        {(!!window.localStorage.getItem("current user")) ? AccountInfo :
+          <div>
+            <AccountInput onSubmit={this.props.getBoards.bind(this)} />
+            <Login onSubmit={this.props.getBoards.bind(this)}/>
+           </div>
+         }
         <form onSubmit={this.createBoard.bind(this)}>
           Title: <input type="text" value={this.state.boardTitle} onChange={this.handleChange.bind(this)}/>
           <button type="submit">Create Board</button>
