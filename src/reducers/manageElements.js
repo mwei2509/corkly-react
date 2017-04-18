@@ -10,14 +10,6 @@ export const manageElements = (state={boardElements: []}, action) => {
           return element
         }
       })})
-    case "UPDATE_ELEMENT_POSITION":
-    return Object.assign({}, state, {boardElements: state.boardElements.map((element) => {
-      if(element.id === action.payload.id){
-        return Object.assign({}, element, {x: action.payload.x, y: action.payload.y})
-      } else {
-        return element
-      }
-    })})
     case "CHANGE_POSITION":
       let newState = [...state.boardElements, action.newElement]
       return {baordElements: newState}
