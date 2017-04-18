@@ -14,11 +14,23 @@ class CorkboardElement extends React.Component {
 
   onStop(){
     let div = this.refs[this.props.element.EID]
+    console.log(div.getBoundingClientRect().top)
     this.props.updateElement({
       element: {
         EID: this.props.element.EID,
         x: div.getBoundingClientRect().left,
         y: div.getBoundingClientRect().top
+      }
+    })
+  }
+
+  resizeSticky(ref, event){
+    let textarea = this.refs[ref]
+    this.props.updateElement({
+      element:{
+        EID: this.props.element.EID,
+        width: (textarea.getBoundingClientRect().width-20),
+        height: textarea.getBoundingClientRect().height
       }
     })
   }
@@ -42,7 +54,10 @@ class CorkboardElement extends React.Component {
       border: "none",
       paddingLeft: 10,
       paddingRight: 10,
+      paddingBottom: 0,
+      paddingTop: 0,
       marginRight: 5,
+      fontSize: "18px",
       width: this.props.element.width,
       height: this.props.element.height
     }
@@ -56,7 +71,7 @@ class CorkboardElement extends React.Component {
         defaultPosition={{x: 0, y: 0}}
         position={{x: this.props.element.x, y: this.props.element.y}}
         grid={null}
-        zIndex={100}
+        zIndex={0}
         onStop={this.onStop.bind(this)}>
         <div ref={this.props.element.EID} style={stickyStyle}>
           <div className="handle" style={{minHeight: 20, width: "100%"}}>
@@ -69,11 +84,11 @@ class CorkboardElement extends React.Component {
           </div>
           <textarea
             autoFocus
-            id={`textarea-${this.props.element.EID}`}
+            ref={`textarea-${this.props.element.EID}`}
             style={inputStyle}
             value={this.props.element.content}
             onChange={(e) => {this.props.contentChange(e, this.props.element.EID)}}
-            onMouseUp={(e)=> {this.props.resizeSticky(e, this.props.element.EID)}} />
+            onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)} />
         </div>
       </Draggable>
     )
