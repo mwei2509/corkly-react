@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+
+/////Board Elements
 export const addBoardElement = (element) => {
   return {
     type: "ADD_ELEMENT",
@@ -18,6 +20,13 @@ export const updateElementPosition = (payload) => {
   return {
     type: "UPDATE_ELEMENT_POSITION",
     payload: payload
+  }
+}
+
+export function deleteElement(id) {
+  return {
+    type: "DELETE_ELEMENT",
+    payload: id
   }
 }
 

@@ -14,6 +14,7 @@ const CorkboardElement = (props) => {
     onStop={props.onStop}>
     <div style={{position: "absolute", top: props.element.y, left: props.element.x}}>
       <div className="handle" style={{minHeight: 20, padding: 10}}>
+        <p onClick={props.handleClick} style={{display: "inline", marginRight: 25}}>x</p>
         HANDLE
       </div>
       <textarea value={props.element.content} onChange={(e) => {props.handleChange(e, props.element.id)}}></textarea>
