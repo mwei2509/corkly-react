@@ -6,12 +6,18 @@ import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addBoardElement, updateElement } from '../actions'
 
+
 class Corkboard extends React.Component {
   constructor(){
     super()
+    this.handleElementClick = this.handleElementClick.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.onStop = this.onStop.bind(this)
+  }
+
+  handleElementClick(id){
+    this.props.deleteElement(id)
   }
 
   handleClick(e){
@@ -33,7 +39,7 @@ class Corkboard extends React.Component {
   render() {
 
     let showElements = this.props.boardElements.map((element) => {
-        return <CorkboardElement key={element.id} element={element} onStop={(e) => this.onStop(e, element.id)} handleChange={this.handleChange} />
+        return <CorkboardElement key={element.id} element={element} onStop={(e) => this.onStop(e, element.id)} handleClick={() => this.handleElementClick(element.id)} handleChange={this.handleChange} />
     })
 
     const corkboardStyle={
@@ -66,6 +72,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     addBoardElement: addBoardElement,
     updateElement: updateElement
+
   }, dispatch)
 }
 

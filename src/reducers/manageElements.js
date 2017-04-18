@@ -10,11 +10,17 @@ export const manageElements = (state={boardElements: [], boardId: null}, action)
           return element
         }
       })})
+
     case "ASSIGN_TO_BOARD":
       return Object.assign({}, state, {boardId: action.payload})
     // case "CHANGE_POSITION":
     //   let newState = [...state.boardElements, action.newElement]
     //   return {baordElements: newState}
+
+    case "DELETE_ELEMENT":
+      return {boardElements: state.boardElements.filter(bE => bE.id !== action.payload)}
+
+      
     default:
       return state
   }

@@ -36,6 +36,7 @@ export default class AccountInput extends Component {
   render() {
     return (
       <div className="account-input">
+        <h3>Sign Up</h3>
         <form onSubmit={this.handleSubmit.bind(this)}>
           Username:
           <input type="text" value={this.state.username} onChange={this.handleChange.bind(this, "username")}  /><br />
