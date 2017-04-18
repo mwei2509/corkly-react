@@ -4,7 +4,7 @@ import CorkboardElement from './CorkboardElement'
 import TextBox from './TextBox'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement, createBoard, deleteElement } from '../actions'
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard } from '../actions'
 
 
 class Corkboard extends React.Component {
@@ -15,6 +15,7 @@ class Corkboard extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.onStop = this.onStop.bind(this)
     this.createBoard = this.createBoard.bind(this)
+    this.saveBoard = this.saveBoard.bind(this)
 
     this.state={
       boardTitle: ''
@@ -50,9 +51,12 @@ class Corkboard extends React.Component {
     })
   }
 
+  saveBoard(){
+    this.props.updateBoard({board: {id: this.props.boardId, boardElements: this.props.boardElements}})
+  }
+
   onStop(e, EID){
     let div = document.getElementById(`element-${EID}`)
-
     this.props.updateElement({element: {EID: EID, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}})
   }
 
@@ -80,6 +84,7 @@ class Corkboard extends React.Component {
           Title: <input type="text" value={this.state.boardTitle} onChange={this.titleChange.bind(this)}/>
           <button type="submit">Create Board</button>
         </form>
+        <button onClick={this.saveBoard}>Save Bard</button>
         {showElements}
       </div>
     );
@@ -98,7 +103,8 @@ const mapDispatchToProps = (dispatch) => {
     addBoardElement: addBoardElement,
     updateElement: updateElement,
     createBoard: createBoard,
-    deleteElement: deleteElement
+    deleteElement: deleteElement,
+    updateBoard: updateBoard
   }, dispatch)
 }
 
