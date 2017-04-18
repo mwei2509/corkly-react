@@ -7,16 +7,9 @@ export const addBoardElement = (element) => {
   }
 }
 
-export const updateElementContent = (payload) => {
+export const updateElement = (payload) => {
   return {
-    type: "UPDATE_ELEMENT_CONTENT",
-    payload: payload
-  }
-}
-
-export const updateElementPosition = (payload) => {
-  return {
-    type: "UPDATE_ELEMENT_POSITION",
+    type: "UPDATE_ELEMENT",
     payload: payload
   }
 }
