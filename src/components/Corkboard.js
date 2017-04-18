@@ -52,7 +52,7 @@ class Corkboard extends React.Component {
   }
 
   saveBoard(){
-    this.props.updateBoard({board: {id: this.props.boardId, boardElements: this.props.boardElements}})
+    this.props.updateBoard({board: {id: this.props.boardId, elements_attributes: this.props.boardElements}})
   }
 
   onStop(e, EID){
