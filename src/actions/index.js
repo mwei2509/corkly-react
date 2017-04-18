@@ -1,5 +1,27 @@
 import axios from 'axios'
 
+const config=
+{
+  headers:
+  {token: window.localStorage.getItem("current user")}
+}
+
+///// Board Stuff
+export const setCurrentBoard = (id) => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:4000/boards/${id}`, config)
+      .then(({data}) => {
+        dispatch({
+          type: "SET_CURRENT_BOARD",
+          data: data
+        })
+      })
+      .catch((error)=>{
+        debugger
+      })
+  }
+}
 
 /////Board Elements
 export const addBoardElement = (element) => {
@@ -24,11 +46,6 @@ export function deleteElement(id) {
 }
 
 //account
-const config=
-{
-  headers:
-  {token: window.localStorage.getItem("current user")}
-}
 export function getBoards(){
   return (dispatch) => {
     axios

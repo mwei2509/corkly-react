@@ -1,10 +1,7 @@
 export const manageBoard = (state={boardElements: []}, action) => {
   switch (action.type) {
-    case "ADD_ELEMENT":
-      return Object.assign({}, state, {boardElements: [...state.boardElements, action.payload]})
-    case "CHANGE_POSITION":
-      let newState = [...state.boardElements, action.newElement]
-      return {baordElements: newState}
+    // case "SET_CURRENT_BOARD":
+    //   return Object.assign({}, state, {currentBoard: action.data})
     default:
       return state
   }
