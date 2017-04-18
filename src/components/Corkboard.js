@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import {
   Link
 } from 'react-router-dom'
+
 import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner } from '../actions'
 import Account from './Account'
 
@@ -65,7 +66,6 @@ class Corkboard extends React.Component {
 
   addCoOwner(id, e){
     e.preventDefault()
-    debugger
     this.props.addOwner({id: id, username: this.state.coOwnerText})
   }
 
