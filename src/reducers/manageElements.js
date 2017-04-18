@@ -12,7 +12,7 @@ export const manageElements = (state={boardElements: [], boardId: null}, action)
       })})
     case "SET_CURRENT_BOARD":
       return Object.assign({}, state, {
-        boardID: action.data.id,
+        boardId: action.data.id,
         boardElements: action.data.elements
      })
     case "ASSIGN_TO_BOARD":
