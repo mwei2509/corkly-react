@@ -47,6 +47,8 @@ class Account extends React.Component {
     })
   }
 
+
+
   render() {
     const {account} = this.props
     const AccountInfo =

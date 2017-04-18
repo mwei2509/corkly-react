@@ -4,7 +4,7 @@ import CorkboardElement from './CorkboardElement'
 import TextBox from './TextBox'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement } from '../actions'
+import { addBoardElement, updateElement, createBoard } from '../actions'
 
 
 class Corkboard extends React.Component {
@@ -14,6 +14,11 @@ class Corkboard extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.onStop = this.onStop.bind(this)
+    this.createBoard = this.createBoard.bind(this)
+
+    this.state={
+      boardTitle: ''
+    }
   }
 
   handleElementClick(id){
@@ -26,6 +31,19 @@ class Corkboard extends React.Component {
 
   handleChange(e, id){
     this.props.updateElement({element: {id: id, content: e.target.value}})
+  }
+
+  titleChange(event){
+    this.setState({
+      boardTitle: event.target.value
+    })
+  }
+  createBoard(event){
+    event.preventDefault()
+    this.props.createBoard({board: {title: this.state.boardTitle, elements_attributes: this.props.boardElements, id: this.props.boardId}})
+    this.setState({
+      boardTitle: ''
+    })
   }
 
   onStop(e, id){
@@ -56,6 +74,10 @@ class Corkboard extends React.Component {
     }
     return (
       <div onDoubleClick={this.handleClick} style={corkboardStyle} className="corkboard-container">
+        <form onSubmit={this.createBoard}>
+          Title: <input type="text" value={this.state.boardTitle} onChange={this.titleChange.bind(this)}/>
+          <button type="submit">Create Board</button>
+        </form>
         {showElements}
       </div>
     );
@@ -64,14 +86,16 @@ class Corkboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
-    boardElements: state.board.boardElements
+    boardElements: state.board.boardElements,
+    boardId: state.board.boardId
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     addBoardElement: addBoardElement,
-    updateElement: updateElement
+    updateElement: updateElement,
+    createBoard: createBoard
 
   }, dispatch)
 }
