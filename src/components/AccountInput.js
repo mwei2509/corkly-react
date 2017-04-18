@@ -20,6 +20,7 @@ export default class AccountInput extends Component {
     })
     .then(({data})=>{
       window.localStorage.setItem("current user", data.jwt)
+      this.props.onSubmit()
     })
     .catch((errors)=>{
       debugger
