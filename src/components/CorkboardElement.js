@@ -12,12 +12,12 @@ const CorkboardElement = (props) => {
     grid={[1, 1]}
     zIndex={100}
     onStop={props.onStop}>
-    <div id={`element-${props.element.id}`} style={{position: "absolute", padding: 0, margin: 0, top: 0, left: 0}}>
+    <div id={`element-${props.element.EID}`} style={{position: "absolute", padding: 0, margin: 0, top: 0, left: 0}}>
       <div className="handle" style={{minHeight: 20, padding: 10}}>
         <p onClick={props.handleClick} style={{display: "inline", marginRight: 25}}>x</p>
         HANDLE
       </div>
-      <textarea value={props.element.content} onChange={(e) => {props.handleChange(e, props.element.id)}}></textarea>
+      <textarea value={props.element.content} onChange={(e) => {props.handleChange(e, props.element.EID)}}></textarea>
     </div>
   </Draggable>
 );

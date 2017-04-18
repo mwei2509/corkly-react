@@ -4,7 +4,7 @@ import CorkboardElement from './CorkboardElement'
 import TextBox from './TextBox'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement, createBoard } from '../actions'
+import { addBoardElement, updateElement, createBoard, deleteElement } from '../actions'
 
 
 class Corkboard extends React.Component {
@@ -21,16 +21,16 @@ class Corkboard extends React.Component {
     }
   }
 
-  handleElementClick(id){
-    this.props.deleteElement(id)
+  handleElementClick(EID){
+    this.props.deleteElement(EID)
   }
 
   handleClick(e){
-    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts", id: this.props.boardElements.length})
+    this.props.addBoardElement({x: e.clientX, y: e.clientY, content: "Butts", EID: this.props.boardElements.length})
   }
 
-  handleChange(e, id){
-    this.props.updateElement({element: {id: id, content: e.target.value}})
+  handleChange(e, EID){
+    this.props.updateElement({element: {EID: EID, content: e.target.value}})
   }
 
   titleChange(event){
@@ -46,22 +46,22 @@ class Corkboard extends React.Component {
     })
   }
 
-  onStop(e, id){
-    // let div = this.refs[id]
+  onStop(e, EID){
+    // let div = this.refs[EID]
     // debugger
-    let div = document.getElementById(`element-${id}`)
+    let div = document.getElementById(`element-${EID}`)
 
-    this.props.updateElement({element: {id: id, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}})
+    this.props.updateElement({element: {EID: EID, x: div.getBoundingClientRect().left, y: div.getBoundingClientRect().top}})
   }
 
   render() {
 
     let showElements = this.props.boardElements.map((element) => {
-        return <CorkboardElement key={element.id} element={element} onStop={(e) => this.onStop(e, element.id)} handleClick={() => this.handleElementClick(element.id)} handleChange={this.handleChange} />
+        return <CorkboardElement key={element.EID} element={element} onStop={(e) => this.onStop(e, element.EID)} handleClick={() => this.handleElementClick(element.EID)} handleChange={this.handleChange} />
     })
 
     const corkboardStyle={
-      width: "100vw",
+      wEIDth: "100vw",
       height: "100vh",
       position: "relative",
       top: 0,
@@ -95,8 +95,8 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     addBoardElement: addBoardElement,
     updateElement: updateElement,
-    createBoard: createBoard
-
+    createBoard: createBoard,
+    deleteElement: deleteElement
   }, dispatch)
 }
 
