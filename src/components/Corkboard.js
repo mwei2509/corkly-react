@@ -7,13 +7,12 @@ import {
   Link
 } from 'react-router-dom'
 import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner } from '../actions'
-
+import Account from './Account'
 
 class Corkboard extends React.Component {
   constructor(){
     super()
     this.deleteSticky = this.deleteSticky.bind(this)
-    this.resizeSticky = this.resizeSticky.bind(this)
     this.addSticky = this.addSticky.bind(this)
     this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
@@ -31,24 +30,12 @@ class Corkboard extends React.Component {
     this.props.deleteElement(EID)
   }
 
-  resizeSticky(e, EID){
-    let textarea = document.getElementById(`textarea-${EID}`)
-    console.log(textarea.offsetWidth)
-    this.props.updateElement({
-      element:{
-        EID: EID,
-        width: textarea.offsetWidth,
-        height: textarea.offsetHeight
-      }
-    })
-  }
-
   addSticky(e){
     this.props.addBoardElement({
       x: e.clientX,
       y: e.clientY,
-      width: 150,
-      height: 100,
+      width: "150px",
+      height: "100px",
       bgcolor: "#eee",
       EID: this.props.boardElements.length
     })
@@ -103,14 +90,29 @@ class Corkboard extends React.Component {
       width: "100vw",
       height: "100vh",
       position: "absolute",
+      top: 0,
+      left: 0,
+      padding: 0,
+      margin: 0,
       background: `url(${corkboardImage})`,
       overflow: 'hidden',
       userSelect: 'none'
     }
+
+    const sidebarStyle={
+      background: "#000",
+      color: "#fff",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: 300
+    }
+
     return (
       <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
-        <Link to="/accounts">Accounts</Link>
-        <Link to="/">Corkboard</Link>
+        <div style={sidebarStyle}>
+          <Account />
+        </div>
         <form onSubmit={this.createBoard}>
           Title: <input type="text" value={this.state.boardTitle} onChange={this.titleChange.bind(this)}/>
           <button type="submit">Create Board</button>
