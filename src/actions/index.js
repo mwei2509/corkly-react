@@ -66,7 +66,7 @@ export function createBoard(board){
 
   return (dispatch) => {
     axios
-      .post(`http://localhost:4000/boards`, {board: board}, config)
+      .post(`http://localhost:4000/boards`, board, config)
       .then(({data}) => {
         dispatch({
           type: "ADD_BOARD",
