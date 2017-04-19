@@ -18,11 +18,22 @@ class Corkboard extends React.Component {
     this.addCoOwner = this.addCoOwner.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleDrop = this.handleDrop.bind(this)
+    this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
       boardTitle: '',
       coOwnerText: ''
     }
+  }
+
+  preventDefault(event){
+    event.preventDefault()
+  }
+
+  handleDrop(event){
+    event.preventDefault()
+    debugger
   }
 
   deleteSticky(EID){
@@ -92,7 +103,8 @@ class Corkboard extends React.Component {
     const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
 
     return (
-      <div onDoubleClick={this.addSticky} style={this.props.corkboardStyle} className="corkboard-container">
+      <div onDoubleClick={this.addSticky} style={this.props.corkboardStyle} onDragOver={this.preventDefault} onDrop={this.handleDrop} className="corkboard-container">
+
         <input
           style={{
             fontSize: "30px",
@@ -121,6 +133,7 @@ class Corkboard extends React.Component {
           </form>
 
         {showElements}
+
       </div>
     );
   }
