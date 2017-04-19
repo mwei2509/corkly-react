@@ -1,4 +1,4 @@
-export const manageElements = (state={boardElements: [], boardId: null, title: ''}, action) => {
+export const manageElements = (state={boardElements: [], boardId: null, created_at: null, updated_at: null, title: ''}, action) => {
   switch (action.type) {
     case "ADD_ELEMENT":
       return Object.assign({}, state, {boardElements: [...state.boardElements, action.payload]})
@@ -23,7 +23,7 @@ export const manageElements = (state={boardElements: [], boardId: null, title: '
     case "DELETE_ELEMENT":
       return Object.assign({}, state, {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)})
     case "NEW_BOARD":
-      return {boardElements: [], boardId: null, title: ''}
+      return {boardElements: [], boardId: null, created_at: null, updated_at: null, title: ''}
     default:
       return state
   }

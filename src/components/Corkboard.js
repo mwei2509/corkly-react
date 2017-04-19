@@ -1,11 +1,7 @@
 import React from 'react';
-import corkboardImage from '../imgs/corkboard.jpg'
 import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {
-  Link
-} from 'react-router-dom'
 import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle } from '../actions'
 
 import Account from './Account'
@@ -39,6 +35,7 @@ class Corkboard extends React.Component {
       width: "150px",
       height: "100px",
       bgcolor: "#fff",
+      content: '',
       EID: this.props.boardElements.length
     })
   }
@@ -82,38 +79,14 @@ class Corkboard extends React.Component {
             contentChange={this.contentChange} />)
     })
 
-    const corkboardStyle={
-      width: "100vw",
-      height: "100vh",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      padding: 0,
-      margin: 0,
-      background: `url(${corkboardImage})`,
-      overflow: 'hidden',
-      userSelect: 'none'
-    }
-
-    const sidebarStyle={
-      background: "#000",
-      color: "#fff",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: 300
-    }
-
-    const saveButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
-      <FontAwesome name="floppy-o" /></button>
-    const createButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
-      <FontAwesome name="floppy-o" /></button>
+    const saveButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
+      <FontAwesome name="floppy-o" /></button></span>
+    const createButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
+      <FontAwesome name="floppy-o" /></button></span>
+    const enterTitle=<span style={{display: "block"}}>Pleae enter a title to save this board</span>
 
     return (
-      <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
-        <div style={sidebarStyle}>
-          <Account />
-        </div>
+      <div onDoubleClick={this.addSticky} style={this.props.corkboardStyle} className="corkboard-container">
         <input
           style={{
             fontSize: "30px",
@@ -130,13 +103,14 @@ class Corkboard extends React.Component {
           type="text" value={this.props.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? saveButton : createButton}
-        
-        <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
-          <label>Co-owner's name</label>
-          <input type="text" onChange={this.handleChange} />
-          <input type="submit" />
-        </form>
+        {this.props.boardId ? saveButton : (this.props.title ? createButton: enterTitle )}
+
+
+          <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
+            <label>Co-owner's name</label>
+            <input type="text" onChange={this.handleChange} />
+            <input type="submit" />
+          </form>
 
         {showElements}
       </div>

@@ -33,10 +33,8 @@ export const addOwner = (payload) => {
     axios
     .post(`http://localhost:4000/boards/${payload.id}`, payload, config)
     .then(({data}) => {
-      this
       debugger
     }).catch((error) => {
-      this
       debugger
     })
   }
@@ -128,9 +126,6 @@ export const clearUser = () =>{
 }
 
 export function setUser(token){
-  let config={
-    headers: {token: token}
-  }
   return (dispatch) => {
     axios
       .get(`http://localhost:4000/account`,

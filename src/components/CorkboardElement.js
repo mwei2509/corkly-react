@@ -4,12 +4,15 @@ import FontAwesome from 'react-fontawesome';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateElement  } from '../actions'
+import {CirclePicker} from 'react-color'
 
 
 class CorkboardElement extends React.Component {
   constructor(props){
     super(props)
-
+    this.state={
+      colorOn: false
+    }
   }
 
   onStop(){
@@ -35,7 +38,34 @@ class CorkboardElement extends React.Component {
     })
   }
 
+  toggleColorPicker(){
+    this.setState({
+      colorOn: !this.state.colorOn
+    })
+  }
+
+  pickColor(color){
+    console.log(color)
+    this.props.updateElement({
+      element:{
+        EID: this.props.element.EID,
+        bgcolor: color.hex
+      }
+    })
+    this.setState({
+      colorOn: false
+    })
+  }
+
   render(){
+    const colorPicker=(
+      <div style={{position: "absolute", left: 50, top: -50}}>
+        <CirclePicker
+        disableAlpha={true}
+        onChange={ this.pickColor.bind(this) }
+         />
+      </div>
+    )
     let stickyStyle={
       position: "absolute",
       top: 0,
@@ -76,9 +106,16 @@ class CorkboardElement extends React.Component {
             <button className="icon-button" onClick={this.props.deleteSticky} style={{float: "left"}}>
               <FontAwesome name="close" />
             </button>
+
             <button className="icon-button" style={{float: "right"}}>
               <FontAwesome name="thumb-tack" />
             </button>
+
+            <button className="icon-button" onClick={this.toggleColorPicker.bind(this)} style={{float: "right"}}>
+              <FontAwesome name="paint-brush" />
+            </button>
+
+            {this.state.colorOn ? colorPicker : null}
           </div>
           <textarea
             autoFocus
