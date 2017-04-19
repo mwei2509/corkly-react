@@ -14,17 +14,7 @@ export default class AccountInput extends Component {
 
   handleSubmit(event){
     event.preventDefault()
-    axios
-    .post('http://localhost:4000/register', {
-      account: { username: this.state.username, email: this.state.email,password: this.state.password}
-    })
-    .then(({data})=>{
-      window.localStorage.setItem("current user", data.jwt)
-      this.props.onSubmit()
-    })
-    .catch((errors)=>{
-      debugger
-    })
+    this.props.register(this.state.username, this.state.email, this.state.password)
   }
 
   handleChange(field, event){

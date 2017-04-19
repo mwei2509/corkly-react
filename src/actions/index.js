@@ -23,6 +23,11 @@ export const setCurrentBoard = (id) => {
   }
 }
 
+export const newBoard = () => {
+  return{
+    type: "NEW_BOARD"
+      }
+}
 export const addOwner = (payload) => {
   return (dispatch) => {
     axios
@@ -59,11 +64,77 @@ export function deleteElement(EID) {
   }
 }
 
+export const updateTitle = (title) =>{
+  return{
+    type: "UPDATE_TITLE",
+    payload: title
+  }
+}
+
+
+//login
+
+export const login = (username, password) => {
+  return(dispatch)=>{
+    axios
+    .post('http://localhost:4000/login', {
+      account: { username: username, password: password}
+    })
+    .then(({data}) => {
+      window.localStorage.setItem("current user", data.jwt)
+      dispatch({
+        type: 'LOGIN',
+        payload: data.jwt
+      })
+    })
+    .catch((errors) => {
+      debugger
+    })
+  }
+}
+
+export const register = (username, email, password) => {
+  return(dispatch)=>{
+    axios
+    .post('http://localhost:4000/register', {
+      account: { username: username, email: email, password: password}
+    })
+    .then(({data})=>{
+      window.localStorage.setItem("current user", data.jwt)
+      dispatch({
+        type: 'LOGIN',
+        payload: data.jwt
+      })
+    })
+    .catch((errors)=>{
+      debugger
+    })
+  }
+}
+
+export const logout = (token) => {
+  console.log("hi")
+  window.localStorage.removeItem("current user")
+  return{
+    type: "LOGOUT"
+  }
+}
+
 //account
-export function getBoards(){
+export const clearUser = () =>{
+  return{
+    type: "CLEAR_USER"
+  }
+}
+
+export function setUser(token){
+  let config={
+    headers: {token: token}
+  }
   return (dispatch) => {
     axios
-      .get(`http://localhost:4000/account`, config)
+      .get(`http://localhost:4000/account`,
+        {headers: {token: token}})
       .then(({data}) => {
         dispatch({
           type: "LOAD_USER",

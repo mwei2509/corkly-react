@@ -6,9 +6,10 @@ import { connect } from 'react-redux'
 import {
   Link
 } from 'react-router-dom'
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle } from '../actions'
 
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner } from '../actions'
 import Account from './Account'
+import FontAwesome from 'react-fontawesome';
 
 class Corkboard extends React.Component {
   constructor(){
@@ -37,7 +38,7 @@ class Corkboard extends React.Component {
       y: e.clientY,
       width: "150px",
       height: "100px",
-      bgcolor: "#eee",
+      bgcolor: "#fff",
       EID: this.props.boardElements.length
     })
   }
@@ -47,21 +48,16 @@ class Corkboard extends React.Component {
   }
 
   titleChange(event){
-    this.setState({
-      boardTitle: event.target.value
-    })
+    this.props.updateTitle(event.target.value)
   }
 
   createBoard(event){
     event.preventDefault()
-    this.props.createBoard({board: {title: this.state.boardTitle, elements_attributes: this.props.boardElements, id: this.props.boardId}})
-    this.setState({
-      boardTitle: ''
-    })
+    this.props.createBoard({board: {title: this.props.title, elements_attributes: this.props.boardElements, id: this.props.boardId}})
   }
 
   saveBoard(){
-    this.props.updateBoard({board: {id: this.props.boardId, elements_attributes: this.props.boardElements}})
+    this.props.updateBoard({board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
   }
 
   addCoOwner(id, e){
@@ -108,21 +104,40 @@ class Corkboard extends React.Component {
       width: 300
     }
 
+    const saveButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
+      <FontAwesome name="floppy-o" /></button>
+    const createButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
+      <FontAwesome name="floppy-o" /></button>
+
     return (
       <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
         <div style={sidebarStyle}>
           <Account />
         </div>
-        <form onSubmit={this.createBoard}>
-          Title: <input type="text" value={this.state.boardTitle} onChange={this.titleChange.bind(this)}/>
-          <button type="submit">Create Board</button>
-        </form>
-        <button onClick={this.saveBoard}>Save Bard</button>
+        <input
+          style={{
+            fontSize: "30px",
+            background: "none",
+            border: "none",
+            outline: "none",
+            color: "#fff",
+            borderBottom: "2px solid #000",
+            fontFamily: "Lobster",
+            textShadow: "1px 1px 1px #000",
+            textAlign: "center"
+          }}
+          placeholder="title your corkly"
+          type="text" value={this.props.title}
+          onChange={this.titleChange.bind(this)}
+          />
+        {this.props.boardId ? saveButton : createButton}
+        
         <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
           <label>Co-owner's name</label>
           <input type="text" onChange={this.handleChange} />
           <input type="submit" />
         </form>
+
         {showElements}
       </div>
     );
@@ -132,7 +147,8 @@ class Corkboard extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     boardElements: state.board.boardElements,
-    boardId: state.board.boardId
+    boardId: state.board.boardId,
+    title: state.board.title
   })
 }
 
@@ -143,6 +159,7 @@ const mapDispatchToProps = (dispatch) => {
     createBoard: createBoard,
     deleteElement: deleteElement,
     updateBoard: updateBoard,
+    updateTitle: updateTitle,
     addOwner: addOwner
   }, dispatch)
 }
