@@ -2,10 +2,15 @@ import React from 'react';
 import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard } from '../actions'
+
+
+
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard } from '../actions'
 import Collaborator from './Collaborator'
+
 import Account from './Account'
 import FontAwesome from 'react-fontawesome';
+import corkboardImage from '../imgs/corkboard.jpg'
 
 class Corkboard extends React.Component {
   constructor(){
@@ -44,6 +49,26 @@ class Corkboard extends React.Component {
       EID: this.props.boardElements.length
     })
   }
+
+  componentWillMount(){
+    let {corkboardId} = this.props.match.params
+    if (corkboardId){
+      this.props.setCurrentBoard(this.props.token, corkboardId)
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    let {corkboardId} = nextProps.match.params
+    if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
+      this.props.setCurrentBoard(this.props.token, corkboardId)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+     if(this.props.token && prevProps.token !== this.props.token){
+       this.props.setCurrentBoard(this.props.token, this.props.match.params.corkboardId)
+     }
+   }
 
   contentChange(e, EID){
     this.props.updateElement({element: {EID: EID, content: e.target.value}})
@@ -88,8 +113,22 @@ class Corkboard extends React.Component {
     const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
     const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
 
+    const corkboardStyle={
+      width: "100vw",
+      height: "100vh",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      padding: 0,
+      margin: 0,
+      background: `url(${corkboardImage})`,
+      overflow: 'hidden',
+      userSelect: 'none',
+      zIndex: -1
+    }
+
     return (
-      <div onDoubleClick={this.addSticky} style={this.props.corkboardStyle} className="corkboard-container">
+      <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
         <input
           style={{
             fontSize: "30px",
@@ -133,7 +172,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteElement: deleteElement,
     updateBoard: updateBoard,
     updateTitle: updateTitle,
+    setCurrentBoard: setCurrentBoard,
     deleteBoard: deleteBoard
+
   }, dispatch)
 }
 

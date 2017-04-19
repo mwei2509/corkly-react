@@ -1,20 +1,14 @@
 import React from 'react';
-import AccountInput from './AccountInput'
-import Login from './Login'
+import { Link } from 'react-router-dom'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
+
 import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
 
-import AccountInfo from './AccountInfo'
 
-class Account extends React.Component {
+class AccountInfo extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state={
-      boardTitle: ''
-    }
   }
 
   componentWillMount(){
@@ -24,12 +18,10 @@ class Account extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-
      if(this.props.token && prevProps.token !== this.props.token){
        this.props.setUser(this.props.token)
      }
    }
-
 
   logOut(){
     this.props.logout()
@@ -37,33 +29,33 @@ class Account extends React.Component {
     this.props.newBoard()
   }
 
-  handleChange(event){
-    this.setState({
-      boardTitle: event.target.value
-    })
-  }
-
-  handleButtonClick(id, e){
-    this.props.setCurrentBoard(this.props.token, id)
-  }
-
-// onClick={this.handleButtonClick.bind(this, board.id)
   render() {
-    return (
-      <div style={{paddingBottom: 50}}>
-        {(!!this.props.token) ? <Route path="/boards" component={AccountInfo} /> :
-          <div>
-            <AccountInput register={this.props.register} />
-            <Login login={this.props.login} />
-           </div>
-         }
-        <button onClick={this.props.newBoard}>New Board</button>
-        <Link to="/boards"><h1>CLICK ME</h1></Link>
-      </div>);
+    let account = this.props.account
+    if (account){
+      return (
+      <div>welcome, {account.username} <button onClick={this.logOut.bind(this)}>Log Out</button>
+      <hr />
+      <h2>Your Boards</h2>
+        {account.boards.map((board, index)=>{
+          let boardUrl = `/boards/${board.id}`
+          return (
+            <Link to={boardUrl}>
+              <div style=
+                {{borderRadius: 5, margin: 15, height: 100, background: "#fff", color: "#000"}}
+                key={index}>
+                {board.title}<br />
+                Created at:{board.created_at}<br />
+                Updated at:{board.created_at}
+              </div>
+            </Link>
+          )
+        })}
+      </div>)
+  } else {
+    return null
   }
 }
-
-
+}
 
 const mapStateToProps = (state) => {
   return ({
@@ -84,6 +76,6 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-const ConnectedAccount = connect(mapStateToProps, mapDispatchToProps)(Account)
+const ConnectedAccountInfo = connect(mapStateToProps, mapDispatchToProps)(AccountInfo)
 
-export default ConnectedAccount
+export default ConnectedAccountInfo
