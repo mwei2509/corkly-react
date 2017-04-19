@@ -54,7 +54,7 @@ export const updateBoard = (token, payload) => {
     })
     .then(({data}) => {
       dispatch({
-        type: "SET_CURRENT_BOARD",
+        type: "ADD_BOARD",
         data: data
       })
     }).catch((error) => {
@@ -99,6 +99,15 @@ export const addOwner = (token, payload) => {
     }).catch((error) => {
       debugger
     })
+  }
+}
+
+////Board attributes like current color
+
+export const changeBoardAttributes = (attributes) => {
+  return{
+    type: "CHANGE_BOARD_ATTRIBUTES",
+    payload: attributes
   }
 }
 

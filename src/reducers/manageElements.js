@@ -16,6 +16,12 @@ export const manageElements = (state={boardElements: [], boardId: null, created_
         boardElements: action.data.elements,
         title: action.data.title
      })
+    case "ADD_BOARD":
+       return Object.assign({}, state, {
+         boardId: action.data.id,
+         boardElements: action.data.elements,
+         title: action.data.title
+      })
     case "UPDATE_TITLE":
       return Object.assign({}, state, {title: action.payload})
     case "ASSIGN_TO_BOARD":
