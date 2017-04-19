@@ -62,8 +62,6 @@ class CorkboardElement extends React.Component {
       height: this.props.element.height
     }
 
-    let buttonStyle={float: "left", padding: 5, margin: 0, background: "none", outline: "none",border: "none"}
-
     return (
       <Draggable
         axis="both"
@@ -75,10 +73,10 @@ class CorkboardElement extends React.Component {
         onStop={this.onStop.bind(this)}>
         <div ref={this.props.element.EID} style={stickyStyle}>
           <div className="handle" style={{minHeight: 20, width: "100%"}}>
-            <button onClick={this.props.deleteSticky} style={buttonStyle}>
+            <button className="icon-button" onClick={this.props.deleteSticky} style={{float: "left"}}>
               <FontAwesome name="close" />
             </button>
-            <button style={{...buttonStyle, float: "right"}}>
+            <button className="icon-button" style={{float: "right"}}>
               <FontAwesome name="thumb-tack" />
             </button>
           </div>

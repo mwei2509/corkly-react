@@ -3,29 +3,32 @@ import AccountInput from './AccountInput'
 import Login from './Login'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getBoards, createBoard, setCurrentBoard } from '../actions'
+import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
 
 class Account extends React.Component {
   constructor(props) {
     super(props);
 
     this.state={
-      token: window.localStorage.getItem('current user'),
       boardTitle: ''
     }
   }
 
   componentWillMount(){
-    if (window.localStorage.getItem('current user')){
-      this.props.getBoards()
+    if (this.props.token){
+      this.props.setUser(this.props.token)
+    }
+  }
+
+  componentDidUpdate(){
+    if(this.props.token){
+      this.props.setUser(this.props.token)
     }
   }
 
   logOut(){
-    window.localStorage.removeItem("current user")
-    this.setState({
-      token: ''
-    })
+    this.props.logout()
+    this.props.clearUser()
   }
 
   handleChange(event){
@@ -38,16 +41,6 @@ class Account extends React.Component {
     this.props.setCurrentBoard(id)
   }
 
-  createBoard(event){
-    event.preventDefault()
-    this.props.createBoard({title: this.state.boardTitle})
-    this.setState({
-      boardTitle: ''
-    })
-  }
-
-
-
   render() {
     const {account} = this.props
     const AccountInfo =
@@ -56,22 +49,19 @@ class Account extends React.Component {
       id: {account.id}, email: {account.email}
       <hr />
         {account.boards.map((board, index)=>{
-          return <li key={index}>{board.title}<button onClick={this.handleButtonClick.bind(this, board.id)}>RANDOM BUTTON</button></li>
+          return <button key={index} onClick={this.handleButtonClick.bind(this, board.id)}>{board.title}</button>
         })}
       </div>
 
     return (
       <div>
-        {(!!window.localStorage.getItem("current user")) ? AccountInfo :
+        {(!!this.props.token) ? AccountInfo :
           <div>
-            <AccountInput onSubmit={this.props.getBoards.bind(this)} />
-            <Login onSubmit={this.props.getBoards.bind(this)}/>
+            <AccountInput register={this.props.register} />
+            <Login login={this.props.login} />
            </div>
          }
-        <form onSubmit={this.createBoard.bind(this)}>
-          Title: <input type="text" value={this.state.boardTitle} onChange={this.handleChange.bind(this)}/>
-          <button type="submit">Create Board</button>
-        </form>
+        <button onClick={this.props.newBoard}>New Board</button>
       </div>);
   }
 }
@@ -80,15 +70,20 @@ class Account extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
+    token: state.manageLogin.token,
     account: state.account
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    getBoards: getBoards,
-    createBoard: createBoard,
-    setCurrentBoard: setCurrentBoard
+    setUser: setUser,
+    newBoard: newBoard,
+    setCurrentBoard: setCurrentBoard,
+    login: login,
+    logout: logout,
+    register: register,
+    clearUser: clearUser
   }, dispatch)
 }
 

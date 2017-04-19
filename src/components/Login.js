@@ -12,15 +12,7 @@ export default class Login extends React.Component {
 
   handleSubmit(e){
     e.preventDefault()
-    axios
-    .post('http://localhost:4000/login', {
-      account: { username: this.state.username, password: this.state.password}
-    }).then(({data}) => {
-      window.localStorage.setItem("current user", data.jwt)
-      this.props.onSubmit()
-    }).catch((errors) => {
-      debugger
-    })
+    this.props.login(this.state.username, this.state.password)
   }
 
   handleChange(field, e){
@@ -43,6 +35,3 @@ export default class Login extends React.Component {
       </div>);
   }
 }
-
-Login.propTypes = {
-};
