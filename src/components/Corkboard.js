@@ -2,7 +2,11 @@ import React from 'react';
 import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle, setCurrentBoard } from '../actions'
+
+
+
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard } from '../actions'
+import Collaborator from './Collaborator'
 
 import Account from './Account'
 import FontAwesome from 'react-fontawesome';
@@ -16,13 +20,18 @@ class Corkboard extends React.Component {
     this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
-    this.addCoOwner = this.addCoOwner.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
 
     this.state={
       boardTitle: '',
-      coOwnerText: ''
+      showCollabForm: false
     }
+  }
+
+  toggleCollabForm(){
+    this.setState({
+      showCollabForm: !this.state.showCollabForm
+    })
   }
 
   deleteSticky(EID){
@@ -35,7 +44,7 @@ class Corkboard extends React.Component {
       y: e.clientY,
       width: "150px",
       height: "100px",
-      bgcolor: "#fff",
+      bgcolor: this.props.boardAttributes.currentColor,
       content: '',
       EID: this.props.boardElements.length
     })
@@ -74,19 +83,12 @@ class Corkboard extends React.Component {
     this.props.createBoard(this.props.token, {board: {title: this.props.title, elements_attributes: this.props.boardElements, id: this.props.boardId}})
   }
 
+  handleDelete(id){
+    this.props.deleteBoard(this.props.token, {id: id})
+  }
+
   saveBoard(){
     this.props.updateBoard(this.props.token, {board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
-  }
-
-  addCoOwner(id, e){
-    e.preventDefault()
-    this.props.addOwner(this.props.token, {id: id, username: this.state.coOwnerText})
-  }
-
-  handleChange(e){
-    this.setState({
-      coOwnerText: e.target.value
-    })
   }
 
   render() {
@@ -100,11 +102,16 @@ class Corkboard extends React.Component {
             contentChange={this.contentChange} />)
     })
 
-    const saveButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
-      <FontAwesome name="floppy-o" /></button></span>
+    const saveButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
+      <FontAwesome name="floppy-o" /></button>
     const createButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
       <FontAwesome name="floppy-o" /></button></span>
-    const enterTitle=<span style={{display: "block"}}>Pleae enter a title to save this board</span>
+    const deleteButton =<button style={{fontSize: "20px"}} className="icon-button" onClick={this.handleDelete.bind(null, this.props.boardId)}>
+      <FontAwesome name="trash" /></button>
+    const addUser=<button style={{fontSize: "20px"}} className="icon-button" onClick={this.toggleCollabForm.bind(this)}>
+      <FontAwesome name="user" /></button>
+    const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
+    const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
 
     const corkboardStyle={
       width: "100vw",
@@ -138,14 +145,8 @@ class Corkboard extends React.Component {
           type="text" value={this.props.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? saveButton : (this.props.title ? createButton: enterTitle )}
-
-
-          <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
-            <label>Co-owner's name</label>
-            <input type="text" onChange={this.handleChange} />
-            <input type="submit" />
-          </form>
+        {this.props.boardId ? <span style={{display: "block"}}>{saveButton}{deleteButton}{addUser}</span> : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
+        {this.state.showCollabForm ? <Collaborator /> : null}
 
         {showElements}
       </div>
@@ -158,7 +159,8 @@ const mapStateToProps = (state) => {
     boardElements: state.board.boardElements,
     boardId: state.board.boardId,
     title: state.board.title,
-    token: state.manageLogin.token
+    token: state.manageLogin.token,
+    boardAttributes: state.boardAttributes
   })
 }
 
@@ -170,8 +172,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteElement: deleteElement,
     updateBoard: updateBoard,
     updateTitle: updateTitle,
-    addOwner: addOwner,
-    setCurrentBoard: setCurrentBoard
+    setCurrentBoard: setCurrentBoard,
+    deleteBoard: deleteBoard
+
   }, dispatch)
 }
 

@@ -6,16 +6,21 @@ import Account from './components/Account'
 import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { newBoard } from './actions'
 import { Link, Route } from 'react-router-dom'
+import { newBoard, changeBoardAttributes } from './actions'
+import {CirclePicker} from 'react-color'
+
+
 
 class App extends Component {
   constructor(){
     super()
 
     this.state={
-      sidebarActive: false
+      sidebarActive: false,
+      colorOn: false
     }
+
     this.alertOptions = {
      offset: 14,
      position: 'bottom left',
@@ -24,6 +29,20 @@ class App extends Component {
      transition: 'scale'
    };
   }
+
+
+    toggleColorPicker(){
+      this.setState({
+        colorOn: !this.state.colorOn
+      })
+    }
+
+    pickColor(color){
+      this.props.changeBoardAttributes({currentColor: color.hex})
+      this.setState({
+        colorOn: false
+      })
+    }
 
   closeSidebar(){
     this.setState({
@@ -66,18 +85,36 @@ class App extends Component {
       left: 0
     }
 
+
+    const colorPicker=(
+      <div style={{position: "absolute", top: 50, left: 50}}>
+        <CirclePicker
+          width={100}
+          circleSize={15}
+          disableAlpha={true}
+          onChange={ this.pickColor.bind(this) }
+         />
+      </div>
+    )
+
     return (
         <div className="App">
+          {this.state.colorOn ? colorPicker : null}
           <div id="sidebar-wrapper" style={this.state.sidebarActive ? sidebarActive : sidebarInactive}>
             <div style={{width: 40, textAlign:"center", padding: 0, margin: 0, float: "right", color: "#000"}} >
-              <span style={{display: "block"}} onClick={this.toggleSidebar.bind(this)}>
+              <span className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />
               </span>
-              <span style={{display: "block"}} onClick={this.props.newBoard.bind(this)}>
+              <span className="operation-buttons" onClick={this.props.newBoard.bind(this)}>
                 <FontAwesome name="plus" />
               </span>
-              <span style={{display: "block"}} >
+              <span className="operation-buttons" >
                 <FontAwesome name="floppy-o" />
+              </span>
+              <span
+                className="operation-buttons" style={{color: this.props.boardAttributes.currentColor}}
+                onClick={this.toggleColorPicker.bind(this)} >
+                <FontAwesome name="circle" />
               </span>
               {this.props.boardId ? "save" : "create"}<br />
               {this.props.token ? "logged in" : "not logged in"}
@@ -85,6 +122,7 @@ class App extends Component {
             <div id="sidebar">
               <Account />
             </div>
+
           </div>
           <div id="corkboard-container">
             <Route exact path="/boards" component={Corkboard}/>
@@ -98,13 +136,15 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return ({
     boardId: state.board.boardId,
-    token: state.manageLogin.token
+    token: state.manageLogin.token,
+    boardAttributes: state.boardAttributes
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    newBoard: newBoard
+    newBoard: newBoard,
+    changeBoardAttributes: changeBoardAttributes
   }, dispatch)
 }
 

@@ -19,6 +19,11 @@ body {
   border: none;
 }
 
+.operation-buttons{
+  display: block;
+  margin-top: 5px;
+}
+
 #sidebar-wrapper{
   transition: all .4s ease 0s;
   height: 100vh;

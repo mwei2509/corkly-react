@@ -16,10 +16,18 @@ export const manageElements = (state={boardElements: [], boardId: null, created_
         boardElements: action.data.elements,
         title: action.data.title
      })
+    case "ADD_BOARD":
+       return Object.assign({}, state, {
+         boardId: action.data.id,
+         boardElements: action.data.elements,
+         title: action.data.title
+      })
     case "UPDATE_TITLE":
       return Object.assign({}, state, {title: action.payload})
     case "ASSIGN_TO_BOARD":
       return Object.assign({}, state, {boardId: action.payload})
+    case "DELETE_BOARD":
+      return {boardElements: [], boardId: null, created_at: null, updated_at: null, title: ''}
     case "DELETE_ELEMENT":
       return Object.assign({}, state, {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)})
     case "NEW_BOARD":

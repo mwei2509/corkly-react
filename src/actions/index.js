@@ -1,12 +1,60 @@
 import axios from 'axios'
 
-// const config=
-// {
-//   headers:
-//   {token: window.localStorage.getItem("current user")}
-// }
+export function createBoard(token, board){
+  return (dispatch) => {
+    axios
+      .post(`http://localhost:4000/boards`, board, {
+        headers:
+        {token: token}
+      })
+      .then(({data}) => {
+        dispatch({
+          type: "ADD_BOARD",
+          data: data
+        })
+      })
+      .catch((errors)=>{
+        console.log(errors)
+      })
+  }
+}
 
-///// Board Stuff
+export const deleteBoard = (token, payload) => {
+  return (dispatch) => {
+  axios
+    .delete(`http://localhost:4000/boards/${payload.id}`, payload, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "DELETE_BOARD",
+        payload: data
+      })
+    }).catch((errors) => {
+      console.log(errors)
+    })
+  }
+}
+
+export const updateBoard = (token, payload) => {
+  return (dispatch) => {
+    axios
+    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
+    }).catch((errors) => {
+      console.log(errors)
+    })
+  }
+}
+
 export const setCurrentBoard = (token, id) => {
   return (dispatch) => {
     axios
@@ -20,8 +68,8 @@ export const setCurrentBoard = (token, id) => {
           data: data
         })
       })
-      .catch((error)=>{
-        debugger
+      .catch((errors)=>{
+        console.log(errors)
       })
   }
 }
@@ -31,7 +79,7 @@ export const newBoard = () => {
     type: "NEW_BOARD"
       }
 }
-export const addOwner = (token, payload) => {
+export const addCollaborator = (token, payload) => {
   return (dispatch) => {
     axios
     .post(`http://localhost:4000/boards/${payload.id}`, payload, {
@@ -40,9 +88,18 @@ export const addOwner = (token, payload) => {
     })
     .then(({data}) => {
       debugger
-    }).catch((error) => {
-      debugger
+    }).catch((errors) => {
+      console.log(errors)
     })
+  }
+}
+
+////Board attributes like current color
+
+export const changeBoardAttributes = (attributes) => {
+  return{
+    type: "CHANGE_BOARD_ATTRIBUTES",
+    payload: attributes
   }
 }
 
@@ -92,7 +149,7 @@ export const login = (username, password) => {
       })
     })
     .catch((errors) => {
-      debugger
+      console.log(errors)
     })
   }
 }
@@ -111,7 +168,7 @@ export const register = (username, email, password) => {
       })
     })
     .catch((errors)=>{
-      debugger
+      console.log(errors)
     })
   }
 }
@@ -142,45 +199,8 @@ export function setUser(token){
           data: data
         })
       })
-      .catch((error)=>{
-        debugger
+      .catch((errors)=>{
+        console.log(errors)
       })
-  }
-}
-
-export function createBoard(token, board){
-  return (dispatch) => {
-    axios
-      .post(`http://localhost:4000/boards`, board, {
-        headers:
-        {token: token}
-      })
-      .then(({data}) => {
-        dispatch({
-          type: "SET_CURRENT_BOARD",
-          data: data
-        })
-      })
-      .catch((error)=>{
-        debugger
-      })
-  }
-}
-
-export const updateBoard = (token, payload) => {
-  return (dispatch) => {
-    axios
-    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
-      headers:
-      {token: token}
-    })
-    .then(({data}) => {
-      dispatch({
-        type: "SET_CURRENT_BOARD",
-        data: data
-      })
-    }).catch((error) => {
-      debugger
-    })
   }
 }
