@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 
 
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard } from '../actions'
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard } from '../actions'
 import Collaborator from './Collaborator'
 
 import Account from './Account'
@@ -59,10 +59,15 @@ class Corkboard extends React.Component {
 
   componentWillReceiveProps(nextProps){
     let {corkboardId} = nextProps.match.params
-    if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
+    if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
+      this.props.newBoard()
+    } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
       this.props.setCurrentBoard(this.props.token, corkboardId)
+    } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
+        debugger
+        this.props.history.push(`/boards/${nextProps.boardId}`)
+      }
     }
-  }
 
   componentDidUpdate(prevProps, prevState){
      if(this.props.token && prevProps.token !== this.props.token){
@@ -173,7 +178,8 @@ const mapDispatchToProps = (dispatch) => {
     updateBoard: updateBoard,
     updateTitle: updateTitle,
     setCurrentBoard: setCurrentBoard,
-    deleteBoard: deleteBoard
+    deleteBoard: deleteBoard,
+    newBoard: newBoard
 
   }, dispatch)
 }

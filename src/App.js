@@ -105,9 +105,11 @@ class App extends Component {
               <span className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />
               </span>
-              <span className="operation-buttons" onClick={this.props.newBoard.bind(this)}>
-                <FontAwesome name="plus" />
-              </span>
+              <Link to="/boards/new" >
+                <span className="operation-buttons">
+                  <FontAwesome name="plus" />
+                </span>
+              </Link>
               <span className="operation-buttons" >
                 <FontAwesome name="floppy-o" />
               </span>
