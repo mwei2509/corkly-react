@@ -2,7 +2,7 @@ import React from 'react';
 import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle } from '../actions'
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle, deleteBoard } from '../actions'
 
 import Account from './Account'
 import FontAwesome from 'react-fontawesome';
@@ -17,6 +17,7 @@ class Corkboard extends React.Component {
     this.saveBoard = this.saveBoard.bind(this)
     this.addCoOwner = this.addCoOwner.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
 
     this.state={
       boardTitle: '',
@@ -51,6 +52,10 @@ class Corkboard extends React.Component {
   createBoard(event){
     event.preventDefault()
     this.props.createBoard(this.props.token, {board: {title: this.props.title, elements_attributes: this.props.boardElements, id: this.props.boardId}})
+  }
+
+  handleDelete(id){
+    this.props.deleteBoard(this.props.token, {id: id})
   }
 
   saveBoard(){
@@ -106,6 +111,8 @@ class Corkboard extends React.Component {
           />
         {this.props.boardId ? saveButton : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
 
+        <button onClick={this.handleDelete.bind(null, this.props.boardId)}>DELETE YOUR BOARD</button>
+
 
           <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
             <label>Co-owner's name</label>
@@ -137,7 +144,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteElement: deleteElement,
     updateBoard: updateBoard,
     updateTitle: updateTitle,
-    addOwner: addOwner
+    addOwner: addOwner,
+    deleteBoard: deleteBoard
   }, dispatch)
 }
 

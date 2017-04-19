@@ -7,6 +7,62 @@ import axios from 'axios'
 // }
 
 ///// Board Stuff
+
+export function createBoard(token, board){
+  return (dispatch) => {
+    axios
+      .post(`http://localhost:4000/boards`, board, {
+        headers:
+        {token: token}
+      })
+      .then(({data}) => {
+        dispatch({
+          type: "SET_CURRENT_BOARD",
+          data: data
+        })
+      })
+      .catch((error)=>{
+        debugger
+      })
+  }
+}
+
+export const deleteBoard = (token, payload) => {
+  return (dispatch) => {
+  axios
+    .delete(`http://localhost:4000/boards/${payload.id}`, payload, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "DELETE_BOARD",
+        payload: data
+      })
+    }).catch((errors) => {
+      debugger
+    })
+  }
+}
+
+export const updateBoard = (token, payload) => {
+  return (dispatch) => {
+    axios
+    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "ADD_BOARD",
+        data: data
+      })
+    }).catch((error) => {
+      debugger
+    })
+  }
+}
+
 export const setCurrentBoard = (token, id) => {
   return (dispatch) => {
     axios
@@ -154,42 +210,5 @@ export function setUser(token){
       .catch((error)=>{
         debugger
       })
-  }
-}
-
-export function createBoard(token, board){
-  return (dispatch) => {
-    axios
-      .post(`http://localhost:4000/boards`, board, {
-        headers:
-        {token: token}
-      })
-      .then(({data}) => {
-        dispatch({
-          type: "ADD_BOARD",
-          data: data
-        })
-      })
-      .catch((error)=>{
-        debugger
-      })
-  }
-}
-
-export const updateBoard = (token, payload) => {
-  return (dispatch) => {
-    axios
-    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
-      headers:
-      {token: token}
-    })
-    .then(({data}) => {
-      dispatch({
-        type: "SET_CURRENT_BOARD",
-        data: data
-      })
-    }).catch((error) => {
-      debugger
-    })
   }
 }
