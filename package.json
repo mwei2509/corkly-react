@@ -4,21 +4,26 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.1",
-    "react": "^15.5.4",
-    "react-addons-css-transition-group": "^15.5.2",
+    "react": "^15.3.2",
     "react-alert": "^1.0.14",
     "react-color": "^2.11.4",
-    "react-dom": "^15.5.4",
+    "react-dom": "^15.3.2",
     "react-draggable": "^2.2.3",
     "react-fontawesome": "^1.5.0",
+    "react-image-file": "^0.1.0",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.0",
     "redux-thunk": "^2.2.0",
     "thunk": "0.0.1"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "redux-devtools": "^3.3.2",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

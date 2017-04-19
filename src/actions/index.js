@@ -1,13 +1,5 @@
 import axios from 'axios'
 
-// const config=
-// {
-//   headers:
-//   {token: window.localStorage.getItem("current user")}
-// }
-
-///// Board Stuff
-
 export function createBoard(token, board){
   return (dispatch) => {
     axios
@@ -17,12 +9,12 @@ export function createBoard(token, board){
       })
       .then(({data}) => {
         dispatch({
-          type: "SET_CURRENT_BOARD",
+          type: "ADD_BOARD",
           data: data
         })
       })
-      .catch((error)=>{
-        debugger
+      .catch((errors)=>{
+        console.log(errors)
       })
   }
 }
@@ -40,7 +32,7 @@ export const deleteBoard = (token, payload) => {
         payload: data
       })
     }).catch((errors) => {
-      debugger
+      console.log(errors)
     })
   }
 }
@@ -54,11 +46,11 @@ export const updateBoard = (token, payload) => {
     })
     .then(({data}) => {
       dispatch({
-        type: "ADD_BOARD",
+        type: "SET_CURRENT_BOARD",
         data: data
       })
-    }).catch((error) => {
-      debugger
+    }).catch((errors) => {
+      console.log(errors)
     })
   }
 }
@@ -76,8 +68,8 @@ export const setCurrentBoard = (token, id) => {
           data: data
         })
       })
-      .catch((error)=>{
-        debugger
+      .catch((errors)=>{
+        console.log(errors)
       })
   }
 }
@@ -87,7 +79,7 @@ export const newBoard = () => {
     type: "NEW_BOARD"
       }
 }
-export const addOwner = (token, payload) => {
+export const addCollaborator = (token, payload) => {
   return (dispatch) => {
     axios
     .post(`http://localhost:4000/boards/${payload.id}`, payload, {
@@ -96,8 +88,8 @@ export const addOwner = (token, payload) => {
     })
     .then(({data}) => {
       debugger
-    }).catch((error) => {
-      debugger
+    }).catch((errors) => {
+      console.log(errors)
     })
   }
 }
@@ -157,7 +149,7 @@ export const login = (username, password) => {
       })
     })
     .catch((errors) => {
-      debugger
+      console.log(errors)
     })
   }
 }
@@ -176,7 +168,7 @@ export const register = (username, email, password) => {
       })
     })
     .catch((errors)=>{
-      debugger
+      console.log(errors)
     })
   }
 }
@@ -207,8 +199,8 @@ export function setUser(token){
           data: data
         })
       })
-      .catch((error)=>{
-        debugger
+      .catch((errors)=>{
+        console.log(errors)
       })
   }
 }

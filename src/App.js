@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import Corkboard from './components/Corkboard'
-import corkboardImage from './imgs/corkboard.jpg'
 import FontAwesome from 'react-fontawesome';
 import AlertContainer from 'react-alert';
 import Account from './components/Account'
 import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link, Route } from 'react-router-dom'
 import { newBoard, changeBoardAttributes } from './actions'
 import {CirclePicker} from 'react-color'
 
 
-let msg
 
 class App extends Component {
   constructor(){
@@ -57,14 +56,6 @@ class App extends Component {
     })
   }
 
-  showAlert(){
-      msg.show('Some text or component', {
-        time: 2000,
-        type: 'success',
-        icon: <img src="path/to/some/img/32x32.png" />
-      });
-    }
-
   render() {
     const sidebarActive={
       color: "#fff",
@@ -84,20 +75,6 @@ class App extends Component {
       zIndex: 1000
     }
 
-    const corkboardStyle={
-      width: "100vw",
-      height: "100vh",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      padding: 0,
-      margin: 0,
-      background: `url(${corkboardImage})`,
-      overflow: 'hidden',
-      userSelect: 'none',
-      zIndex: -1
-    }
-
     const mainSidebarActive={
       position: "relative",
       left: 300
@@ -108,8 +85,9 @@ class App extends Component {
       left: 0
     }
 
+
     const colorPicker=(
-      <div style={{position: "absolute", left: 50, top: 50}}>
+      <div style={{position: "absolute", top: 50, left: 50}}>
         <CirclePicker
           width={100}
           circleSize={15}
@@ -119,13 +97,6 @@ class App extends Component {
       </div>
     )
 
-    // <div className="App">
-    //   <Account />
-    //   <Corkboard />
-    // </div>
-    // <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
-    // const corkboard = <Corkboard elements={this.state.elements}/>
-    // const test = function(){return <div>hello</div>}
     return (
         <div className="App">
           {this.state.colorOn ? colorPicker : null}
@@ -151,9 +122,11 @@ class App extends Component {
             <div id="sidebar">
               <Account />
             </div>
+
           </div>
           <div id="corkboard-container">
-            <Corkboard corkboardStyle={corkboardStyle}/>
+            <Route exact path="/boards" component={Corkboard}/>
+            <Route path="/boards/:corkboardId" component={Corkboard}/>
           </div>
         </div>
     );

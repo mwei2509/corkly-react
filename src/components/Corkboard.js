@@ -2,10 +2,16 @@ import React from 'react';
 import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle, deleteBoard } from '../actions'
+import Image from 'react-image-file'
+
+
+
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard } from '../actions'
+import Collaborator from './Collaborator'
 
 import Account from './Account'
 import FontAwesome from 'react-fontawesome';
+import corkboardImage from '../imgs/corkboard.jpg'
 
 class Corkboard extends React.Component {
   constructor(){
@@ -15,17 +21,17 @@ class Corkboard extends React.Component {
     this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
-    this.addCoOwner = this.addCoOwner.bind(this)
-    this.handleChange = this.handleChange.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
     this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
       boardTitle: '',
-      coOwnerText: ''
+      showCollabForm: false,
+      imageBlob: null
     }
   }
+
 
   preventDefault(event){
     event.preventDefault()
@@ -33,7 +39,17 @@ class Corkboard extends React.Component {
 
   handleDrop(event){
     event.preventDefault()
-    debugger
+    let file = event.dataTransfer.files[0]
+    let imageBlob = window.URL.createObjectURL(file)
+    this.setState({
+      imageBlob: imageBlob
+    })
+  }
+
+  toggleCollabForm(){
+    this.setState({
+      showCollabForm: !this.state.showCollabForm
+    })
   }
 
   deleteSticky(EID){
@@ -51,6 +67,26 @@ class Corkboard extends React.Component {
       EID: this.props.boardElements.length
     })
   }
+
+  componentWillMount(){
+    let {corkboardId} = this.props.match.params
+    if (corkboardId){
+      this.props.setCurrentBoard(this.props.token, corkboardId)
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    let {corkboardId} = nextProps.match.params
+    if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
+      this.props.setCurrentBoard(this.props.token, corkboardId)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+     if(this.props.token && prevProps.token !== this.props.token){
+       this.props.setCurrentBoard(this.props.token, this.props.match.params.corkboardId)
+     }
+   }
 
   contentChange(e, EID){
     this.props.updateElement({element: {EID: EID, content: e.target.value}})
@@ -73,19 +109,7 @@ class Corkboard extends React.Component {
     this.props.updateBoard(this.props.token, {board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
   }
 
-  addCoOwner(id, e){
-    e.preventDefault()
-    this.props.addOwner(this.props.token, {id: id, username: this.state.coOwnerText})
-  }
-
-  handleChange(e){
-    this.setState({
-      coOwnerText: e.target.value
-    })
-  }
-
   render() {
-
     let showElements = this.props.boardElements.map((element) => {
         return(<CorkboardElement
             key={element.EID}
@@ -95,16 +119,33 @@ class Corkboard extends React.Component {
             contentChange={this.contentChange} />)
     })
 
-    const saveButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
-      <FontAwesome name="floppy-o" /></button></span>
+    const saveButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
+      <FontAwesome name="floppy-o" /></button>
     const createButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
       <FontAwesome name="floppy-o" /></button></span>
+    const deleteButton =<button style={{fontSize: "20px"}} className="icon-button" onClick={this.handleDelete.bind(null, this.props.boardId)}>
+      <FontAwesome name="trash" /></button>
+    const addUser=<button style={{fontSize: "20px"}} className="icon-button" onClick={this.toggleCollabForm.bind(this)}>
+      <FontAwesome name="user" /></button>
     const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
     const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
 
-    return (
-      <div onDoubleClick={this.addSticky} style={this.props.corkboardStyle} onDragOver={this.preventDefault} onDrop={this.handleDrop} className="corkboard-container">
+    const corkboardStyle={
+      width: "100vw",
+      height: "100vh",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      padding: 0,
+      margin: 0,
+      background: `url(${corkboardImage})`,
+      overflow: 'hidden',
+      userSelect: 'none',
+      zIndex: -1
+    }
 
+    return (
+      <div onDoubleClick={this.addSticky} style={corkboardStyle} onDragOver={this.preventDefault} onDrop={this.handleDrop} className="corkboard-container">
         <input
           style={{
             fontSize: "30px",
@@ -121,17 +162,9 @@ class Corkboard extends React.Component {
           type="text" value={this.props.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? saveButton : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
-
-        <button onClick={this.handleDelete.bind(null, this.props.boardId)}>DELETE YOUR BOARD</button>
-
-
-          <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
-            <label>Co-owner's name</label>
-            <input type="text" onChange={this.handleChange} />
-            <input type="submit" />
-          </form>
-
+        {this.props.boardId ? <span style={{display: "block"}}>{saveButton}{deleteButton}{addUser}</span> : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
+        {this.state.showCollabForm ? <Collaborator /> : null}
+        {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
         {showElements}
 
       </div>
@@ -157,8 +190,9 @@ const mapDispatchToProps = (dispatch) => {
     deleteElement: deleteElement,
     updateBoard: updateBoard,
     updateTitle: updateTitle,
-    addOwner: addOwner,
+    setCurrentBoard: setCurrentBoard,
     deleteBoard: deleteBoard
+
   }, dispatch)
 }
 

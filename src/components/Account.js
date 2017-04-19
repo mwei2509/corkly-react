@@ -3,7 +3,10 @@ import AccountInput from './AccountInput'
 import Login from './Login'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link, Route } from 'react-router-dom'
 import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
+
+import AccountInfo from './AccountInfo'
 
 class Account extends React.Component {
   constructor(props) {
@@ -42,31 +45,18 @@ class Account extends React.Component {
     this.props.setCurrentBoard(this.props.token, id)
   }
 
+// onClick={this.handleButtonClick.bind(this, board.id)
   render() {
-    const {account} = this.props
-    const AccountInfo =
-      <div>welcome, {account.username} <button onClick={this.logOut.bind(this)}>Log Out</button>
-      <hr />
-      <h2>Your Boards</h2>
-        {account.boards.map((board, index)=>{
-          return (
-            <div style={{borderRadius: 5, margin: 15, height: 100, background: "#fff", color: "#000"}} key={index} onClick={this.handleButtonClick.bind(this, board.id)}>
-              {board.title}<br />
-            Created at:{board.created_at}<br />
-          Updated at:{board.created_at}
-            </div>)
-        })}
-      </div>
-
     return (
       <div style={{paddingBottom: 50}}>
-        {(!!this.props.token) ? AccountInfo :
+        {(!!this.props.token) ? <Route path="/boards" component={AccountInfo} /> :
           <div>
             <AccountInput register={this.props.register} />
             <Login login={this.props.login} />
            </div>
          }
         <button onClick={this.props.newBoard}>New Board</button>
+        <Link to="/boards"><h1>CLICK ME</h1></Link>
       </div>);
   }
 }
