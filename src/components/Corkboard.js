@@ -3,8 +3,6 @@ import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-
-
 import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard } from '../actions'
 import Collaborator from './Collaborator'
 
@@ -64,10 +62,15 @@ class Corkboard extends React.Component {
     } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
       this.props.setCurrentBoard(this.props.token, corkboardId)
     } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
-        debugger
         this.props.history.push(`/boards/${nextProps.boardId}`)
       }
     }
+
+  componentWillUpdate(nextProps){
+    if (!nextProps.token && this.props.match.params.corkboardId) {
+      this.props.history.push('/boards')
+    }
+  }
 
   componentDidUpdate(prevProps, prevState){
      if(this.props.token && prevProps.token !== this.props.token){
@@ -90,6 +93,7 @@ class Corkboard extends React.Component {
 
   handleDelete(id){
     this.props.deleteBoard(this.props.token, {id: id})
+    this.props.history.push('/boards')
   }
 
   saveBoard(){
