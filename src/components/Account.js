@@ -39,7 +39,7 @@ class Account extends React.Component {
   }
 
   handleButtonClick(id, e){
-    this.props.setCurrentBoard(id)
+    this.props.setCurrentBoard(this.props.token, id)
   }
 
   render() {

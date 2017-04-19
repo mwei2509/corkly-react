@@ -50,16 +50,16 @@ class Corkboard extends React.Component {
 
   createBoard(event){
     event.preventDefault()
-    this.props.createBoard({board: {title: this.props.title, elements_attributes: this.props.boardElements, id: this.props.boardId}})
+    this.props.createBoard(this.props.token, {board: {title: this.props.title, elements_attributes: this.props.boardElements, id: this.props.boardId}})
   }
 
   saveBoard(){
-    this.props.updateBoard({board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
+    this.props.updateBoard(this.props.token, {board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
   }
 
   addCoOwner(id, e){
     e.preventDefault()
-    this.props.addOwner({id: id, username: this.state.coOwnerText})
+    this.props.addOwner(this.props.token, {id: id, username: this.state.coOwnerText})
   }
 
   handleChange(e){
@@ -122,7 +122,8 @@ const mapStateToProps = (state) => {
   return ({
     boardElements: state.board.boardElements,
     boardId: state.board.boardId,
-    title: state.board.title
+    title: state.board.title,
+    token: state.manageLogin.token
   })
 }
 

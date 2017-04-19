@@ -1,16 +1,19 @@
 import axios from 'axios'
 
-const config=
-{
-  headers:
-  {token: window.localStorage.getItem("current user")}
-}
+// const config=
+// {
+//   headers:
+//   {token: window.localStorage.getItem("current user")}
+// }
 
 ///// Board Stuff
-export const setCurrentBoard = (id) => {
+export const setCurrentBoard = (token, id) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:4000/boards/${id}`, config)
+      .get(`http://localhost:4000/boards/${id}`, {
+        headers:
+        {token: token}
+      })
       .then(({data}) => {
         dispatch({
           type: "SET_CURRENT_BOARD",
@@ -28,10 +31,13 @@ export const newBoard = () => {
     type: "NEW_BOARD"
       }
 }
-export const addOwner = (payload) => {
+export const addOwner = (token, payload) => {
   return (dispatch) => {
     axios
-    .post(`http://localhost:4000/boards/${payload.id}`, payload, config)
+    .post(`http://localhost:4000/boards/${payload.id}`, payload, {
+      headers:
+      {token: token}
+    })
     .then(({data}) => {
       debugger
     }).catch((error) => {
@@ -142,13 +148,16 @@ export function setUser(token){
   }
 }
 
-export function createBoard(board){
+export function createBoard(token, board){
   return (dispatch) => {
     axios
-      .post(`http://localhost:4000/boards`, board, config)
+      .post(`http://localhost:4000/boards`, board, {
+        headers:
+        {token: token}
+      })
       .then(({data}) => {
         dispatch({
-          type: "ADD_BOARD",
+          type: "SET_CURRENT_BOARD",
           data: data
         })
       })
@@ -158,10 +167,13 @@ export function createBoard(board){
   }
 }
 
-export const updateBoard = (payload) => {
+export const updateBoard = (token, payload) => {
   return (dispatch) => {
     axios
-    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, config)
+    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
+      headers:
+      {token: token}
+    })
     .then(({data}) => {
       dispatch({
         type: "SET_CURRENT_BOARD",

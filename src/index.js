@@ -11,8 +11,12 @@ import rootReducer from './reducers'
 
 
 //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-
-let store = createStore(rootReducer, applyMiddleware(thunk))
+let initialState={
+  account: {boards:[], username: '', email: '', id: ''},
+  board: {boardElements: [], boardId: null, created_at: null, updated_at: null, title: ''},
+  manageLogin: {token: window.localStorage.getItem("current user")}
+}
+let store = createStore(rootReducer, initialState, applyMiddleware(thunk))
 
 
 ReactDOM.render(

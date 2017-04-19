@@ -1,4 +1,4 @@
-export const manageLogin = (state={token: window.localStorage.getItem("current user")}, action) => {
+export const manageLogin = (state={token: ''}, action) => {
   switch (action.type) {
     case "LOGIN":
       return {token: action.payload}
