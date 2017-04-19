@@ -34,7 +34,7 @@ class Corkboard extends React.Component {
       y: e.clientY,
       width: "150px",
       height: "100px",
-      bgcolor: "#fff",
+      bgcolor: this.props.boardAttributes.currentColor,
       content: '',
       EID: this.props.boardElements.length
     })
@@ -83,7 +83,8 @@ class Corkboard extends React.Component {
       <FontAwesome name="floppy-o" /></button></span>
     const createButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
       <FontAwesome name="floppy-o" /></button></span>
-    const enterTitle=<span style={{display: "block"}}>Pleae enter a title to save this board</span>
+    const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
+    const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
 
     return (
       <div onDoubleClick={this.addSticky} style={this.props.corkboardStyle} className="corkboard-container">
@@ -103,7 +104,7 @@ class Corkboard extends React.Component {
           type="text" value={this.props.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? saveButton : (this.props.title ? createButton: enterTitle )}
+        {this.props.boardId ? saveButton : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
 
 
           <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
@@ -123,7 +124,8 @@ const mapStateToProps = (state) => {
     boardElements: state.board.boardElements,
     boardId: state.board.boardId,
     title: state.board.title,
-    token: state.manageLogin.token
+    token: state.manageLogin.token,
+    boardAttributes: state.boardAttributes
   })
 }
 

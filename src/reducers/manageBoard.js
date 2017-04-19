@@ -1,7 +1,7 @@
-export const manageBoard = (state={boardElements: []}, action) => {
+export const manageBoard = (state={currentColor: "#fff"}, action) => {
   switch (action.type) {
-    // case "SET_CURRENT_BOARD":
-    //   return Object.assign({}, state, {currentBoard: action.data})
+    case "CHANGE_BOARD_ATTRIBUTES":
+      return Object.assign({}, state, action.payload)
     default:
       return state
   }

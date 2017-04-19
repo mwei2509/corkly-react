@@ -20,8 +20,9 @@ class Account extends React.Component {
     }
   }
 
-  componentDidUpdate(){
-    if(this.props.token){
+  componentDidUpdate(prevProps, prevState){
+    debugger
+    if(this.props.token && prevProps.token !== this.props.token){
       this.props.setUser(this.props.token)
     }
   }

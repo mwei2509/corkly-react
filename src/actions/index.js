@@ -46,6 +46,15 @@ export const addOwner = (token, payload) => {
   }
 }
 
+////Board attributes like current color
+
+export const changeBoardAttributes = (attributes) => {
+  return{
+    type: "CHANGE_BOARD_ATTRIBUTES",
+    payload: attributes
+  }
+}
+
 /////Board Elements
 export const addBoardElement = (element) => {
   return {
@@ -157,7 +166,7 @@ export function createBoard(token, board){
       })
       .then(({data}) => {
         dispatch({
-          type: "SET_CURRENT_BOARD",
+          type: "ADD_BOARD",
           data: data
         })
       })

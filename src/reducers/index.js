@@ -7,8 +7,8 @@ import { combineReducers } from 'redux'
 const rootReducer = combineReducers({
   account: manageAccount,
   board: manageElements,
-  currentBoard: manageBoard,
-  manageLogin: manageLogin
+  manageLogin: manageLogin,
+  boardAttributes: manageBoard
 })
 
 export default rootReducer
