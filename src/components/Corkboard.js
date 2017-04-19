@@ -6,7 +6,8 @@ import { connect } from 'react-redux'
 import {
   Link
 } from 'react-router-dom'
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle } from '../actions'
+import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addOwner, updateTitle } from '../actions'
+
 import Account from './Account'
 import FontAwesome from 'react-fontawesome';
 
@@ -18,9 +19,12 @@ class Corkboard extends React.Component {
     this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
+    this.addCoOwner = this.addCoOwner.bind(this)
+    this.handleChange = this.handleChange.bind(this)
 
     this.state={
-      boardTitle: ''
+      boardTitle: '',
+      coOwnerText: ''
     }
   }
 
@@ -54,6 +58,17 @@ class Corkboard extends React.Component {
 
   saveBoard(){
     this.props.updateBoard({board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
+  }
+
+  addCoOwner(id, e){
+    e.preventDefault()
+    this.props.addOwner({id: id, username: this.state.coOwnerText})
+  }
+
+  handleChange(e){
+    this.setState({
+      coOwnerText: e.target.value
+    })
   }
 
   render() {
@@ -116,6 +131,13 @@ class Corkboard extends React.Component {
           onChange={this.titleChange.bind(this)}
           />
         {this.props.boardId ? saveButton : createButton}
+        
+        <form onSubmit={this.addCoOwner.bind(null, this.props.boardId)} >
+          <label>Co-owner's name</label>
+          <input type="text" onChange={this.handleChange} />
+          <input type="submit" />
+        </form>
+
         {showElements}
       </div>
     );
@@ -137,7 +159,8 @@ const mapDispatchToProps = (dispatch) => {
     createBoard: createBoard,
     deleteElement: deleteElement,
     updateBoard: updateBoard,
-    updateTitle: updateTitle
+    updateTitle: updateTitle,
+    addOwner: addOwner
   }, dispatch)
 }
 

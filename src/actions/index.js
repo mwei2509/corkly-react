@@ -26,6 +26,19 @@ export const setCurrentBoard = (id) => {
 export const newBoard = () => {
   return{
     type: "NEW_BOARD"
+      }
+}
+export const addOwner = (payload) => {
+  return (dispatch) => {
+    axios
+    .post(`http://localhost:4000/boards/${payload.id}`, payload, config)
+    .then(({data}) => {
+      this
+      debugger
+    }).catch((error) => {
+      this
+      debugger
+    })
   }
 }
 
