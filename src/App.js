@@ -109,7 +109,7 @@ class App extends Component {
     }
 
     const colorPicker=(
-      <div style={{position: "absolute", left: 50, top: 50}}>
+      <div style={{position: "absolute", top: 50, left: 50}}>
         <CirclePicker
           width={100}
           circleSize={15}
@@ -119,13 +119,6 @@ class App extends Component {
       </div>
     )
 
-    // <div className="App">
-    //   <Account />
-    //   <Corkboard />
-    // </div>
-    // <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
-    // const corkboard = <Corkboard elements={this.state.elements}/>
-    // const test = function(){return <div>hello</div>}
     return (
         <div className="App">
           {this.state.colorOn ? colorPicker : null}
@@ -151,6 +144,7 @@ class App extends Component {
             <div id="sidebar">
               <Account />
             </div>
+
           </div>
           <div id="corkboard-container">
             <Corkboard corkboardStyle={corkboardStyle}/>
