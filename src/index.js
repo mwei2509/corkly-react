@@ -31,7 +31,8 @@ ReactDOM.render(
     <Router history={history}>
       <div>
         <Route exact path="/" component={App}/>
-        <Route path="/boards" component={App}/>
+        <Route exact path="/boards" component={App}/>
+        <Route path="/boards/:boardId" component={App}/>
       </div>
     </Router>
   </Provider>,
