@@ -3,7 +3,7 @@ export const manageAccount = (state={boards:[], username: '', email: '', id: ''}
     case "LOAD_USER":
       return Object.assign({}, state, action.data)
     case "SET_CURRENT_BOARD":
-      return Object.assign({}, state, {updated_at: action.data.updated_at})
+      return Object.assign({}, state, {update_me: action.data.update_me})
     case "CLEAR_USER":
       return {boards:[], username: '', email: '', id: ''}
     case "ADD_BOARD":

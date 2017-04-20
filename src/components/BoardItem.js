@@ -37,6 +37,7 @@ class BoardItem extends React.Component{
         className="board-list-items"
         onMouseEnter={this.hoverOn.bind(this)}
         onMouseLeave={this.hoverOff.bind(this)}>
+        <span style={{float: "right", fontSize: 10, fontWeight: "bold", color: "#fff"}}>{board.public ? "public":"private"}</span>
         <h4 style={{margin: 0, padding: 0}}>{board.title}</h4>
         <p style={{margin: 0, padding: 0, fontSize: 10}}>Created: {board.created_at}<br />
         Updated: {board.updated_at}</p>

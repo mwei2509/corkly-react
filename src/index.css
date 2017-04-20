@@ -16,6 +16,7 @@ body {
 a{
   color: #000;
   text-decoration: none;
+  cursor: default;
 }
 .icon-button {
   padding: 5px;
@@ -25,18 +26,33 @@ a{
   border: none;
 }
 
+.icon-button:hover{
+  color: #fff !important;
+  transition: all .3s ease 0s;
+}
+
 .operation-buttons{
   display: block;
   margin-top: 5px;
+  transition: all .3s ease 0s;
+}
+
+.operation-buttons:hover{
+  color: #fff !important;
+}
+
+.highlight-button:hover{
+  border: 1px solid #fff !important;
+  transition: all .3s ease 0s;
 }
 
 #sidebar-wrapper{
-  transition: all .4s ease 0s;
+  transition: all .3s ease 0s;
   height: 100vh;
   overflow: hidden;
 }
 
-#color-picker, .board-list-items{transition: all .4s ease 0s;}
+#color-picker, .board-list-items{transition: all .3s ease 0s;}
 
 .hide{
   display: none !important;

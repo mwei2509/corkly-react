@@ -90,6 +90,10 @@ class App extends Component {
           width={100}
           circleSize={15}
           disableAlpha={true}
+          colors={["#f44336", "#e91e63", "#9c27b0",
+            "#03a9f4", "#009688", "#4caf50",
+            "#8bc34a", "#cddc39", "#ffeb3b",
+            "#ffc107", "#ff9800", "#ff5722"]}
           onChange={ this.pickColor.bind(this) }
          />
       </div>
@@ -112,7 +116,7 @@ class App extends Component {
               <span
                 className="operation-buttons"
                 onClick={this.toggleColorPicker.bind(this)} >
-                <button style={{background: this.props.boardAttributes.currentColor,
+                <button className="highlight-button" style={{background: this.props.boardAttributes.currentColor,
                   width: 14, height: 14, borderRadius: 7,
                   border: "1px solid #000", outline: 0}}/>
               </span>
@@ -121,9 +125,6 @@ class App extends Component {
               </span>
               <span className="operation-buttons">
                 <FontAwesome name="users" />
-              </span>
-              <span className="operation-buttons">
-                <FontAwesome name="address-book" />
               </span>
             </div>
             <div id="sidebar">
