@@ -21,7 +21,7 @@ const rMiddleware = routerMiddleware(history)
 let initialState={
   boardAttributes: {sidebarActive: false, showCollabForm: false, currentColor: "#ff0000"},
   account: {boards:[], username: '', email: '', id: ''},
-  board: {boardElements: [], accounts: [], boardId: null, created_at: null, updated_at: null, title: ''},
+  board: {boardElements: [], accounts: [], public: false, slug: '', boardId: null, created_at: null, updated_at: null, title: ''},
   manageLogin: {token: window.localStorage.getItem("current user")}
 }
 let store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk, rMiddleware)))
@@ -32,8 +32,8 @@ ReactDOM.render(
     <Router history={history}>
       <div>
         <Route exact path="/" component={App}/>
-        <Route exact path="/boards" component={App}/>
-        <Route path="/boards/:boardId" component={App}/>
+        <Route exact path="/:username" component={App}/>
+        <Route path="/:username/b/:boardId" component={App}/>
       </div>
     </Router>
   </Provider>,

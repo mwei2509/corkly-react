@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.1",
+    "draft-js": "^0.10.0",
     "react": "^15.3.2",
     "react-alert": "^1.0.14",
     "react-color": "^2.11.4",

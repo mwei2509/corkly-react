@@ -52,15 +52,16 @@ class Account extends React.Component {
 
 // onClick={this.handleButtonClick.bind(this, board.id)
   render() {
+    let usernameUrl = `/${this.props.account.username}`
     return (
       <div style={{paddingBottom: 50}}>
-        {(!!this.props.token) ? <Route path="/boards" component={AccountInfo} /> :
+        {(!!this.props.token) ? <Route path="/:username" component={AccountInfo} /> :
           <div>
             <AccountInput register={this.props.register} />
             <Login login={this.props.login} />
            </div>
          }
-        <Link to="/boards"><h1>CLICK ME</h1></Link>
+        <Link to={usernameUrl}><h1>CLICK ME</h1></Link>
       </div>);
   }
 }

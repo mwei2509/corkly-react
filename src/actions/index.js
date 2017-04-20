@@ -69,7 +69,14 @@ export const setCurrentBoard = (token, id) => {
         })
       })
       .catch((errors)=>{
-        console.log(errors)
+        dispatch ({
+          type: "ADD_ERROR",
+          payload: "Unable to access"
+        })
+        setTimeout(()=>{dispatch({
+          type: "ADD_ERROR",
+          payload: ""
+        })}, 2000)
       })
   }
 }
@@ -91,6 +98,24 @@ export function addCollaborator(token, payload){
   return (dispatch) => {
     axios
     .post(`http://localhost:4000/boards/${payload.id}`, payload, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
+    }).catch((errors) => {
+      debugger
+    })
+  }
+}
+
+export function publish(token, {board}){
+  return (dispatch) => {
+    axios
+    .patch(`http://localhost:4000/boards/${board.id}/publish`, board, {
       headers:
       {token: token}
     })
