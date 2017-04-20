@@ -17,7 +17,6 @@ class App extends Component {
     super()
 
     this.state={
-      sidebarActive: false,
       colorOn: false
     }
 
@@ -44,17 +43,12 @@ class App extends Component {
       })
     }
 
-  closeSidebar(){
-    this.setState({
-      sidebarActive: false
-    })
-  }
-
-  toggleSidebar(){
-    this.setState({
-      sidebarActive: !this.state.sidebarActive
-    })
-  }
+    toggleSidebar(){
+      console.log(this.props.boardAttributes.sidebarActive)
+      this.props.changeBoardAttributes({
+        sidebarActive: !this.props.boardAttributes.sidebarActive
+      })
+    }
 
   render() {
     const sidebarActive={
@@ -87,7 +81,8 @@ class App extends Component {
 
 
     const colorPicker=(
-      <div style={{position: "absolute", top: 50, left: 50}}>
+      <div id="color-picker"
+        style={{position: "absolute", top: 50, left: this.props.boardAttributes.sidebarActive? 300 : 50}}>
         <CirclePicker
           width={100}
           circleSize={15}
@@ -100,7 +95,7 @@ class App extends Component {
     return (
         <div className="App">
           {this.state.colorOn ? colorPicker : null}
-          <div id="sidebar-wrapper" style={this.state.sidebarActive ? sidebarActive : sidebarInactive}>
+          <div id="sidebar-wrapper" style={this.props.boardAttributes.sidebarActive ? sidebarActive : sidebarInactive}>
             <div style={{width: 40, textAlign:"center", padding: 0, margin: 0, float: "right", color: "#000"}} >
               <span className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />

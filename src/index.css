@@ -11,6 +11,10 @@ body {
   font-family: "Open Sans";
 }
 
+a{
+  color: #000;
+  text-decoration: none;
+}
 .icon-button {
   padding: 5px;
   margin: 0;
@@ -30,6 +34,8 @@ body {
   overflow: hidden;
 }
 
+#color-picker{transition: all .4s ease 0s;}
+
 .hide{
   display: none !important;
 }
@@ -42,14 +48,24 @@ body {
   height: 100vh;
   overflow-y: auto;
 }
-
-::-webkit-input-placeholder {
-  	color: #fff;
-  	opacity: 0.7;
-    font-style: italic;
-}
-:-moz-placeholder {
-	color: #fff;
-	opacity: 0.7;
+.title-text::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 0.7;
   font-style: italic;
+}
+.title-text:-moz-placeholder {
+color: #fff;
+opacity: 0.7;
+font-style: italic;
+}
+
+.collaborator-input::-webkit-input-placeholder {
+  color: #000;
+  opacity: 0.7;
+  font-style: italic;
+}
+.collaborator-input:-moz-placeholder {
+color: #000;
+opacity: 0.7;
+font-style: italic;
 }
