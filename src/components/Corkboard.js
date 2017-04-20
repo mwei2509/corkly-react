@@ -2,6 +2,7 @@ import React from 'react';
 import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Image from 'react-image-file'
 
 import { changeBoardAttributes, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard } from '../actions'
 import Collaborator from './Collaborator'
@@ -18,22 +19,41 @@ class Corkboard extends React.Component {
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleDrop = this.handleDrop.bind(this)
+    this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
-      boardTitle: ''
+      boardTitle: '',
+      imageBlob: null
     }
   }
 
+
+//   preventDefault(event){
+//     event.preventDefault()
+//   }
+
+//   handleDrop(event){
+//     event.preventDefault()
+//     let file = event.dataTransfer.files[0]
+//     let imageBlob = window.URL.createObjectURL(file)
+//     this.setState({
+//       imageBlob: imageBlob
+//     })
+//   }
+
   addSticky(e){
-    this.props.addBoardElement({
-      x: e.clientX,
-      y: e.clientY,
-      width: "150px",
-      height: "100px",
-      bgcolor: this.props.boardAttributes.currentColor,
-      content: '',
-      EID: this.props.boardElements.length
-    })
+    if(!(e.target.type === "textarea")){
+      this.props.addBoardElement({
+        x: e.clientX,
+        y: e.clientY,
+        width: "150px",
+        height: "100px",
+        bgcolor: this.props.boardAttributes.currentColor,
+        content: '',
+        EID: this.props.boardElements.length
+      })
+    }
   }
 
   componentWillMount(){
@@ -89,7 +109,6 @@ class Corkboard extends React.Component {
   }
 
   render() {
-
     let showElements = this.props.boardElements.map((element) => {
         return(<CorkboardElement
             key={element.EID}
@@ -126,7 +145,7 @@ class Corkboard extends React.Component {
     }
 
     return (
-      <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
+      <div onDoubleClick={this.addSticky} style={corkboardStyle} onDragOver={this.preventDefault} onDrop={this.handleDrop} className="corkboard-container">
         <input
           style={{
             fontSize: "30px",
@@ -145,8 +164,9 @@ class Corkboard extends React.Component {
           onChange={this.titleChange.bind(this)}
           />
         {this.props.boardId ? <span style={{display: "block"}}>{saveButton}{deleteButton}{addUser}</span> : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
-        {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
 
+        {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
+        {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
         {showElements}
 
       </div>
@@ -177,7 +197,6 @@ const mapDispatchToProps = (dispatch) => {
     deleteBoard: deleteBoard,
     newBoard: newBoard,
     changeBoardAttributes: changeBoardAttributes
-
   }, dispatch)
 }
 
