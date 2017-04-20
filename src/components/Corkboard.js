@@ -67,16 +67,18 @@ class Corkboard extends React.Component {
     let {corkboardId} = nextProps.match.params
     if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
       this.props.newBoard()
+    } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
+        this.props.history.push(`/${this.props.account.username}/b/new`)
     } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
       this.props.setCurrentBoard(this.props.token, corkboardId)
     } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
-        this.props.history.push(`/boards/${nextProps.boardId}`)
+        this.props.history.push(`/${this.props.account.username}/b/${nextProps.boardId}`)
       }
     }
 
   componentWillUpdate(nextProps){
     if (!nextProps.token && this.props.match.params.corkboardId) {
-      this.props.history.push('/boards')
+      this.props.history.push('/${this.props.account.username}')
     }
   }
 
@@ -105,7 +107,7 @@ class Corkboard extends React.Component {
 
   handleDelete(id){
     this.props.deleteBoard(this.props.token, {id: id})
-    this.props.history.push('/boards')
+    this.props.history.push('/#{this.props.account.username}')
   }
 
   saveBoard(){
@@ -156,7 +158,7 @@ class Corkboard extends React.Component {
     }
 
     return (
-      <div onDoubleClick={this.addSticky} style={corkboardStyle} onDragOver={this.preventDefault} onDrop={this.handleDrop} className="corkboard-container">
+      <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
         <input
           style={{
             fontSize: "30px",

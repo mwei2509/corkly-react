@@ -69,7 +69,14 @@ export const setCurrentBoard = (token, id) => {
         })
       })
       .catch((errors)=>{
-        console.log(errors)
+        dispatch ({
+          type: "ADD_ERROR",
+          payload: "Unable to access"
+        })
+        setTimeout(()=>{dispatch({
+          type: "ADD_ERROR",
+          payload: ""
+        })}, 2000)
       })
   }
 }
