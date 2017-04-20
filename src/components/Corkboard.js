@@ -55,15 +55,17 @@ class Corkboard extends React.Component {
   }
 
   addSticky(e){
-    this.props.addBoardElement({
-      x: e.clientX,
-      y: e.clientY,
-      width: "150px",
-      height: "100px",
-      bgcolor: this.props.boardAttributes.currentColor,
-      content: '',
-      EID: this.props.boardElements.length
-    })
+    if(!(e.target.type === "textarea")){
+      this.props.addBoardElement({
+        x: e.clientX,
+        y: e.clientY,
+        width: "150px",
+        height: "100px",
+        bgcolor: this.props.boardAttributes.currentColor,
+        content: '',
+        EID: this.props.boardElements.length
+      })
+    }
   }
 
   componentWillMount(){
@@ -202,7 +204,6 @@ const mapDispatchToProps = (dispatch) => {
     setCurrentBoard: setCurrentBoard,
     deleteBoard: deleteBoard,
     newBoard: newBoard
-
   }, dispatch)
 }
 
