@@ -36,6 +36,14 @@ class CorkboardElement extends React.Component {
     })
   }
 
+  onFocus(e){
+    this.props.updateElement({
+      element:{
+        EID: this.props.element.EID,
+        zIndex: Math.max.apply(Math, this.props.corkboardElements.map((el) => el.zIndex)) + 1
+      }
+    })
+  }
 
   resizeSticky(ref, event){
     let textarea = this.refs[ref]
@@ -130,6 +138,7 @@ class CorkboardElement extends React.Component {
           </div>
           <textarea
             autoFocus
+            onFocus={this.onFocus.bind(this)}
             ref={`textarea-${this.props.element.EID}`}
             style={inputStyle}
             value={this.props.element.content}
