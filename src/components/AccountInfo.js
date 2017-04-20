@@ -50,7 +50,7 @@ class AccountInfo extends React.Component {
       <hr />
       <h2 style={{fontFamily: "Lobster", border: 0, margin: 0}}>Your Boards</h2>
         {account.boards.map((board, index)=>{
-          let boardUrl = `/boards/${board.id}`
+          let boardUrl = `/${this.props.account.username}/b/${board.id}`
           return (
             <Link to={boardUrl}>
               <BoardItem key={index} board={board} />

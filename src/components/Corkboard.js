@@ -19,8 +19,8 @@ class Corkboard extends React.Component {
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleDrop = this.handleDrop.bind(this)
-    this.preventDefault = this.preventDefault.bind(this)
+    // this.handleDrop = this.handleDrop.bind(this)
+    // this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
       boardTitle: '',
@@ -67,16 +67,18 @@ class Corkboard extends React.Component {
     let {corkboardId} = nextProps.match.params
     if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
       this.props.newBoard()
+    } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
+        this.props.history.push(`/${this.props.account.username}/b/new`)
     } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
       this.props.setCurrentBoard(this.props.token, corkboardId)
     } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
-        this.props.history.push(`/boards/${nextProps.boardId}`)
+        this.props.history.push(`/${this.props.account.username}/b/${nextProps.boardId}`)
       }
     }
 
   componentWillUpdate(nextProps){
     if (!nextProps.token && this.props.match.params.corkboardId) {
-      this.props.history.push('/boards')
+      this.props.history.push('/${this.props.account.username}')
     }
   }
 
@@ -101,7 +103,7 @@ class Corkboard extends React.Component {
 
   handleDelete(id){
     this.props.deleteBoard(this.props.token, {id: id})
-    this.props.history.push('/boards')
+    this.props.history.push('/#{this.props.account.username}')
   }
 
   saveBoard(){
@@ -145,7 +147,7 @@ class Corkboard extends React.Component {
     }
 
     return (
-      <div onDoubleClick={this.addSticky} style={corkboardStyle} onDragOver={this.preventDefault} onDrop={this.handleDrop} className="corkboard-container">
+      <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
         <input
           style={{
             fontSize: "30px",
@@ -176,6 +178,7 @@ class Corkboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
+    account: state.account,
     boardElements: state.board.boardElements,
     boardAccounts: state.board.accounts,
     boardId: state.board.boardId,
