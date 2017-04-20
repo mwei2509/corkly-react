@@ -81,6 +81,32 @@ export const setCurrentBoard = (token, id) => {
   }
 }
 
+export const setPublicBoard = (token, slug) => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:4000/boards/slug/${slug}`, {
+        headers:
+        {token: token}
+      })
+      .then(({data}) => {
+        dispatch({
+          type: "SET_CURRENT_BOARD",
+          data: data
+        })
+      })
+      .catch((errors)=>{
+        dispatch ({
+          type: "ADD_ERROR",
+          payload: "Unable to access"
+        })
+        setTimeout(()=>{dispatch({
+          type: "ADD_ERROR",
+          payload: ""
+        })}, 2000)
+      })
+  }
+}
+
 export const addError = (error) => {
   return{
     type: "ADD_ERROR",

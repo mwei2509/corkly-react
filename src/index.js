@@ -33,7 +33,8 @@ ReactDOM.render(
       <div>
         <Route exact path="/" component={App}/>
         <Route exact path="/:username" component={App}/>
-        <Route path="/:username/b/:boardId" component={App}/>
+        <Route exact path="/:username/b/:boardId" component={App}/>
+        <Route exact path="/:username/:slug" component={App}/>
       </div>
     </Router>
   </Provider>,
