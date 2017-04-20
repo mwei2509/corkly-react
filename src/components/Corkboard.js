@@ -43,7 +43,7 @@ class Corkboard extends React.Component {
 //   }
 
   addSticky(e){
-    if(!(e.target.type === "textarea")){
+    if(e.target.className === "corkboard-container"){
       this.props.addBoardElement({
         x: e.clientX,
         y: e.clientY,
@@ -51,7 +51,8 @@ class Corkboard extends React.Component {
         height: "100px",
         bgcolor: this.props.boardAttributes.currentColor,
         content: '',
-        EID: this.props.boardElements.length
+        EID: this.props.boardElements.length,
+        zIndex: this.props.boardElements.length
       })
     }
   }
@@ -98,7 +99,10 @@ class Corkboard extends React.Component {
 
   createBoard(event){
     event.preventDefault()
-    this.props.createBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, elements_attributes: this.props.boardElements, id: this.props.boardId}})
+    let boardElements = this.props.boardElements
+    boardElements.sort((elA, elB) => elA.zIndex - elB.zIndex)
+    let zSort = boardElements.map((el, index) => Object.assign({}, el, {zIndex: index}))
+    this.props.createBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, elements_attributes: zSort, id: this.props.boardId}})
   }
 
   publish(event){
@@ -111,7 +115,10 @@ class Corkboard extends React.Component {
   }
 
   saveBoard(){
-    this.props.updateBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: this.props.boardElements}})
+    let boardElements = this.props.boardElements
+    boardElements.sort((elA, elB) => elA.zIndex - elB.zIndex)
+    let zSort = boardElements.map((el, index) => Object.assign({}, el, {zIndex: index}))
+    this.props.updateBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: zSort}})
   }
 
   render() {
@@ -121,7 +128,8 @@ class Corkboard extends React.Component {
             element={element}
             resizeSticky={this.resizeSticky}
             deleteSticky={this.props.deleteElement.bind(this, element.EID)}
-            contentChange={this.contentChange} />)
+            contentChange={this.contentChange}
+            zIndex={element.zIndex ? element.zIndex : 1}/>)
     })
 
     const saveButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>

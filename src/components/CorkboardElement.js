@@ -22,10 +22,20 @@ class CorkboardElement extends React.Component {
       element: {
         EID: this.props.element.EID,
         x: div.getBoundingClientRect().left,
-        y: div.getBoundingClientRect().top
+        y: div.getBoundingClientRect().top,
       }
     })
   }
+
+  onStart(){
+    this.props.updateElement({
+      element:{
+        EID: this.props.element.EID,
+        zIndex: Math.max.apply(Math, this.props.corkboardElements.map((el) => el.zIndex)) + 1
+      }
+    })
+  }
+
 
   resizeSticky(ref, event){
     let textarea = this.refs[ref]
@@ -56,7 +66,6 @@ class CorkboardElement extends React.Component {
       colorOn: false
     })
   }
-
   render(){
     const colorPicker=(
       <div style={{position: "absolute", left: 50, top: -50}}>
@@ -75,7 +84,7 @@ class CorkboardElement extends React.Component {
       background: this.props.element.bgcolor,
       boxShadow: "0px 2px 2px rgba(0,0,0,0.4)",
       borderRadius: 5,
-      zIndex: 10
+      zIndex: this.props.zIndex
     }
 
     let inputStyle={
@@ -101,7 +110,8 @@ class CorkboardElement extends React.Component {
         position={{x: this.props.element.x, y: this.props.element.y}}
         grid={null}
         zIndex={1}
-        onStop={this.onStop.bind(this)}>
+        onStop={this.onStop.bind(this)}
+        onStart={this.onStart.bind(this)}>
         <div ref={this.props.element.EID} style={stickyStyle}>
           <div className="handle" style={{minHeight: 20, width: "100%"}}>
             <button className="icon-button" onClick={this.props.deleteSticky} style={{float: "left"}}>
@@ -137,6 +147,12 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-const ConnectedCorkboardElement = connect(null, mapDispatchToProps)(CorkboardElement)
+const mapStateToProps = (state) => {
+  return ({
+    corkboardElements: state.board.boardElements
+  })
+}
+
+const ConnectedCorkboardElement = connect(mapStateToProps, mapDispatchToProps)(CorkboardElement)
 
 export default ConnectedCorkboardElement
