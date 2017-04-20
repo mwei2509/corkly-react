@@ -82,7 +82,10 @@ class App extends Component {
 
     const colorPicker=(
       <div id="color-picker"
-        style={{position: "absolute", top: 50, left: this.props.boardAttributes.sidebarActive? 300 : 50}}>
+        style={{position: "absolute",
+          top: 50, borderLeft: "2px solid #fff",
+          paddingLeft: 10,
+          left: this.props.boardAttributes.sidebarActive? 300 : 50}}>
         <CirclePicker
           width={100}
           circleSize={15}
@@ -102,19 +105,25 @@ class App extends Component {
               </span>
               <Link to="/boards/new" >
                 <span className="operation-buttons">
-                  <FontAwesome name="plus" />
+                  <FontAwesome name="file" />
                 </span>
               </Link>
-              <span className="operation-buttons" >
-                <FontAwesome name="floppy-o" />
-              </span>
               <span
-                className="operation-buttons" style={{color: this.props.boardAttributes.currentColor}}
+                className="operation-buttons"
                 onClick={this.toggleColorPicker.bind(this)} >
-                <FontAwesome name="circle" />
+                <button style={{background: this.props.boardAttributes.currentColor,
+                  width: 14, height: 14, borderRadius: 7,
+                  border: "1px solid #000", outline: 0}}/>
               </span>
-              {this.props.boardId ? "save" : "create"}<br />
-              {this.props.token ? "logged in" : "not logged in"}
+              <span className="operation-buttons">
+                <FontAwesome name="font" />
+              </span>
+              <span className="operation-buttons">
+                <FontAwesome name="users" />
+              </span>
+              <span className="operation-buttons">
+                <FontAwesome name="address-book" />
+              </span>
             </div>
             <div id="sidebar">
               <Account />
