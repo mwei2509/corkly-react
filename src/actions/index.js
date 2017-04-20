@@ -74,6 +74,13 @@ export const setCurrentBoard = (token, id) => {
   }
 }
 
+export const addError = (error) => {
+  return{
+    type: "ADD_ERROR",
+    payload: error
+  }
+}
+
 export const newBoard = () => {
   return{
     type: "NEW_BOARD"

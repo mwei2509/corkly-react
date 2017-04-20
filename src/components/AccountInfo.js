@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import BoardItem from './BoardItem'
+
+import FontAwesome from 'react-fontawesome';
 
 import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
 
@@ -9,6 +12,7 @@ import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser}
 class AccountInfo extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
   componentWillMount(){
@@ -29,24 +33,27 @@ class AccountInfo extends React.Component {
     this.props.newBoard()
   }
 
+
   render() {
     let account = this.props.account
     if (account){
       return (
-      <div>welcome, {account.username} <button onClick={this.logOut.bind(this)}>Log Out</button>
+
+      <div>
+        <div style={{position: "relative", paddingLeft: 10, paddingRight: 10, textAlign: "left"}}>
+          <span style={{width: "100%", fontSize: 20}}>welcome, {account.username}
+            <button style={{float: "right", fontSize: 20, background: "none", color: "#fff", border: 0, outline: 0}} onClick={this.logOut.bind(this)}>
+              <FontAwesome name="power-off"/>
+            </button>
+          </span>
+        </div>
       <hr />
-      <h2>Your Boards</h2>
+      <h2 style={{fontFamily: "Lobster", border: 0, margin: 0}}>Your Boards</h2>
         {account.boards.map((board, index)=>{
           let boardUrl = `/boards/${board.id}`
           return (
             <Link to={boardUrl}>
-              <div style=
-                {{borderRadius: 5, margin: 15, height: 100, background: board.currentcolor, color: "#000"}}
-                key={index}>
-                {board.title}<br />
-                Created at:{board.created_at}<br />
-                Updated at:{board.updated_at}
-              </div>
+              <BoardItem key={index} board={board} />
             </Link>
           )
         })}
@@ -60,7 +67,8 @@ class AccountInfo extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     token: state.manageLogin.token,
-    account: state.account
+    account: state.account,
+    boardId: state.board.boardId
   })
 }
 

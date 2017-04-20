@@ -59,7 +59,6 @@ class Account extends React.Component {
             <Login login={this.props.login} />
            </div>
          }
-        <button onClick={this.props.newBoard}>New Board</button>
         <Link to="/boards"><h1>CLICK ME</h1></Link>
       </div>);
   }
@@ -70,7 +69,8 @@ class Account extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     token: state.manageLogin.token,
-    account: state.account
+    account: state.account,
+    boardAttributes: state.boardAttributes
   })
 }
 

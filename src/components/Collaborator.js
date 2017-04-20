@@ -1,7 +1,7 @@
 import React from 'react'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeBoardAttributes, addCollaborator, findCollaborator } from '../actions'
+import { changeBoardAttributes, addCollaborator, findCollaborator, addError } from '../actions'
 import axios from 'axios'
 import FontAwesome from 'react-fontawesome';
 
@@ -37,6 +37,9 @@ class Collaborator extends React.Component{
         collaboratorName: data.data.username,
         collaboratorId: data.data.id
       })
+    }).catch(()=>{
+      this.props.addError("Couldn't find user")
+      setTimeout(()=>{this.props.addError("")}, 2000)
     })
   }
 
@@ -104,6 +107,7 @@ class Collaborator extends React.Component{
           <FontAwesome name="close" /></button>
         <h2 style={style.h2}>Add a Collaborator</h2>
         <form style={style.form} onSubmit={this.handleSubmit.bind(this)}>
+          {this.props.boardAttributes.error ? <div>{this.props.boardAttributes.error}</div>: null}
           {!!this.state.collaboratorName ? verifycollab : findcollab}
         </form>
       </div>)
@@ -122,7 +126,8 @@ const mapDispatchToProps=(dispatch)=>{
   return bindActionCreators({
     addCollaborator: addCollaborator,
     findCollaborator: findCollaborator,
-    changeBoardAttributes: changeBoardAttributes
+    changeBoardAttributes: changeBoardAttributes,
+    addError: addError
   }, dispatch)
 }
 
