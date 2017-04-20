@@ -7,7 +7,8 @@ export const manageAccount = (state={boards:[], username: '', email: '', id: ''}
     case "CLEAR_USER":
       return {boards:[], username: '', email: '', id: ''}
     case "ADD_BOARD":
-      return {...state, boards: state.boards.concat(action.data)}
+      // return {...state, boards: state.boards.concat(action.data)}
+      return Object.assign({}, state, {boards: state.boards.concat(action.data), updated_at: action.data.updated_at})
     case "DELETE_BOARD":
       return {...state, boards: state.boards.filter(board => board.id !== action.payload)}
     default:

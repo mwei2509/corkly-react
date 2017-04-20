@@ -105,6 +105,24 @@ export function addCollaborator(token, payload){
   }
 }
 
+export function publish(token, {board}){
+  return (dispatch) => {
+    axios
+    .patch(`http://localhost:4000/boards/${board.id}/publish`, board, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
+    }).catch((errors) => {
+      debugger
+    })
+  }
+}
+
 ////Board attributes like current color
 
 export const changeBoardAttributes = (attributes) => {
