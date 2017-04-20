@@ -4,7 +4,7 @@ import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
 
-import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard } from '../actions'
+import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
 import Collaborator from './Collaborator'
 
 import Account from './Account'
@@ -59,15 +59,19 @@ class Corkboard extends React.Component {
   }
 
   componentWillMount(){
-    let {corkboardId} = this.props.match.params
-    if (corkboardId){
+    let {corkboardId, slug} = this.props.match.params
+    if (slug){
+      this.props.setPublicBoard(this.props.token, slug)
+    } else if (corkboardId){
       this.props.setCurrentBoard(this.props.token, corkboardId)
     }
   }
 
   componentWillReceiveProps(nextProps){
-    let {corkboardId} = nextProps.match.params
-    if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
+    let {corkboardId, slug} = nextProps.match.params
+    if (slug){
+      
+    } else if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
       this.props.newBoard()
     } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
         this.props.history.push(`/${this.props.account.username}/b/new`)
@@ -191,7 +195,7 @@ class Corkboard extends React.Component {
           type="text" value={this.props.board.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
+        {this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{this.props.match.params.slug ? null : addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
         {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
         {showElements}
@@ -214,6 +218,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    setPublicBoard: setPublicBoard,
     addBoardElement: addBoardElement,
     updateElement: updateElement,
     createBoard: createBoard,

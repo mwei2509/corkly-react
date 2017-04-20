@@ -133,10 +133,9 @@ class App extends Component {
 
           </div>
           <div id="corkboard-container">
-            <Switch>
-              <Route exact path="/:username" component={Corkboard}/>
-              <Route path="/:username/b/:corkboardId" component={Corkboard}/>
-            </Switch>
+            <Route exact path="/:username" component={Corkboard}/>
+            <Route exact path="/:username/b/:corkboardId" component={Corkboard}/>
+            <Route exact path="/:username/:slug" component={Corkboard}/>
           </div>
         </div>
     );
