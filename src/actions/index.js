@@ -79,7 +79,8 @@ export const newBoard = () => {
     type: "NEW_BOARD"
       }
 }
-export const addCollaborator = (token, payload) => {
+
+export function addCollaborator(token, payload){
   return (dispatch) => {
     axios
     .post(`http://localhost:4000/boards/${payload.id}`, payload, {
@@ -87,9 +88,12 @@ export const addCollaborator = (token, payload) => {
       {token: token}
     })
     .then(({data}) => {
-      debugger
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
     }).catch((errors) => {
-      console.log(errors)
+      debugger
     })
   }
 }

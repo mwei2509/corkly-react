@@ -3,7 +3,7 @@ import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard } from '../actions'
+import { changeBoardAttributes, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard } from '../actions'
 import Collaborator from './Collaborator'
 
 import Account from './Account'
@@ -13,7 +13,6 @@ import corkboardImage from '../imgs/corkboard.jpg'
 class Corkboard extends React.Component {
   constructor(){
     super()
-    this.deleteSticky = this.deleteSticky.bind(this)
     this.addSticky = this.addSticky.bind(this)
     this.contentChange = this.contentChange.bind(this)
     this.createBoard = this.createBoard.bind(this)
@@ -21,19 +20,8 @@ class Corkboard extends React.Component {
     this.handleDelete = this.handleDelete.bind(this)
 
     this.state={
-      boardTitle: '',
-      showCollabForm: false
+      boardTitle: ''
     }
-  }
-
-  toggleCollabForm(){
-    this.setState({
-      showCollabForm: !this.state.showCollabForm
-    })
-  }
-
-  deleteSticky(EID){
-    this.props.deleteElement(EID)
   }
 
   addSticky(e){
@@ -88,7 +76,7 @@ class Corkboard extends React.Component {
 
   createBoard(event){
     event.preventDefault()
-    this.props.createBoard(this.props.token, {board: {title: this.props.title, elements_attributes: this.props.boardElements, id: this.props.boardId}})
+    this.props.createBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, elements_attributes: this.props.boardElements, id: this.props.boardId}})
   }
 
   handleDelete(id){
@@ -97,7 +85,7 @@ class Corkboard extends React.Component {
   }
 
   saveBoard(){
-    this.props.updateBoard(this.props.token, {board: {title: this.props.title, id: this.props.boardId, elements_attributes: this.props.boardElements}})
+    this.props.updateBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: this.props.boardElements}})
   }
 
   render() {
@@ -107,7 +95,7 @@ class Corkboard extends React.Component {
             key={element.EID}
             element={element}
             resizeSticky={this.resizeSticky}
-            deleteSticky={() => this.deleteSticky(element.EID)}
+            deleteSticky={this.props.deleteElement.bind(this, element.EID)}
             contentChange={this.contentChange} />)
     })
 
@@ -117,7 +105,8 @@ class Corkboard extends React.Component {
       <FontAwesome name="floppy-o" /></button></span>
     const deleteButton =<button style={{fontSize: "20px"}} className="icon-button" onClick={this.handleDelete.bind(null, this.props.boardId)}>
       <FontAwesome name="trash" /></button>
-    const addUser=<button style={{fontSize: "20px"}} className="icon-button" onClick={this.toggleCollabForm.bind(this)}>
+    const addUser=<button style={{fontSize: "20px"}} className="icon-button"
+      onClick={this.props.changeBoardAttributes.bind(this, {showCollabForm: !this.props.boardAttributes.showCollabForm})}>
       <FontAwesome name="user" /></button>
     const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
     const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
@@ -150,14 +139,16 @@ class Corkboard extends React.Component {
             textShadow: "1px 1px 1px #000",
             textAlign: "center"
           }}
+          className="title-text"
           placeholder="title your corkly"
           type="text" value={this.props.title}
           onChange={this.titleChange.bind(this)}
           />
         {this.props.boardId ? <span style={{display: "block"}}>{saveButton}{deleteButton}{addUser}</span> : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
-        {this.state.showCollabForm ? <Collaborator /> : null}
+        {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
 
         {showElements}
+
       </div>
     );
   }
@@ -166,6 +157,7 @@ class Corkboard extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     boardElements: state.board.boardElements,
+    boardAccounts: state.board.accounts,
     boardId: state.board.boardId,
     title: state.board.title,
     token: state.manageLogin.token,
@@ -183,7 +175,8 @@ const mapDispatchToProps = (dispatch) => {
     updateTitle: updateTitle,
     setCurrentBoard: setCurrentBoard,
     deleteBoard: deleteBoard,
-    newBoard: newBoard
+    newBoard: newBoard,
+    changeBoardAttributes: changeBoardAttributes
 
   }, dispatch)
 }

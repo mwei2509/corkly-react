@@ -74,7 +74,8 @@ class CorkboardElement extends React.Component {
       padding: 0,
       background: this.props.element.bgcolor,
       boxShadow: "0px 2px 2px rgba(0,0,0,0.4)",
-      borderRadius: 5
+      borderRadius: 5,
+      zIndex: 10
     }
 
     let inputStyle={
@@ -99,7 +100,7 @@ class CorkboardElement extends React.Component {
         defaultPosition={{x: 0, y: 0}}
         position={{x: this.props.element.x, y: this.props.element.y}}
         grid={null}
-        zIndex={0}
+        zIndex={1}
         onStop={this.onStop.bind(this)}>
         <div ref={this.props.element.EID} style={stickyStyle}>
           <div className="handle" style={{minHeight: 20, width: "100%"}}>

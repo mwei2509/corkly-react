@@ -41,11 +41,11 @@ class AccountInfo extends React.Component {
           return (
             <Link to={boardUrl}>
               <div style=
-                {{borderRadius: 5, margin: 15, height: 100, background: "#fff", color: "#000"}}
+                {{borderRadius: 5, margin: 15, height: 100, background: board.currentcolor, color: "#000"}}
                 key={index}>
                 {board.title}<br />
                 Created at:{board.created_at}<br />
-                Updated at:{board.created_at}
+                Updated at:{board.updated_at}
               </div>
             </Link>
           )
