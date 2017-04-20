@@ -70,8 +70,14 @@ class CorkboardElement extends React.Component {
     const colorPicker=(
       <div style={{position: "absolute", left: 50, top: -50}}>
         <CirclePicker
-        disableAlpha={true}
-        onChange={ this.pickColor.bind(this) }
+          width={100}
+          circleSize={15}
+          disableAlpha={true}
+          colors={["#f44336", "#e91e63", "#9c27b0",
+            "#03a9f4", "#009688", "#4caf50",
+            "#8bc34a", "#cddc39", "#ffeb3b",
+            "#ffc107", "#ff9800", "#ff5722"]}
+          onChange={ this.pickColor.bind(this) }
          />
       </div>
     )

@@ -13,7 +13,8 @@ class Account extends React.Component {
     super(props);
 
     this.state={
-      boardTitle: ''
+      boardTitle: '',
+      showLogin: false
     }
   }
 
@@ -28,10 +29,16 @@ class Account extends React.Component {
      if(this.props.token && prevProps.token !== this.props.token){
        this.props.setUser(this.props.token)
      }
-     if(this.props.account.updated_at !== prevProps.account.updated_at){
+     if(this.props.account.update_me !== prevProps.account.update_me){
        this.props.setUser(this.props.token)
      }
    }
+
+  toggleLogin(){
+    this.setState({
+      showLogin: !this.state.showLogin
+    })
+  }
 
 
   logOut(){
@@ -52,13 +59,25 @@ class Account extends React.Component {
 
 // onClick={this.handleButtonClick.bind(this, board.id)
   render() {
+    const buttonStyle={
+      background: "#00bcd4",
+      border: 0,
+      outline: 0,
+      padding: 5,
+      paddingLeft: 15,
+      paddingRight: 15,
+      borderRadius: 5,
+      marginLeft: 5,
+      color: "#fff"
+    }
     let usernameUrl = `/${this.props.account.username}`
     return (
       <div style={{paddingBottom: 50}}>
         {(!!this.props.token) ? <Route path="/:username" component={AccountInfo} /> :
           <div>
-            <AccountInput register={this.props.register} />
-            <Login login={this.props.login} />
+            <button style={buttonStyle} onClick={this.toggleLogin.bind(this)}>
+              {this.state.showLogin? "Register":"Log in!"}</button>
+            {this.state.showLogin ? <Login login={this.props.login} />:<AccountInput register={this.props.register} />}
            </div>
          }
         <Link to={usernameUrl}><h1>CLICK ME</h1></Link>

@@ -10,6 +10,7 @@ import Collaborator from './Collaborator'
 import Account from './Account'
 import FontAwesome from 'react-fontawesome';
 import corkboardImage from '../imgs/corkboard.jpg'
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 class Corkboard extends React.Component {
   constructor(){
@@ -102,7 +103,7 @@ class Corkboard extends React.Component {
     let boardElements = this.props.boardElements
     boardElements.sort((elA, elB) => elA.zIndex - elB.zIndex)
     let zSort = boardElements.map((el, index) => Object.assign({}, el, {zIndex: index}))
-    this.props.createBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, elements_attributes: zSort, id: this.props.boardId}})
+    this.props.createBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.boardAttributes.currentColor, elements_attributes: zSort, id: this.props.boardId}})
   }
 
   publish(event){
@@ -111,14 +112,14 @@ class Corkboard extends React.Component {
 
   handleDelete(id){
     this.props.deleteBoard(this.props.token, {id: id})
-    this.props.history.push('/#{this.props.account.username}')
+    this.props.history.push(`/${this.props.account.username}`)
   }
 
   saveBoard(){
     let boardElements = this.props.boardElements
     boardElements.sort((elA, elB) => elA.zIndex - elB.zIndex)
     let zSort = boardElements.map((el, index) => Object.assign({}, el, {zIndex: index}))
-    this.props.updateBoard(this.props.token, {board: {title: this.props.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: zSort}})
+    this.props.updateBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: zSort}})
   }
 
   render() {
@@ -143,11 +144,15 @@ class Corkboard extends React.Component {
       <FontAwesome name="user" /></button>
     const publishButton=<button style={{fontSize: "20px"}} className="icon-button" onClick={this.publish.bind(this)}>
       <FontAwesome name="share" /></button>
-    const shareLink=<input type="text"
-      style={{
-        border: 0, borderRadius: 5, outline: 0, fontSize: 12, padding: 4, paddingLeft: 5, background: "rgba(255,255,255,0.3)"
-      }}
-      value={`http://corkly.io/${this.props.account.username}/${this.props.slug}`} />
+    const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
+      background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
+      style={{border: 0, outline: 0, background: "none"}}
+      value={`http://corkly.co/${this.props.account.username}/${this.props.board.slug}`} />
+    <CopyToClipboard text={`http://corkly.co/${this.props.account.username}/${this.props.board.slug}`}>
+        <button className="icon-button"><FontAwesome name="clipboard" /></button>
+      </CopyToClipboard>
+    </span>
+
     const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
     const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
 
@@ -177,14 +182,16 @@ class Corkboard extends React.Component {
             borderBottom: "2px solid #000",
             fontFamily: "Lobster",
             textShadow: "1px 1px 1px #000",
-            textAlign: "center"
+            textAlign: "center",
+            position: "relative",
+            zIndex: "1000"
           }}
           className="title-text"
           placeholder="title your corkly"
-          type="text" value={this.props.title}
+          type="text" value={this.props.board.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? <span style={{display: "block"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
+        {this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
         {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
         {showElements}
@@ -200,8 +207,6 @@ const mapStateToProps = (state) => {
     boardElements: state.board.boardElements,
     boardAccounts: state.board.accounts,
     boardId: state.board.boardId,
-    title: state.board.title,
-    slug: state.board.slug,
     token: state.manageLogin.token,
     boardAttributes: state.boardAttributes
   })
