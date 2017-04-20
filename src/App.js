@@ -6,7 +6,7 @@ import Account from './components/Account'
 import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import { newBoard, changeBoardAttributes } from './actions'
 import {CirclePicker} from 'react-color'
 
@@ -94,16 +94,17 @@ class App extends Component {
          />
       </div>
     )
-
+    let newBoardUrl = `/${this.props.account.username}/b/new`
     return (
         <div className="App">
+          {this.props.boardAttributes.error ? this.props.boardAttributes.error : null}
           {this.state.colorOn ? colorPicker : null}
           <div id="sidebar-wrapper" style={this.props.boardAttributes.sidebarActive ? sidebarActive : sidebarInactive}>
             <div style={{width: 40, textAlign:"center", padding: 0, margin: 0, float: "right", color: "#000"}} >
               <span className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />
               </span>
-              <Link to="/boards/new" >
+              <Link to={newBoardUrl} >
                 <span className="operation-buttons">
                   <FontAwesome name="file" />
                 </span>
@@ -131,8 +132,10 @@ class App extends Component {
 
           </div>
           <div id="corkboard-container">
-            <Route exact path="/boards" component={Corkboard}/>
-            <Route path="/boards/:corkboardId" component={Corkboard}/>
+            <Switch>
+              <Route exact path="/:username" component={Corkboard}/>
+              <Route path="/:username/b/:corkboardId" component={Corkboard}/>
+            </Switch>
           </div>
         </div>
     );
@@ -141,6 +144,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return ({
+    account: state.account,
     boardId: state.board.boardId,
     token: state.manageLogin.token,
     boardAttributes: state.boardAttributes
