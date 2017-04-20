@@ -24,12 +24,10 @@ class Account extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-
-     if(this.props.token && prevProps.token !== this.props.token){
-       this.props.setUser(this.props.token)
-     }
-   }
-
+    if(this.props.token && prevProps.token !== this.props.token){
+      this.props.setUser(this.props.token)
+    }
+  }
 
   logOut(){
     this.props.logout()
