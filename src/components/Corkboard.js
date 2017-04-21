@@ -69,22 +69,37 @@ class Corkboard extends React.Component {
 
   componentWillReceiveProps(nextProps){
     let {corkboardId, slug} = nextProps.match.params
-    if (slug){
-      
-    } else if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
-      this.props.newBoard()
-    } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
-        this.props.history.push(`/${this.props.account.username}/b/new`)
-    } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
-      this.props.setCurrentBoard(this.props.token, corkboardId)
-    } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
-        this.props.history.push(`/${this.props.account.username}/b/${nextProps.boardId}`)
+    //check logged in
+    if(!!nextProps.token){
+      //logged in
+      //check board exists
+      if(!!nextProps.boardId){
+        //board exists
+        //check params
+        if (slug){
+
+        } else if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
+          this.props.newBoard()
+        } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
+            this.props.history.push(`/${this.props.account.username}/b/new`)
+        } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
+          this.props.setCurrentBoard(this.props.token, corkboardId)
+        } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
+            this.props.history.push(`/${this.props.account.username}/b/${nextProps.boardId}`)
+          }
+      }else{
+        //board doesn't exist
+        console.log("hi")
       }
+    }else{
+      //not logged in
+
     }
+  }
 
   componentWillUpdate(nextProps){
     if (!nextProps.token && this.props.match.params.corkboardId) {
-      this.props.history.push('/${this.props.account.username}')
+      this.props.history.push(`/${this.props.account.username}`)
     }
   }
 

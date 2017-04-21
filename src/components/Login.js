@@ -25,10 +25,10 @@ export default class Login extends React.Component {
       <div className="account-input">
         <h3>Log In</h3>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          Username:
-          <input type="text" value={this.state.username} onChange={this.handleChange.bind(this, "username")}  /><br />
-          Password:
-          <input type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
+          <label>Email (or Username):</label>
+          <input placeholder="Username or Email" type="text" value={this.state.username} onChange={this.handleChange.bind(this, "username")}  /><br />
+          <label>Password:</label>
+          <input placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange.bind(this, "password")} /><br />
           <button type="submit">Log In</button>
         </form>
       </div>);
