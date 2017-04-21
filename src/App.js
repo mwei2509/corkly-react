@@ -90,8 +90,6 @@ class App extends Component {
       {this.props.boardAttributes.error}
       </div>
 
-    let usernameUrl = `/${this.props.account.username}`
-
     return (
         <div className="App">
           {this.props.boardAttributes.error ? errorDiv : null}

@@ -4,6 +4,7 @@ import Login from './Login'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
+import {push} from 'react-router-redux'
 import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
 
 import AccountInfo from './AccountInfo'
@@ -93,7 +94,8 @@ const mapDispatchToProps = (dispatch) => {
     login: login,
     logout: logout,
     register: register,
-    clearUser: clearUser
+    clearUser: clearUser,
+    push: push
   }, dispatch)
 }
 
