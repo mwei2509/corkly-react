@@ -18,6 +18,18 @@ a{
   text-decoration: none;
   cursor: default;
 }
+
+.error-div{
+  position: absolute;
+  border-radius: 10px;
+  margin: 15px;
+  z-index: 1001;
+  top: 0;
+  right: 0;
+  padding: 25px;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+}
 .icon-button {
   padding: 5px;
   margin: 0;
@@ -25,12 +37,19 @@ a{
   outline: none;
   border: none;
 }
+
+.account-input{
+  width: 100%;
+}
 .account-input>h3{
   font-family: "Lobster";
   font-size: 25px;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 .account-input>form{
   color: #fff;
+  width: 220px;
 }
 .account-input>form>input{
   background: #fff;
@@ -38,7 +57,13 @@ a{
   border-radius: 5px;
   border: 0;
   outline: 0;
-  width: 80%;
+  width: 100%;
+}
+
+.account-input>form>label{
+  display: block;
+  margin-top: 15px;
+  font-size: 12px;
 }
 
 .account-input>button, .account-input>form>button{
@@ -46,21 +71,39 @@ a{
   border: 0;
   outline: 0;
   padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
   border-radius: 5px;
-  margin-left: 5px;
   color: "#fff";
 }
 
-.account-input>form>button{
-  padding: 10px !important;
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 5px;
+.account-input>button:hover, .account-input>form>button:hover{
+  background-color: #008C9D !important;
+  transition: all .3s ease 0s;
+
 }
 
+.account-input>form>button{
+  padding: 7px !important;
+  color: #fff;
+  font-size: 18px;
+  font-family: "Lobster";
+  font-weight: bold;
+  margin-top: 15px;
+  width: 240px;
+}
+
+.account-input>form{
+  text-align: left;
+}
+.account-input::-webkit-input-placeholder {
+  color: #000;
+  opacity: 0.7;
+  font-style: italic;
+}
+.account-input:-moz-placeholder {
+color: #000;
+opacity: 0.7;
+font-style: italic;
+}
 .icon-button:hover{
   color: #fff !important;
   transition: all .3s ease 0s;

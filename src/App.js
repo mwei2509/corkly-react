@@ -99,9 +99,13 @@ class App extends Component {
       </div>
     )
     let newBoardUrl = `/${this.props.account.username}/b/new`
+    let errorDiv=<div className="error-div">
+      {this.props.boardAttributes.error}
+      </div>
+
     return (
         <div className="App">
-          {this.props.boardAttributes.error ? this.props.boardAttributes.error : null}
+          {this.props.boardAttributes.error ? errorDiv : null}
           {this.state.colorOn ? colorPicker : null}
           <div id="sidebar-wrapper" style={this.props.boardAttributes.sidebarActive ? sidebarActive : sidebarInactive}>
             <div style={{width: 40, textAlign:"center", padding: 0, margin: 0, float: "right", color: "#000"}} >

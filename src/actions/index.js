@@ -211,7 +211,14 @@ export const login = (username, password) => {
       })
     })
     .catch((errors) => {
-      console.log(errors)
+      dispatch({
+        type: "ADD_ERROR",
+        payload: errors.response.data.error
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
     })
   }
 }
@@ -230,7 +237,20 @@ export const register = (username, email, password) => {
       })
     })
     .catch((errors)=>{
-      console.log(errors)
+      let builderror
+      if(!!errors.response.data.errors.username){
+        builderror="Username " + errors.response.data.errors.username
+      } else if(!!errors.response.data.errors.email){
+        builderror="Email " + errors.response.data.errors.email
+      }
+      dispatch({
+        type: "ADD_ERROR",
+        payload: builderror
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
     })
   }
 }
@@ -262,7 +282,14 @@ export function setUser(token){
         })
       })
       .catch((errors)=>{
-        console.log(errors)
+        dispatch({
+          type: "ADD_ERROR",
+          payload: errors.response.data.error
+        })
+        setTimeout(()=>{dispatch({
+          type: "ADD_ERROR",
+          payload: ""
+        })}, 2000)
       })
   }
 }
