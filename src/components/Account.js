@@ -46,6 +46,7 @@ class Account extends React.Component {
     this.props.logout()
     this.props.clearUser()
     this.props.newBoard()
+    this.props.push('/')
   }
 
   handleChange(event){
@@ -94,7 +95,8 @@ const mapDispatchToProps = (dispatch) => {
     login: login,
     logout: logout,
     register: register,
-    clearUser: clearUser
+    clearUser: clearUser,
+    push: push
   }, dispatch)
 }
 
