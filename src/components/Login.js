@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="account-input">
         <h3>Log In</h3>
         <form onSubmit={this.handleSubmit.bind(this)}>
           Username:
