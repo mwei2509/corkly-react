@@ -4,10 +4,9 @@ import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
 
-import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, addCollaborator, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
+import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
 import Collaborator from './Collaborator'
 
-import Account from './Account'
 import FontAwesome from 'react-fontawesome';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -166,14 +165,14 @@ class Corkboard extends React.Component {
     const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none"}}
-      value={`http://corkly.co/${this.props.account.username}/${this.props.board.slug}`} />
-    <CopyToClipboard text={`http://corkly.co/${this.props.account.username}/${this.props.board.slug}`}>
+      value={`http://localhost:3000/${this.props.account.username}/${this.props.board.slug}`} />
+    <CopyToClipboard text={`http://localhost:3000/${this.props.account.username}/${this.props.board.slug}`}>
         <button className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
 
     const enterTitle=<span style={{display: "block"}}><strong>Please enter a title to save this board</strong></span>
-    const pleaseLogin=<span style={{display: "block"}}><strong>Please login or register to save this board</strong></span>
+    const pleaseLogin=<span style={{display: "block"}}><strong>Must be logged in to save or edit this board</strong></span>
 
     const corkboardStyle={
       width: "100vw",
@@ -210,7 +209,7 @@ class Corkboard extends React.Component {
           type="text" value={this.props.board.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{this.props.match.params.slug ? null : addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? (this.props.token ? createButton : pleaseLogin): enterTitle )}
+        {this.props.token ? (this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
         {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
         {showElements}

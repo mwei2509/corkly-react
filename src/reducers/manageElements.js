@@ -43,7 +43,15 @@ export const manageElements = (state=defaultState, action) => {
     case "ASSIGN_TO_BOARD":
       return Object.assign({}, state, {boardId: action.payload})
     case "DELETE_BOARD":
-      return defaultState
+      return {
+          boardElements: [],
+          accounts: [],
+          boardId: null,
+          created_at: null,
+          updated_at: null,
+          slug: '',
+          public: false,
+          title: ''}
     case "DELETE_ELEMENT":
       return Object.assign({}, state, {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)})
     case "NEW_BOARD":

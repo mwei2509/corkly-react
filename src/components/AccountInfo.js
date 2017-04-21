@@ -10,10 +10,6 @@ import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser}
 
 
 class AccountInfo extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
 
   componentWillMount(){
     if (this.props.token){
@@ -52,8 +48,8 @@ class AccountInfo extends React.Component {
         {account.boards.map((board, index)=>{
           let boardUrl = `/${this.props.account.username}/b/${board.id}`
           return (
-            <Link to={boardUrl}>
-              <BoardItem key={index} board={board} />
+            <Link key={index} to={boardUrl}>
+              <BoardItem board={board} />
             </Link>
           )
         })}

@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
 import Corkboard from './components/Corkboard'
 import FontAwesome from 'react-fontawesome';
-import AlertContainer from 'react-alert';
 import Account from './components/Account'
 import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route, Redirect} from 'react-router-dom'
 import { newBoard, changeBoardAttributes } from './actions'
 import {CirclePicker} from 'react-color'
+import marbleImage from './imgs/marble.jpg'
 
 
 
 class App extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
 
     this.state={
       colorOn: false
     }
-
-    this.alertOptions = {
-     offset: 14,
-     position: 'bottom left',
-     theme: 'dark',
-     time: 5000,
-     transition: 'scale'
-   };
   }
 
+  componentWillMount(){
+    // if(this.props.token && !this.props.match){
+    //   this.props.history.push(`/${this.props.account.username}`)
+    // }
+  }
 
     toggleColorPicker(){
       this.setState({
@@ -69,16 +66,6 @@ class App extends Component {
       zIndex: 1000
     }
 
-    const mainSidebarActive={
-      position: "relative",
-      left: 300
-    }
-
-    const mainSidebarInactive={
-      position: "relative",
-      left: 0
-    }
-
 
     const colorPicker=(
       <div id="color-picker"
@@ -102,6 +89,8 @@ class App extends Component {
     let errorDiv=<div className="error-div">
       {this.props.boardAttributes.error}
       </div>
+
+    let usernameUrl = `/${this.props.account.username}`
 
     return (
         <div className="App">
@@ -131,12 +120,13 @@ class App extends Component {
                 <FontAwesome name="users" />
               </span>
             </div>
-            <div id="sidebar">
+            <div id="sidebar" style={{background: `url(${marbleImage})`}}>
               <Account />
             </div>
 
           </div>
           <div id="corkboard-container">
+            <Route exact path="/" component={Corkboard}/>
             <Route exact path="/:username" component={Corkboard}/>
             <Route exact path="/:username/b/:corkboardId" component={Corkboard}/>
             <Route exact path="/:username/:slug" component={Corkboard}/>

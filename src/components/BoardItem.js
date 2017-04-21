@@ -26,13 +26,12 @@ class BoardItem extends React.Component{
   render(){
     const {board} = this.props
     return(
-      <div style=
-        {{borderRadius: 5,
+      <div style={{borderRadius: 5,
           textAlign: "left",
           padding: 10,
           marginBottom: 7,
           background: board.currentcolor,
-          opacity: (this.state.hoverState || this.props.boardId == board.id) ? 1: .4,
+          opacity: (this.state.hoverState || this.props.boardId === board.id) ? 1: .4,
           color: "#000"}}
         className="board-list-items"
         onMouseEnter={this.hoverOn.bind(this)}
