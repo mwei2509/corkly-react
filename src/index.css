@@ -25,6 +25,41 @@ a{
   outline: none;
   border: none;
 }
+.account-input>h3{
+  font-family: "Lobster";
+  font-size: 25px;
+}
+.account-input>form{
+  color: #fff;
+}
+.account-input>form>input{
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  width: 80%;
+}
+
+.account-input>button, .account-input>form>button{
+  background: #00bcd4;
+  border: 0;
+  outline: 0;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 5px;
+  margin-left: 5px;
+  color: "#fff";
+}
+
+.account-input>form>button{
+  padding: 10px !important;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 5px;
+}
 
 .icon-button:hover{
   color: #fff !important;

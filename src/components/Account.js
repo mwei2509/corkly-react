@@ -59,24 +59,14 @@ class Account extends React.Component {
 
 // onClick={this.handleButtonClick.bind(this, board.id)
   render() {
-    const buttonStyle={
-      background: "#00bcd4",
-      border: 0,
-      outline: 0,
-      padding: 5,
-      paddingLeft: 15,
-      paddingRight: 15,
-      borderRadius: 5,
-      marginLeft: 5,
-      color: "#fff"
-    }
     let usernameUrl = `/${this.props.account.username}`
     return (
       <div style={{paddingBottom: 50}}>
         {(!!this.props.token) ? <Route path="/:username" component={AccountInfo} /> :
-          <div>
-            <button style={buttonStyle} onClick={this.toggleLogin.bind(this)}>
+          <div className="account-input">
+            <button onClick={this.toggleLogin.bind(this)}>
               {this.state.showLogin? "Register":"Log in!"}</button>
+            <p>Create cool shit.</p>
             {this.state.showLogin ? <Login login={this.props.login} />:<AccountInput register={this.props.register} />}
            </div>
          }
