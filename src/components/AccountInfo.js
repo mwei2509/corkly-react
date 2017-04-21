@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import BoardItem from './BoardItem'
-
+import {push} from 'react-router-redux'
 import FontAwesome from 'react-fontawesome';
 
 import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
@@ -24,6 +24,7 @@ class AccountInfo extends React.Component {
    }
 
   logOut(){
+    this.props.push('/')
     this.props.logout()
     this.props.clearUser()
     this.props.newBoard()
@@ -76,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
     login: login,
     logout: logout,
     register: register,
-    clearUser: clearUser
+    clearUser: clearUser,
+    push: push
   }, dispatch)
 }
 
