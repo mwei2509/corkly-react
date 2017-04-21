@@ -4,7 +4,9 @@ import Login from './Login'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
-import {push} from 'react-router-redux'
+
+import { push } from 'react-router-redux'
+
 import { setUser, setCurrentBoard, newBoard, login, logout, register, clearUser} from '../actions'
 
 import AccountInfo from './AccountInfo'
@@ -46,6 +48,7 @@ class Account extends React.Component {
     this.props.logout()
     this.props.clearUser()
     this.props.newBoard()
+    this.props.push('/')
   }
 
   handleChange(event){

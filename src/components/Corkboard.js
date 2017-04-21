@@ -3,6 +3,7 @@ import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
+import { push } from 'react-router-redux'
 
 import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
 import Collaborator from './Collaborator'
@@ -78,21 +79,31 @@ class Corkboard extends React.Component {
         if (slug){
 
         } else if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
+          // routes == /:user/b/new && you JUST navigated there
           this.props.newBoard()
         } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
-            this.props.history.push(`/${this.props.account.username}/b/new`)
+          // if there are errors, take you to a new board. ie: you don't have permission to access the board?
+            this.props.push(`/${this.props.account.username}/b/new`)
         } else if (corkboardId && corkboardId !== this.props.match.params.corkboardId){
+          // routes == /:users/b/:boardId && if you just clicked on a link to a board
           this.props.setCurrentBoard(this.props.token, corkboardId)
         } else if (this.props.match.params.corkboardId !== nextProps.boardId && nextProps.boardId && this.props.boardId !== nextProps.boardId){
-            this.props.history.push(`/${this.props.account.username}/b/${nextProps.boardId}`)
+          // both a new route && new data. Saving a new board triggers this.
+            this.props.push(`/${this.props.account.username}/b/${nextProps.boardId}`)
           }
       }else{
         //board doesn't exist
-        console.log("hi")
+        if (this.props.match.params.corkboardId === "new" && corkboardId !== "new") {
+          // going from /:user/b/new to :user/b/:boardId will set board correctly
+          this.props.setCurrentBoard(this.props.token, corkboardId)
+        } else if (this.props.account.id === '' && nextProps.account.id !== ''){
+          // logging in redirects to /:user
+          this.props.push(`/${nextProps.account.username}`)
+        }
       }
     }else{
       //not logged in
-
+      // DO A THING redirect to home page unless going to public board.
     }
   }
 
@@ -243,7 +254,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteBoard: deleteBoard,
     newBoard: newBoard,
     changeBoardAttributes: changeBoardAttributes,
-    publish: publish
+    publish: publish,
+    push: push
   }, dispatch)
 }
 
