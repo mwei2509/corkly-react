@@ -22,7 +22,7 @@ export function createBoard(token, board){
 export const deleteBoard = (token, payload) => {
   return (dispatch) => {
   axios
-    .delete(`http://localhost:4000/boards/${payload.id}`, payload, {
+    .delete(`http://localhost:4000/boards/${payload.id}`, {
       headers:
       {token: token}
     })
@@ -50,7 +50,10 @@ export const updateBoard = (token, payload) => {
         data: data
       })
     }).catch((errors) => {
-      console.log(errors)
+      dispatch({
+        type: "ADD_ERROR",
+        payload: errors.response.data.error
+      })
     })
   }
 }
