@@ -21,7 +21,7 @@ let loggedin=window.localStorage.getItem("current user")
 let initialState={
   boardAttributes: {sidebarActive: (!!loggedin ? false : true), showCollabForm: false, currentColor: "#ffeb3b"},
   account: {boards:[], username: '', email: '', id: ''},
-  board: {boardElements: [], accounts: [], public: false, slug: '', boardId: null, created_at: null, updated_at: null, title: ''},
+  board: {boardElements: [], accounts: [], public: false, slug: '', url: '', boardId: null, created_at: null, updated_at: null, title: ''},
   manageLogin: {token: window.localStorage.getItem("current user")}
 }
 let store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk, rMiddleware)))

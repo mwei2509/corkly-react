@@ -46,6 +46,14 @@ export const updateBoard = (token, payload) => {
     })
     .then(({data}) => {
       dispatch({
+        type: "ADD_ERROR",
+        payload: "Saved Board"
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
+      dispatch({
         type: "SET_CURRENT_BOARD",
         data: data
       })
@@ -54,6 +62,10 @@ export const updateBoard = (token, payload) => {
         type: "ADD_ERROR",
         payload: errors.response.data.error
       })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
     })
   }
 }
@@ -131,6 +143,14 @@ export function addCollaborator(token, payload){
       {token: token}
     })
     .then(({data}) => {
+      dispatch({
+        type: "ADD_ERROR",
+        payload: "Added Collaborator"
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
       dispatch({
         type: "SET_CURRENT_BOARD",
         data: data
