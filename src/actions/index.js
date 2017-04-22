@@ -3,7 +3,7 @@ import axios from 'axios'
 export function createBoard(token, board){
   return (dispatch) => {
     axios
-      .post(`http://localhost:4000/boards`, board, {
+      .post(`https://corkly-api.herokuapp.com/boards`, board, {
         headers:
         {token: token}
       })
@@ -22,7 +22,7 @@ export function createBoard(token, board){
 export const deleteBoard = (token, payload) => {
   return (dispatch) => {
   axios
-    .delete(`http://localhost:4000/boards/${payload.id}`, {
+    .delete(`https://corkly-api.herokuapp.com/boards/${payload.id}`, {
       headers:
       {token: token}
     })
@@ -40,11 +40,19 @@ export const deleteBoard = (token, payload) => {
 export const updateBoard = (token, payload) => {
   return (dispatch) => {
     axios
-    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
+    .patch(`https://corkly-api.herokuapp.com/boards/${payload.board.id}`, payload, {
       headers:
       {token: token}
     })
     .then(({data}) => {
+      dispatch({
+        type: "ADD_ERROR",
+        payload: "Saved Board"
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
       dispatch({
         type: "SET_CURRENT_BOARD",
         data: data
@@ -54,6 +62,10 @@ export const updateBoard = (token, payload) => {
         type: "ADD_ERROR",
         payload: errors.response.data.error
       })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
     })
   }
 }
@@ -82,7 +94,7 @@ export const changeBoardColor =(token, payload) => {
 export const setCurrentBoard = (token, id) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:4000/boards/${id}`, {
+      .get(`https://corkly-api.herokuapp.com/boards/${id}`, {
         headers:
         {token: token}
       })
@@ -108,7 +120,7 @@ export const setCurrentBoard = (token, id) => {
 export const setPublicBoard = (token, slug) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:4000/boards/slug/${slug}`, {
+      .get(`https://corkly-api.herokuapp.com/boards/slug/${slug}`, {
         headers:
         {token: token}
       })
@@ -147,11 +159,19 @@ export const newBoard = () => {
 export function addCollaborator(token, payload){
   return (dispatch) => {
     axios
-    .post(`http://localhost:4000/boards/${payload.id}`, payload, {
+    .post(`https://corkly-api.herokuapp.com/boards/${payload.id}`, payload, {
       headers:
       {token: token}
     })
     .then(({data}) => {
+      dispatch({
+        type: "ADD_ERROR",
+        payload: "Added Collaborator"
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
       dispatch({
         type: "SET_CURRENT_BOARD",
         data: data
@@ -165,7 +185,7 @@ export function addCollaborator(token, payload){
 export function publish(token, {board}){
   return (dispatch) => {
     axios
-    .patch(`http://localhost:4000/boards/${board.id}/publish`, board, {
+    .patch(`https://corkly-api.herokuapp.com/boards/${board.id}/publish`, board, {
       headers:
       {token: token}
     })
@@ -224,7 +244,7 @@ export const updateTitle = (title) =>{
 export const login = (username, password) => {
   return(dispatch)=>{
     axios
-    .post('http://localhost:4000/login', {
+    .post('https://corkly-api.herokuapp.com/login', {
       account: { username: username, password: password}
     })
     .then(({data}) => {
@@ -250,7 +270,7 @@ export const login = (username, password) => {
 export const register = (username, email, password) => {
   return(dispatch)=>{
     axios
-    .post('http://localhost:4000/register', {
+    .post('https://corkly-api.herokuapp.com/register', {
       account: { username: username, email: email, password: password}
     })
     .then(({data})=>{
@@ -297,7 +317,7 @@ export const clearUser = () =>{
 export function setUser(token){
   return (dispatch) => {
     axios
-      .get(`http://localhost:4000/account`,
+      .get(`https://corkly-api.herokuapp.com/account`,
         {headers: {token: token}})
       .then(({data}) => {
         dispatch({

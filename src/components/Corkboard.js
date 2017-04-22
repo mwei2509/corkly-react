@@ -3,10 +3,24 @@ import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
+
 import { push } from 'react-router-redux'
 import { Receiver } from 'react-file-uploader'
 
-import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
+import {
+  changeBoardAttributes,
+  publish,
+  addBoardElement,
+  updateElement,
+  createBoard,
+  deleteElement,
+  updateBoard,
+  updateTitle,
+  deleteBoard,
+  setCurrentBoard,
+  newBoard,
+  setPublicBoard
+} from '../actions'
 import Collaborator from './Collaborator'
 
 import FontAwesome from 'react-fontawesome';
@@ -21,28 +35,11 @@ class Corkboard extends React.Component {
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    // this.handleDrop = this.handleDrop.bind(this)
-    // this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
-      boardTitle: '',
-      imageBlob: null
+      boardTitle: ''
     }
   }
-
-
-//   preventDefault(event){
-//     event.preventDefault()
-//   }
-
-//   handleDrop(event){
-//     event.preventDefault()
-//     let file = event.dataTransfer.files[0]
-//     let imageBlob = window.URL.createObjectURL(file)
-//     this.setState({
-//       imageBlob: imageBlob
-//     })
-//   }
 
   addSticky(e){
     if(e.target.className === "corkboard-container"){
@@ -54,7 +51,9 @@ class Corkboard extends React.Component {
         bgcolor: this.props.board.currentColor,
         content: '',
         EID: this.props.boardElements.length,
-        zIndex: this.props.boardElements.length
+        zIndex: this.props.boardElements.length,
+        is_image: false,
+        image_blob: null
       })
     }
   }
@@ -71,10 +70,10 @@ class Corkboard extends React.Component {
   componentWillReceiveProps(nextProps){
     let {corkboardId, slug} = nextProps.match.params
     //check logged in
-    if(!!nextProps.token){
+    if(nextProps.token){
       //logged in
       //check board exists
-      if(!!nextProps.boardId){
+      if(nextProps.boardId){
         //board exists
         //check params
         if (slug){
@@ -177,8 +176,8 @@ class Corkboard extends React.Component {
     const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none"}}
-      value={`http://localhost:3000/${this.props.account.username}/${this.props.board.slug}`} />
-    <CopyToClipboard text={`http://localhost:3000/${this.props.account.username}/${this.props.board.slug}`}>
+      value={`http://localhost:3000${this.props.board.url}`} />
+    <CopyToClipboard text={`http://localhost:3000${this.props.board.url}`}>
         <button className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
@@ -223,7 +222,7 @@ class Corkboard extends React.Component {
           />
         {this.props.token ? (this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
-        {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
+
         {showElements}
       </div>
     );

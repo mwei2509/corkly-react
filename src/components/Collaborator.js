@@ -24,7 +24,7 @@ class Collaborator extends React.Component{
 
   getCollab(token, email){
     return(axios
-      .get(`http://localhost:4000/findaccount?email=${email}`, {
+      .get(`https://corkly-api.herokuapp.com/findaccount?email=${email}`, {
         headers:
         {token: token}
       }))
@@ -110,15 +110,20 @@ class Collaborator extends React.Component{
           {this.props.boardAttributes.error ? <div>{this.props.boardAttributes.error}</div>: null}
           {!!this.state.collaboratorName ? verifycollab : findcollab}
         </form>
+        {this.props.board.accounts.map((collab)=>{
+          return <span style={{display: "block", marginTop: 5}}>{collab.username} {collab.id==this.props.account.id ? "(you)":null}</span>
+        })}
       </div>)
   }
 }
 
 const mapStateToProps=(state)=>{
   return({
+    board: state.board,
     boardId: state.board.boardId,
     token: state.manageLogin.token,
-    boardAttributes: state.boardAttributes
+    boardAttributes: state.boardAttributes,
+    account: state.account
   })
 }
 

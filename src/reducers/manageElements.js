@@ -5,6 +5,7 @@ let defaultState={
     created_at: null,
     updated_at: null,
     slug: '',
+    url: '',
     public: false,
     title: '',
     currentColor: "#FFEB3B"}
@@ -27,6 +28,7 @@ export const manageElements = (state=defaultState, action) => {
         boardElements: action.data.elements,
         title: action.data.title,
         slug: action.data.slug,
+        url: action.data.url,
         public: action.data.public,
         accounts: action.data.accounts,
         currentColor: action.data.currentcolor
@@ -37,6 +39,7 @@ export const manageElements = (state=defaultState, action) => {
          boardElements: action.data.elements,
          title: action.data.title,
          slug: action.data.slug,
+         url: action.data.url,
          public: action.data.public,
          accounts: action.data.accounts
       })
@@ -45,15 +48,7 @@ export const manageElements = (state=defaultState, action) => {
     case "ASSIGN_TO_BOARD":
       return Object.assign({}, state, {boardId: action.payload})
     case "DELETE_BOARD":
-      return {
-          boardElements: [],
-          accounts: [],
-          boardId: null,
-          created_at: null,
-          updated_at: null,
-          slug: '',
-          public: false,
-          title: ''}
+      return defaultState
     case "DELETE_ELEMENT":
       return Object.assign({}, state, {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)})
     case "NEW_BOARD":
