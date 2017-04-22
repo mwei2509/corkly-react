@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Corkboard from './components/Corkboard'
+import PublicCorkboard from './components/PublicCorkboard'
 import FontAwesome from 'react-fontawesome';
 import Account from './components/Account'
 import './App.css';
@@ -48,7 +49,14 @@ class App extends Component {
         sidebarActive: !this.props.boardAttributes.sidebarActive
       })
     }
-
+    newBoard(){
+      this.props.newBoard()
+      if(this.props.token){
+        this.props.push(`/${this.props.account.username}/b/new`)
+      }else{
+        this.props.push('/')
+      }
+    }
   render() {
     const sidebarActive={
       color: "#fff",
@@ -87,7 +95,6 @@ class App extends Component {
          />
       </div>
     )
-    let newBoardUrl = `/${this.props.account.username}/b/new`
     let errorDiv=<div className="error-div">
       {this.props.boardAttributes.error}
       </div>
@@ -101,11 +108,9 @@ class App extends Component {
               <span className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />
               </span>
-              <Link to={newBoardUrl} >
-                <span className="operation-buttons">
-                  <FontAwesome name="file" />
-                </span>
-              </Link>
+              <span className="operation-buttons" onClick={this.newBoard.bind(this)}>
+                <FontAwesome name="file" />
+              </span>
               <span
                 className="operation-buttons"
                 onClick={this.toggleColorPicker.bind(this)} >
@@ -129,7 +134,7 @@ class App extends Component {
             <Route exact path="/" component={Corkboard}/>
             <Route exact path="/:username" component={Corkboard}/>
             <Route exact path="/:username/b/:corkboardId" component={Corkboard}/>
-            <Route exact path="/:username/:slug" component={Corkboard}/>
+            <Route exact path="/:username/:slug" component={PublicCorkboard}/>
           </div>
         </div>
     );
