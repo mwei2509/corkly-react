@@ -83,10 +83,10 @@ class Corkboard extends React.Component {
   componentWillReceiveProps(nextProps){
     let {corkboardId, slug} = nextProps.match.params
     //check logged in
-    if(!!nextProps.token){
+    if(nextProps.token){
       //logged in
       //check board exists
-      if(!!nextProps.boardId){
+      if(nextProps.boardId){
         //board exists
         //check params
         if (slug){
