@@ -70,7 +70,7 @@ class Account extends React.Component {
           <div className="account-input">
             <button onClick={this.toggleLogin.bind(this)}>
               {this.state.showLogin? "Register":"Log in!"}</button>
-            <p>Create cool shit.</p>
+            <p>Create cool stuff.</p>
             {this.state.showLogin ? <Login login={this.props.login} />:<AccountInput register={this.props.register} />}
            </div>
          }
