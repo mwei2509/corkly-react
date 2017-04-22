@@ -4,6 +4,7 @@ import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
 import { push } from 'react-router-redux'
+import { Receiver } from 'react-file-uploader'
 
 import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
 import Collaborator from './Collaborator'
@@ -50,7 +51,7 @@ class Corkboard extends React.Component {
         y: e.clientY,
         width: "150px",
         height: "100px",
-        bgcolor: this.props.boardAttributes.currentColor,
+        bgcolor: this.props.board.currentColor,
         content: '',
         EID: this.props.boardElements.length,
         zIndex: this.props.boardElements.length
@@ -132,7 +133,7 @@ class Corkboard extends React.Component {
     let boardElements = this.props.boardElements
     boardElements.sort((elA, elB) => elA.zIndex - elB.zIndex)
     let zSort = boardElements.map((el, index) => Object.assign({}, el, {zIndex: index}))
-    this.props.createBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.boardAttributes.currentColor, elements_attributes: zSort, id: this.props.boardId}})
+    this.props.createBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: "#FFEB3B", elements_attributes: zSort, id: this.props.boardId, currentColor: this.props.board.currentColor}})
   }
 
   publish(event){
@@ -148,7 +149,7 @@ class Corkboard extends React.Component {
     let boardElements = this.props.boardElements
     boardElements.sort((elA, elB) => elA.zIndex - elB.zIndex)
     let zSort = boardElements.map((el, index) => Object.assign({}, el, {zIndex: index}))
-    this.props.updateBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: zSort}})
+    this.props.updateBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.board.currentColor, id: this.props.boardId, elements_attributes: zSort, color: this.props.boardAttributes.currentColor}})
   }
 
   render() {

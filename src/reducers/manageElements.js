@@ -6,7 +6,8 @@ let defaultState={
     updated_at: null,
     slug: '',
     public: false,
-    title: ''}
+    title: '',
+    currentColor: "#FFEB3B"}
 
 export const manageElements = (state=defaultState, action) => {
   switch (action.type) {
@@ -27,7 +28,8 @@ export const manageElements = (state=defaultState, action) => {
         title: action.data.title,
         slug: action.data.slug,
         public: action.data.public,
-        accounts: action.data.accounts
+        accounts: action.data.accounts,
+        currentColor: action.data.currentcolor
      })
     case "ADD_BOARD":
        return Object.assign({}, state, {
@@ -55,6 +57,7 @@ export const manageElements = (state=defaultState, action) => {
     case "DELETE_ELEMENT":
       return Object.assign({}, state, {boardElements: state.boardElements.filter(elm => elm.EID !== action.payload)})
     case "NEW_BOARD":
+
       return defaultState
     default:
       return state
