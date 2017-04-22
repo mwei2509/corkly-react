@@ -3,6 +3,7 @@ import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
+
 import { push } from 'react-router-redux'
 
 import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
@@ -24,8 +25,7 @@ class Corkboard extends React.Component {
     // this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
-      boardTitle: '',
-      imageBlob: null
+      boardTitle: ''
     }
   }
 
@@ -53,7 +53,9 @@ class Corkboard extends React.Component {
         bgcolor: this.props.boardAttributes.currentColor,
         content: '',
         EID: this.props.boardElements.length,
-        zIndex: this.props.boardElements.length
+        zIndex: this.props.boardElements.length,
+        is_image: false,
+        image_blob: null
       })
     }
   }
@@ -151,6 +153,29 @@ class Corkboard extends React.Component {
     this.props.updateBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: zSort}})
   }
 
+  // submitImage(){
+  //   var preview = document.querySelector('img');
+  //   var file    = document.querySelector('input[type=file]').files[0];
+  //   var reader  = new FileReader();
+  //   reader.onload = function(upload){
+  //     self.setState({
+  //       imageBlob: reader.result
+  //     })
+  //   }
+  //
+  //   reader.addEventListener("load", function () {
+  //     preview.src = reader.result;
+  //   }, false);
+  //
+  //   if (file) {
+  //     reader.readAsDataURL(file);
+  //   }
+  //   if (file){
+  //     reader.readAsDataURL(file)
+  //   }
+  // }
+
+
   render() {
     let showElements = this.props.boardElements.map((element) => {
         return(<CorkboardElement
@@ -222,7 +247,7 @@ class Corkboard extends React.Component {
           />
         {this.props.token ? (this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
-        {this.state.imageBlob ? <Image file={this.state.imageBlob} /> : null}
+
         {showElements}
       </div>
     );

@@ -6,6 +6,7 @@ import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link, Route, Redirect} from 'react-router-dom'
+import {push} from 'react-router-redux'
 import { newBoard, changeBoardAttributes } from './actions'
 import {CirclePicker} from 'react-color'
 import marbleImage from './imgs/marble.jpg'
@@ -25,6 +26,7 @@ class App extends Component {
     // if(this.props.token && !this.props.match){
     //   this.props.history.push(`/${this.props.account.username}`)
     // }
+
   }
 
     toggleColorPicker(){
@@ -146,7 +148,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     newBoard: newBoard,
-    changeBoardAttributes: changeBoardAttributes
+    changeBoardAttributes: changeBoardAttributes,
+    push: push
   }, dispatch)
 }
 
