@@ -17,6 +17,26 @@ class CorkboardElement extends React.Component {
     }
   }
 
+  drop(event){
+    var url = event.dataTransfer.getData('URL')
+    if (url){
+      event.stopPropagation()
+      event.preventDefault()
+      document.addEventListener('dragover', (event)=>{event.preventDefault()}, false)
+      document.addEventListener('drop', (event)=>{event.preventDefault()}, false)
+      this.props.updateElement({
+        element:{
+          EID: this.props.element.EID,
+          is_image: true,
+          image_blob: url
+        }
+      })
+      this.setState({
+        imageOn: false
+      })
+    }
+  }
+
   onStop(){
     let div = this.refs[this.props.element.EID]
     console.log(div.getBoundingClientRect().top)
@@ -61,26 +81,34 @@ class CorkboardElement extends React.Component {
   toggleThing(field){
     this.setState({
       [field]: !this.state[field]
+    },()=>{
+      let dropbox = document.getElementById("dragdrop")
+      if (dropbox){
+        // dropbox.addEventListener('dragover', (event)=>{event.preventDefault()}, false)
+        dropbox.addEventListener('drop', this.drop.bind(this), false);
+      }
     })
   }
 
   onDrop(files){
-    var self = this
-    var file = files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(file)
-    reader.onload=()=>{
-      self.props.updateElement({
-        element:{
-          EID: self.props.element.EID,
-          is_image: true,
-          image_blob: reader.result
-        }
+    if (files){
+      var self = this
+      var file = files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file)
+      reader.onload=()=>{
+        self.props.updateElement({
+          element:{
+            EID: self.props.element.EID,
+            is_image: true,
+            image_blob: reader.result
+          }
+        })
+      }
+      this.setState({
+        imageOn: false
       })
     }
-    this.setState({
-      imageOn: false
-    })
 }
 
   onOpenClick(){
@@ -159,7 +187,7 @@ class CorkboardElement extends React.Component {
 
     const imageForm=<Dropzone style={{}} accept="image/jpeg, image/jpg, image/png, image/gif"
         ref="dropzone" onDrop={this.onDrop.bind(this)} >
-        <div style={dropzoneStyle}
+        <div style={dropzoneStyle} id="dragdrop"
           onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)}>
           <span style={{fontSize: 12}}>Drag and drop (or click to upload) photos to this sticky</span><br />
         </div>
