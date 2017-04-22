@@ -5,7 +5,20 @@ import { connect } from 'react-redux'
 import Image from 'react-image-file'
 import { push } from 'react-router-redux'
 
-import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
+import {
+  changeBoardAttributes,
+  publish,
+  addBoardElement,
+  updateElement,
+  createBoard,
+  deleteElement,
+  updateBoard,
+  updateTitle,
+  deleteBoard,
+  setCurrentBoard,
+  newBoard,
+  setPublicBoard
+} from '../actions'
 import Collaborator from './Collaborator'
 
 import FontAwesome from 'react-fontawesome';
