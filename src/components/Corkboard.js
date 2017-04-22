@@ -174,8 +174,8 @@ class Corkboard extends React.Component {
     const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none"}}
-      value={`http://localhost:3000${this.props.board.url}`} />
-    <CopyToClipboard text={`http://localhost:3000${this.props.board.url}`}>
+      value={`http://troubled-offer.surge.sh${this.props.board.url}`} />
+    <CopyToClipboard text={`http://troubled-offer.surge.sh${this.props.board.url}`}>
         <button className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
