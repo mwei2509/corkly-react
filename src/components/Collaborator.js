@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { changeBoardAttributes, addCollaborator, findCollaborator, addError } from '../actions'
 import axios from 'axios'
 import FontAwesome from 'react-fontawesome';
-
+import {CorklyApi} from './constants'
 class Collaborator extends React.Component{
   constructor(props){
     super(props)
@@ -24,7 +24,7 @@ class Collaborator extends React.Component{
 
   getCollab(token, email){
     return(axios
-      .get(`https://corkly-api.herokuapp.com/findaccount?email=${email}`, {
+      .get(`${CorklyApi}/findaccount?email=${email}`, {
         headers:
         {token: token}
       }))

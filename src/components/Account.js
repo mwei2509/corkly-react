@@ -74,7 +74,6 @@ class Account extends React.Component {
             {this.state.showLogin ? <Login login={this.props.login} />:<AccountInput register={this.props.register} />}
            </div>
          }
-        <Link to={usernameUrl} style={{color: "#fff", textShadow: "2px 2px 2px #ff0000"}}><h1>CLICK ME</h1></Link>
       </div>);
   }
 }
