@@ -11,7 +11,8 @@ class CorkboardElement extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      colorOn: false
+      colorOn: false,
+      imageOn: false
     }
   }
 
@@ -56,10 +57,30 @@ class CorkboardElement extends React.Component {
     })
   }
 
-  toggleColorPicker(){
+  toggleThing(field){
     this.setState({
-      colorOn: !this.state.colorOn
+      [field]: !this.state[field]
     })
+  }
+
+  handleChangeImage(evt){
+      var self = this;
+      var reader = new FileReader();
+      var file = evt.target.files[0];
+
+      reader.onload = function(upload) {
+          self.props.updateElement({
+            element:{
+              EID: self.props.element.EID,
+              is_image: true,
+              image_blob: upload.target.result
+            }
+          })
+      };
+      reader.readAsDataURL(file);
+      this.setState({
+        imageOn: false
+      })
   }
 
   pickColor(color){
@@ -94,7 +115,7 @@ class CorkboardElement extends React.Component {
       top: 0,
       left: 0,
       margin: 0,
-      padding: 0,
+      padding: "0 !important",
       background: this.props.element.bgcolor,
       boxShadow: "0px 2px 2px rgba(0,0,0,0.4)",
       borderRadius: 5,
@@ -116,6 +137,12 @@ class CorkboardElement extends React.Component {
       height: this.props.element.height
     }
 
+    const imageForm=<form>
+      <label>
+        <input type="file" accept="image/gif,image/jpeg" onChange={this.handleChangeImage.bind(this)} />
+      </label>
+    </form>
+
     return (
       <Draggable
         axis="both"
@@ -136,20 +163,26 @@ class CorkboardElement extends React.Component {
               <FontAwesome name="thumb-tack" />
             </button>
 
-            <button className="icon-button" onClick={this.toggleColorPicker.bind(this)} style={{float: "right"}}>
-              <FontAwesome name="paint-brush" />
+            <button className="icon-button" onClick={this.toggleThing.bind(this, "imageOn")} style={{float: "right"}}>
+              <FontAwesome name="image" />
             </button>
 
-            {this.state.colorOn ? colorPicker : null}
+            <button className="icon-button" onClick={this.toggleThing.bind(this, "colorOn")} style={{float: "right"}}>
+              <FontAwesome name="paint-brush" />
+            </button>
           </div>
+          {this.state.colorOn ? colorPicker : null}
+          {this.state.imageOn ? imageForm : null}
+          {this.props.element.is_image ? <img src={this.props.element.image_blob} className="postit-image" /> :
           <textarea
-            autoFocus
-            onFocus={this.onFocus.bind(this)}
-            ref={`textarea-${this.props.element.EID}`}
-            style={inputStyle}
-            value={this.props.element.content}
-            onChange={(e) => {this.props.contentChange(e, this.props.element.EID)}}
-            onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)} />
+              autoFocus
+              onFocus={this.onFocus.bind(this)}
+              ref={`textarea-${this.props.element.EID}`}
+              style={inputStyle}
+              value={this.props.element.content}
+              onChange={(e) => {this.props.contentChange(e, this.props.element.EID)}}
+              onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)} />
+          }
         </div>
       </Draggable>
     )

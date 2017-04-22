@@ -109,6 +109,17 @@ font-style: italic;
   transition: all .3s ease 0s;
 }
 
+.postit-image{
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 !important;
+  display: block;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 0;
+  height: auto;
+}
+
 .operation-buttons{
   display: block;
   margin-top: 5px;
