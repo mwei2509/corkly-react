@@ -7,8 +7,9 @@ import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link, Route, Redirect} from 'react-router-dom'
+import { newBoard, changeBoardAttributes, changeBoardColor } from './actions'
 import {push} from 'react-router-redux'
-import { newBoard, changeBoardAttributes } from './actions'
+
 import {CirclePicker} from 'react-color'
 import marbleImage from './imgs/marble.jpg'
 
@@ -37,10 +38,13 @@ class App extends Component {
     }
 
     pickColor(color){
+      let board = this.props.board
+      board.currentColor = color.hex
       this.props.changeBoardAttributes({currentColor: color.hex})
       this.setState({
         colorOn: false
       })
+      this.props.changeBoardColor(this.props.token, board)
     }
 
     toggleSidebar(){
@@ -114,7 +118,7 @@ class App extends Component {
               <span
                 className="operation-buttons"
                 onClick={this.toggleColorPicker.bind(this)} >
-                <button className="highlight-button" style={{background: this.props.boardAttributes.currentColor,
+                <button className="highlight-button" style={{background: this.props.board.currentColor,
                   width: 14, height: 14, borderRadius: 7,
                   border: "1px solid #000", outline: 0}}/>
               </span>
@@ -146,7 +150,8 @@ const mapStateToProps = (state) => {
     account: state.account,
     boardId: state.board.boardId,
     token: state.manageLogin.token,
-    boardAttributes: state.boardAttributes
+    boardAttributes: state.boardAttributes,
+    board: state.board
   })
 }
 
@@ -154,6 +159,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     newBoard: newBoard,
     changeBoardAttributes: changeBoardAttributes,
+    changeBoardColor: changeBoardColor,
     push: push
   }, dispatch)
 }

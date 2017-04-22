@@ -70,6 +70,27 @@ export const updateBoard = (token, payload) => {
   }
 }
 
+export const changeBoardColor =(token, payload) => {
+  return (dispatch) => {
+    axios
+    .patch(`http://localhost:4000/boards/${payload.board.id}`, payload, {
+      headers:
+      {token: token}
+    })
+    .then(({data}) => {
+      dispatch({
+        type: "SET_CURRENT_BOARD",
+        data: data
+      })
+    }).catch((errors) => {
+      dispatch({
+        type: "ADD_ERROR",
+        payload: errors.response.data.error
+      })
+    })
+  }
+}
+
 export const setCurrentBoard = (token, id) => {
   return (dispatch) => {
     axios
