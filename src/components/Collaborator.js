@@ -24,7 +24,7 @@ class Collaborator extends React.Component{
 
   getCollab(token, email){
     return(axios
-      .get(`http://localhost:4000/findaccount?email=${email}`, {
+      .get(`https://corkly-api.herokuapp.com/findaccount?email=${email}`, {
         headers:
         {token: token}
       }))
