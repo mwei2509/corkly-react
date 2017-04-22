@@ -220,7 +220,7 @@ class Corkboard extends React.Component {
           type="text" value={this.props.board.title}
           onChange={this.titleChange.bind(this)}
           />
-        {this.props.token ? (this.props.boardId ? <span style={{display: "block", zIndex: "1000", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
+        {this.props.token ? (this.props.boardId ? <span style={{display: "block", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
 
         {showElements}
