@@ -110,8 +110,8 @@ font-style: italic;
 }
 
 .postit-image{
-  max-width: 400px;
-  max-height: 400px;
+  /*max-width: 400px;
+  max-height: 400px;*/
   margin: 0 !important;
   display: block;
   border-bottom-left-radius: 5px;

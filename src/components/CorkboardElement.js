@@ -5,6 +5,7 @@ import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateElement  } from '../actions'
 import {CirclePicker} from 'react-color'
+import Dropzone from 'react-dropzone'
 
 
 class CorkboardElement extends React.Component {
@@ -63,24 +64,27 @@ class CorkboardElement extends React.Component {
     })
   }
 
-  handleChangeImage(evt){
-      var self = this;
-      var reader = new FileReader();
-      var file = evt.target.files[0];
-
-      reader.onload = function(upload) {
-          self.props.updateElement({
-            element:{
-              EID: self.props.element.EID,
-              is_image: true,
-              image_blob: upload.target.result
-            }
-          })
-      };
-      reader.readAsDataURL(file);
-      this.setState({
-        imageOn: false
+  onDrop(files){
+    var self = this
+    var file = files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file)
+    reader.onload=()=>{
+      self.props.updateElement({
+        element:{
+          EID: self.props.element.EID,
+          is_image: true,
+          image_blob: reader.result
+        }
       })
+    }
+    this.setState({
+      imageOn: false
+    })
+}
+
+  onOpenClick(){
+    this.refs.dropzone.open()
   }
 
   pickColor(color){
@@ -96,6 +100,11 @@ class CorkboardElement extends React.Component {
     })
   }
   render(){
+    let {width, height} = this.props.element
+
+    let elementwidth = (typeof width === "string") ? parseInt(width.slice(0,-2))+20 : width+20
+    let elementheight = (typeof height === "string") ? parseInt(height.slice(0,-2)) : height
+    console.log(elementwidth)
     const colorPicker=(
       <div style={{position: "absolute", left: 50, top: -50}}>
         <CirclePicker
@@ -123,7 +132,6 @@ class CorkboardElement extends React.Component {
     }
 
     let inputStyle={
-      // background: "rgba(255, 255, 255, 0.3)",
       background: "none",
       outline: "none",
       border: "none",
@@ -137,12 +145,25 @@ class CorkboardElement extends React.Component {
       height: this.props.element.height
     }
 
-    const imageForm=<form>
-      <label>
-        <input type="file" accept="image/gif,image/jpeg" onChange={this.handleChangeImage.bind(this)} />
-      </label>
-    </form>
+    let dropzoneStyle={
+      position: "absolute",
+      background: "rgba(255,255,255,0.3)",
+      outline: "none",
+      border: "1px dashed #000",
+      margin: 5,
+      padding: 5,
+      width: elementwidth-17,
+      height: elementheight-25,
+      marginBottom: 10
+    }
 
+    const imageForm=<Dropzone style={{}} accept="image/jpeg, image/jpg, image/png, image/gif"
+        ref="dropzone" onDrop={this.onDrop.bind(this)} >
+        <div style={dropzoneStyle}
+          onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)}>
+          <span style={{fontSize: 12}}>Drag and drop (or click to upload) photos to this sticky</span><br />
+        </div>
+      </Dropzone>
     return (
       <Draggable
         axis="both"
@@ -173,16 +194,16 @@ class CorkboardElement extends React.Component {
           </div>
           {this.state.colorOn ? colorPicker : null}
           {this.state.imageOn ? imageForm : null}
-          {this.props.element.is_image ? <img src={this.props.element.image_blob} className="postit-image" /> :
-          <textarea
-              autoFocus
-              onFocus={this.onFocus.bind(this)}
-              ref={`textarea-${this.props.element.EID}`}
-              style={inputStyle}
-              value={this.props.element.content}
-              onChange={(e) => {this.props.contentChange(e, this.props.element.EID)}}
-              onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)} />
-          }
+          {(!this.state.imageOn && this.props.element.is_image) ? <img src={this.props.element.image_blob}
+              style={{width: elementwidth+20}} className="postit-image" /> : <textarea
+                  autoFocus
+                  onFocus={this.onFocus.bind(this)}
+                  ref={`textarea-${this.props.element.EID}`}
+                  style={inputStyle}
+                  value={this.state.imageOn ? "": this.props.element.content}
+                  onChange={(e) => {this.props.contentChange(e, this.props.element.EID)}}
+                  onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)} />}
+
         </div>
       </Draggable>
     )

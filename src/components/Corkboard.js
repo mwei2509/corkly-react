@@ -21,27 +21,11 @@ class Corkboard extends React.Component {
     this.createBoard = this.createBoard.bind(this)
     this.saveBoard = this.saveBoard.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    // this.handleDrop = this.handleDrop.bind(this)
-    // this.preventDefault = this.preventDefault.bind(this)
 
     this.state={
       boardTitle: ''
     }
   }
-
-
-//   preventDefault(event){
-//     event.preventDefault()
-//   }
-
-//   handleDrop(event){
-//     event.preventDefault()
-//     let file = event.dataTransfer.files[0]
-//     let imageBlob = window.URL.createObjectURL(file)
-//     this.setState({
-//       imageBlob: imageBlob
-//     })
-//   }
 
   addSticky(e){
     if(e.target.className === "corkboard-container"){
@@ -153,29 +137,6 @@ class Corkboard extends React.Component {
     this.props.updateBoard(this.props.token, {board: {title: this.props.board.title, currentcolor: this.props.boardAttributes.currentColor, id: this.props.boardId, elements_attributes: zSort}})
   }
 
-  // submitImage(){
-  //   var preview = document.querySelector('img');
-  //   var file    = document.querySelector('input[type=file]').files[0];
-  //   var reader  = new FileReader();
-  //   reader.onload = function(upload){
-  //     self.setState({
-  //       imageBlob: reader.result
-  //     })
-  //   }
-  //
-  //   reader.addEventListener("load", function () {
-  //     preview.src = reader.result;
-  //   }, false);
-  //
-  //   if (file) {
-  //     reader.readAsDataURL(file);
-  //   }
-  //   if (file){
-  //     reader.readAsDataURL(file)
-  //   }
-  // }
-
-
   render() {
     let showElements = this.props.boardElements.map((element) => {
         return(<CorkboardElement
@@ -201,8 +162,8 @@ class Corkboard extends React.Component {
     const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none"}}
-      value={`http://localhost:3000/${this.props.account.username}/${this.props.board.slug}`} />
-    <CopyToClipboard text={`http://localhost:3000/${this.props.account.username}/${this.props.board.slug}`}>
+      value={`http://localhost:3000${this.props.board.url}`} />
+    <CopyToClipboard text={`http://localhost:3000${this.props.board.url}`}>
         <button className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
