@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { updateElement  } from '../actions'
 import {CirclePicker} from 'react-color'
 import Dropzone from 'react-dropzone'
+import Canvas from './canvas'
 
 
 class CorkboardElement extends React.Component {
@@ -126,7 +127,10 @@ class CorkboardElement extends React.Component {
     this.setState({
       colorOn: false
     })
+
   }
+
+
   render(){
     let {width, height} = this.props.element
 
@@ -222,8 +226,12 @@ class CorkboardElement extends React.Component {
           </div>
           {this.state.colorOn ? colorPicker : null}
           {this.state.imageOn ? imageForm : null}
-          {(!this.state.imageOn && this.props.element.is_image) ? <img src={this.props.element.image_blob}
-              style={{width: elementwidth+20}} className="postit-image" /> : <textarea
+          {(!this.state.imageOn && this.props.element.is_image) ? <div>
+              <Canvas id={this.props.element.EID}
+                width={elementwidth}
+                height={elementheight}/>
+              <img src={this.props.element.image_blob}
+              style={{width: elementwidth+20}} className="postit-image" /></div> : <textarea
                   autoFocus
                   onFocus={this.onFocus.bind(this)}
                   ref={`textarea-${this.props.element.EID}`}
