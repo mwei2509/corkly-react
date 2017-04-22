@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import Image from 'react-image-file'
 
 import { push } from 'react-router-redux'
-import { Receiver } from 'react-file-uploader'
-
 import {
   changeBoardAttributes,
   publish,
