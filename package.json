@@ -2,7 +2,6 @@
   "name": "corkly-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "corkly.surge.sh",
   "dependencies": {
     "axios": "^0.16.1",
     "dotenv": "^4.0.0",
