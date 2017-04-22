@@ -1,9 +1,10 @@
 import axios from 'axios'
+import {CorklyApi} from '../components/constants'
 
 export function createBoard(token, board){
   return (dispatch) => {
     axios
-      .post(`https://corkly-api.herokuapp.com/boards`, board, {
+      .post(`${CorklyApi}/boards`, board, {
         headers:
         {token: token}
       })
@@ -22,7 +23,7 @@ export function createBoard(token, board){
 export const deleteBoard = (token, payload) => {
   return (dispatch) => {
   axios
-    .delete(`https://corkly-api.herokuapp.com/boards/${payload.id}`, {
+    .delete(`${CorklyApi}/boards/${payload.id}`, {
       headers:
       {token: token}
     })
@@ -40,7 +41,7 @@ export const deleteBoard = (token, payload) => {
 export const updateBoard = (token, payload) => {
   return (dispatch) => {
     axios
-    .patch(`https://corkly-api.herokuapp.com/boards/${payload.board.id}`, payload, {
+    .patch(`${CorklyApi}/boards/${payload.board.id}`, payload, {
       headers:
       {token: token}
     })
@@ -94,7 +95,7 @@ export const changeBoardColor =(token, payload) => {
 export const setCurrentBoard = (token, id) => {
   return (dispatch) => {
     axios
-      .get(`https://corkly-api.herokuapp.com/boards/${id}`, {
+      .get(`${CorklyApi}/boards/${id}`, {
         headers:
         {token: token}
       })
@@ -120,7 +121,7 @@ export const setCurrentBoard = (token, id) => {
 export const setPublicBoard = (token, slug) => {
   return (dispatch) => {
     axios
-      .get(`https://corkly-api.herokuapp.com/boards/slug/${slug}`, {
+      .get(`${CorklyApi}/boards/slug/${slug}`, {
         headers:
         {token: token}
       })
@@ -159,7 +160,7 @@ export const newBoard = () => {
 export function addCollaborator(token, payload){
   return (dispatch) => {
     axios
-    .post(`https://corkly-api.herokuapp.com/boards/${payload.id}`, payload, {
+    .post(`${CorklyApi}/boards/${payload.id}`, payload, {
       headers:
       {token: token}
     })
@@ -185,7 +186,7 @@ export function addCollaborator(token, payload){
 export function publish(token, {board}){
   return (dispatch) => {
     axios
-    .patch(`https://corkly-api.herokuapp.com/boards/${board.id}/publish`, board, {
+    .patch(`${CorklyApi}/boards/${board.id}/publish`, board, {
       headers:
       {token: token}
     })
@@ -244,7 +245,7 @@ export const updateTitle = (title) =>{
 export const login = (username, password) => {
   return(dispatch)=>{
     axios
-    .post('https://corkly-api.herokuapp.com/login', {
+    .post(`${CorklyApi}/login`, {
       account: { username: username, password: password}
     })
     .then(({data}) => {
@@ -270,7 +271,7 @@ export const login = (username, password) => {
 export const register = (username, email, password) => {
   return(dispatch)=>{
     axios
-    .post('https://corkly-api.herokuapp.com/register', {
+    .post(`${CorklyApi}/register`, {
       account: { username: username, email: email, password: password}
     })
     .then(({data})=>{
@@ -317,7 +318,7 @@ export const clearUser = () =>{
 export function setUser(token){
   return (dispatch) => {
     axios
-      .get(`https://corkly-api.herokuapp.com/account`,
+      .get(`${CorklyApi}/account`,
         {headers: {token: token}})
       .then(({data}) => {
         dispatch({
