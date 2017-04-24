@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Corkboard from './components/Corkboard'
 import PublicCorkboard from './components/PublicCorkboard'
+import About from './components/about'
 import FontAwesome from 'react-fontawesome';
 import Account from './components/Account'
 import './App.css';
@@ -131,6 +132,7 @@ class App extends Component {
           </div>
           <div id="corkboard-container">
             <Route exact path="/" component={Corkboard}/>
+            <Route exact path="/about" component={About}/>
             <Route exact path="/:username" component={Corkboard}/>
             <Route exact path="/:username/b/:corkboardId" component={Corkboard}/>
             <Route exact path="/:username/:slug" component={PublicCorkboard}/>

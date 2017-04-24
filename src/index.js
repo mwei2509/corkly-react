@@ -32,6 +32,7 @@ ReactDOM.render(
     <Router history={history}>
       <div>
         <Route exact path="/" component={App}/>
+        <Route exact path="/about" component={App}/>
         <Route exact path="/:username" component={App}/>
         <Route exact path="/:username/b/:boardId" component={App}/>
         <Route exact path="/:username/:slug" component={App}/>
