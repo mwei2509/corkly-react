@@ -147,6 +147,7 @@ class Corkboard extends React.Component {
   }
 
   render() {
+    debugger
     let showElements = this.props.boardElements.map((element) => {
         return(<CorkboardElement
             key={element.EID}

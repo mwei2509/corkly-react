@@ -119,6 +119,7 @@ font-style: italic;
   border-bottom-right-radius: 5px;
   padding: 0;
   height: auto;
+  transition: all .3s ease 0s;
 }
 
 .operation-buttons{
@@ -129,6 +130,11 @@ font-style: italic;
 
 .operation-buttons:hover{
   color: #fff !important;
+}
+
+.meta:hover{
+  color: #008C9D !important;
+  transition: all .3s ease 0s;
 }
 
 .highlight-button:hover{

@@ -8,7 +8,7 @@ ConnectedRouter as Router,
 routerMiddleware
 } from 'react-router-redux'
 import thunk from 'redux-thunk'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link} from 'react-router-dom'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import App from './App';
@@ -32,10 +32,10 @@ ReactDOM.render(
     <Router history={history}>
       <div>
         <Route exact path="/" component={App}/>
-        <Route exact path="/about" component={App}/>
-        <Route exact path="/:username" component={App}/>
-        <Route exact path="/:username/b/:boardId" component={App}/>
-        <Route exact path="/:username/:slug" component={App}/>
+        <Route path="/about" component={App}/>
+        <Route path="/:username" component={App}/>
+        <Route path="/:username/b/:boardId" component={App}/>
+        <Route path="/:username/:slug" component={App}/>
       </div>
     </Router>
   </Provider>,
