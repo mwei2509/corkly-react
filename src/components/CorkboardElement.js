@@ -40,7 +40,6 @@ class CorkboardElement extends React.Component {
 
   onStop(){
     let div = this.refs[this.props.element.EID]
-    console.log(div.getBoundingClientRect().top)
     this.props.updateElement({
       element: {
         EID: this.props.element.EID,
@@ -117,7 +116,6 @@ class CorkboardElement extends React.Component {
   }
 
   pickColor(color){
-    console.log(color)
     this.props.updateElement({
       element:{
         EID: this.props.element.EID,
@@ -137,9 +135,9 @@ class CorkboardElement extends React.Component {
     let elementwidth = (typeof width === "string") ? parseInt(width.slice(0,-2))+20 : width+20
     let elementheight = (typeof height === "string") ? parseInt(height.slice(0,-2)) : height
     const colorPicker=(
-      <div style={{position: "absolute", left: 50, top: -50}}>
+      <div style={{position: "absolute", left: 0, top: -50}}>
         <CirclePicker
-          width={100}
+          width={200}
           circleSize={15}
           disableAlpha={true}
           colors={["#f44336", "#e91e63", "#9c27b0",

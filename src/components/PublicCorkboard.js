@@ -3,7 +3,7 @@ import PublicCorkboardElement from './PublicCorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
-
+import { Link} from 'react-router-dom'
 import { push } from 'react-router-redux'
 
 import { changeBoardAttributes, publish, addBoardElement, updateElement, createBoard, deleteElement, updateBoard, updateTitle, deleteBoard, setCurrentBoard, newBoard, setPublicBoard } from '../actions'
@@ -12,6 +12,7 @@ import Collaborator from './Collaborator'
 import FontAwesome from 'react-fontawesome';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CopyToClipboard from 'react-copy-to-clipboard';
+import ReactTooltip from 'react-tooltip'
 
 class PublicCorkboard extends React.Component {
 
@@ -33,16 +34,17 @@ class PublicCorkboard extends React.Component {
             contentChange={null}
             zIndex={element.zIndex ? element.zIndex : 1}/>)
     })
-    const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
+    const shareLink=<span data-tip="Share public board link"  style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
-      style={{border: 0, outline: 0, background: "none"}}
-      value={`http://localhost:3000${this.props.board.url}`} />
-    <CopyToClipboard text={`http://localhost:3000${this.props.board.url}`}>
+      style={{border: 0, outline: 0, background: "none", width: 275}}
+      value={`http://troubled-offer.surge.sh${this.props.board.url}`} />
+    <CopyToClipboard text={`http://troubled-offer.surge.sh${this.props.board.url}`}>
         <button className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
-
-    const pleaseLogin=<span style={{display: "block"}}><strong>Must be logged in to save or edit this board</strong></span>
+    const viewPrivate = <Link data-tip="View private board to edit" to={`/${this.props.account.username}/b/${this.props.boardId}`}>
+      <button data-tip="View private board to edit" style={{fontSize: 20}} className="icon-button">
+      <FontAwesome name="edit" /></button></Link>
 
     const corkboardStyle={
       width: "100vw",
@@ -78,6 +80,9 @@ class PublicCorkboard extends React.Component {
           placeholder="title your corkly"
           type="text" value={this.props.board.title}
           />
+
+        <span style={{display: "block", position: "relative"}}>{this.props.token ? (this.props.boardAccounts.filter((account)=>{return account.id==this.props.account.id}).length>0 ? <span>{viewPrivate}</span>:null):null}{shareLink}</span>
+        <ReactTooltip place="bottom" type="dark" effect="float"/>
 
         {showElements}
       </div>

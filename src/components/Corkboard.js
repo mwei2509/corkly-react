@@ -20,7 +20,7 @@ import {
   setPublicBoard
 } from '../actions'
 import Collaborator from './Collaborator'
-
+import ReactTooltip from 'react-tooltip'
 import FontAwesome from 'react-fontawesome';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -157,23 +157,23 @@ class Corkboard extends React.Component {
             zIndex={element.zIndex ? element.zIndex : 1}/>)
     })
 
-    const saveButton = <button style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
+    const saveButton = <button data-tip="Save board" data-for="corkboard-operations" style={{fontSize: "20px"}} className="icon-button" onClick={this.saveBoard}>
       <FontAwesome name="floppy-o" /></button>
-    const createButton = <span style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
+    const createButton = <span data-tip="Create board" data-for="corkboard-operations" style={{display: "block"}}><button style={{fontSize: "20px"}} className="icon-button" onClick={this.createBoard}>
       <FontAwesome name="floppy-o" /></button></span>
-    const deleteButton =<button style={{fontSize: "20px"}} className="icon-button" onClick={this.handleDelete.bind(null, this.props.boardId)}>
+    const deleteButton =<button data-tip="Delete board" data-for="corkboard-operations" style={{fontSize: "20px"}} className="icon-button" onClick={this.handleDelete.bind(null, this.props.boardId)}>
       <FontAwesome name="trash" /></button>
-    const addUser=<button style={{fontSize: "20px"}} className="icon-button"
+    const addUser=<button data-tip="Add a Collaborator" data-for="corkboard-operations" style={{fontSize: "20px"}} className="icon-button"
       onClick={this.props.changeBoardAttributes.bind(this, {showCollabForm: !this.props.boardAttributes.showCollabForm})}>
       <FontAwesome name="user" /></button>
-    const publishButton=<button style={{fontSize: "20px"}} className="icon-button" onClick={this.publish.bind(this)}>
+    const publishButton=<button data-tip="Publish board!" data-for="corkboard-operations" style={{fontSize: "20px"}} className="icon-button" onClick={this.publish.bind(this)}>
       <FontAwesome name="share" /></button>
     const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none"}}
       value={`http://troubled-offer.surge.sh${this.props.board.url}`} />
     <CopyToClipboard text={`http://troubled-offer.surge.sh${this.props.board.url}`}>
-        <button className="icon-button"><FontAwesome name="clipboard" /></button>
+        <button data-tip="Share link to public board!" data-for="corkboard-operations" className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
 
@@ -217,7 +217,6 @@ class Corkboard extends React.Component {
           />
         {this.props.token ? (this.props.boardId ? <span style={{display: "block", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
-
         {showElements}
       </div>
     );
