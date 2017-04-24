@@ -66,7 +66,7 @@ class Account extends React.Component {
     let usernameUrl = `/${this.props.account.username}`
     return (
       <div style={{paddingBottom: 50}}>
-        {(!!this.props.token) ? <Route path="/:username" component={AccountInfo} /> :
+        {(!!this.props.token) ? <AccountInfo /> :
           <div className="account-input">
             <button onClick={this.toggleLogin.bind(this)}>
               {this.state.showLogin? "Register":"Log in!"}</button>

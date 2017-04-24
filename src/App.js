@@ -7,7 +7,7 @@ import Account from './components/Account'
 import './App.css';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link, Route, Redirect} from 'react-router-dom'
+import { Link, Route, Redirect, Switch} from 'react-router-dom'
 import { newBoard, changeBoardAttributes, changeBoardColor } from './actions'
 import {push} from 'react-router-redux'
 import ReactTooltip from 'react-tooltip'
@@ -53,14 +53,15 @@ class App extends Component {
         sidebarActive: !this.props.boardAttributes.sidebarActive
       })
     }
-    newBoard(){
-      this.props.newBoard()
-      if(this.props.token){
-        this.props.push(`/${this.props.account.username}/b/new`)
-      }else{
-        this.props.push('/')
-      }
+
+  newBoard(){
+    this.props.newBoard()
+    if(this.props.token){
+      this.props.push(`/${this.props.account.username}/b/new`)
+    }else{
+      this.props.push('/')
     }
+  }
   render() {
     const sidebarActive={
       color: "#fff",
@@ -131,11 +132,13 @@ class App extends Component {
 
           </div>
           <div id="corkboard-container">
-            <Route exact path="/" component={Corkboard}/>
-            <Route exact path="/about" component={About}/>
-            <Route exact path="/:username" component={Corkboard}/>
-            <Route exact path="/:username/b/:corkboardId" component={Corkboard}/>
-            <Route exact path="/:username/:slug" component={PublicCorkboard}/>
+            <Switch>
+              <Route exact path="/" component={Corkboard}/>
+              <Route path="/about" component={About}/>
+              <Route path="/:username" component={Corkboard}/>
+              <Route path="/:username/b/:corkboardId" component={Corkboard}/>
+              <Route path="/:username/:slug" component={PublicCorkboard}/>
+            </Switch>
           </div>
         </div>
     );
