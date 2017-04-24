@@ -136,7 +136,6 @@ class CorkboardElement extends React.Component {
 
     let elementwidth = (typeof width === "string") ? parseInt(width.slice(0,-2))+20 : width+20
     let elementheight = (typeof height === "string") ? parseInt(height.slice(0,-2)) : height
-    console.log(elementwidth)
     const colorPicker=(
       <div style={{position: "absolute", left: 50, top: -50}}>
         <CirclePicker
@@ -230,8 +229,10 @@ class CorkboardElement extends React.Component {
               <Canvas id={this.props.element.EID}
                 width={elementwidth}
                 height={elementheight}/>
-              <img src={this.props.element.image_blob}
-              style={{width: elementwidth+20}} className="postit-image" /></div> : <textarea
+              <img
+                src={this.props.element.image_blob}
+                style={{width: elementwidth+20}} className="postit-image" /></div> :
+                <textarea
                   autoFocus
                   onFocus={this.onFocus.bind(this)}
                   ref={`textarea-${this.props.element.EID}`}

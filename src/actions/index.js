@@ -33,7 +33,14 @@ export const deleteBoard = (token, payload) => {
         payload: data
       })
     }).catch((errors) => {
-      console.log(errors)
+      dispatch({
+        type: "ADD_ERROR",
+        payload: "Problem deleting board"
+      })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
     })
   }
 }
@@ -88,6 +95,10 @@ export const changeBoardColor =(token, payload) => {
         type: "ADD_ERROR",
         payload: errors.response.data.error
       })
+      setTimeout(()=>{dispatch({
+        type: "ADD_ERROR",
+        payload: ""
+      })}, 2000)
     })
   }
 }

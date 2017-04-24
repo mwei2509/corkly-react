@@ -32,7 +32,7 @@ class Account extends React.Component {
      if(this.props.token && prevProps.token !== this.props.token){
        this.props.setUser(this.props.token)
      }
-     if(this.props.account.update_me !== prevProps.account.update_me){
+     if(this.props.token && this.props.account.update_me !== prevProps.account.update_me){
        this.props.setUser(this.props.token)
      }
    }
