@@ -57,16 +57,14 @@ class Corkboard extends React.Component {
   }
 
   componentWillMount(){
-    let {corkboardId, slug} = this.props.match.params
-    if (slug){
-      this.props.setPublicBoard(this.props.token, slug)
-    } else if (corkboardId){
+    let {corkboardId} = this.props.match.params
+    if (corkboardId){
       this.props.setCurrentBoard(this.props.token, corkboardId)
     }
   }
 
   componentWillReceiveProps(nextProps){
-    let {corkboardId, slug} = nextProps.match.params
+    let {corkboardId} = nextProps.match.params
     //check logged in
     if(nextProps.token){
       //logged in
@@ -74,9 +72,7 @@ class Corkboard extends React.Component {
       if(nextProps.boardId){
         //board exists
         //check params
-        if (slug){
-
-        } else if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
+        if (corkboardId && corkboardId === "new" && corkboardId !== this.props.match.params.corkboardId){
           // routes == /:user/b/new && you JUST navigated there
           this.props.newBoard()
         } else if (!this.props.boardAttributes.error && nextProps.boardAttributes.error) {
@@ -112,9 +108,10 @@ class Corkboard extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-     if(this.props.token && prevProps.token !== this.props.token){
-       this.props.setCurrentBoard(this.props.token, this.props.match.params.corkboardId)
-     }
+    let {corkboardId} = this.props.match.params
+    if(corkboardId && corkboardId!=="new" && this.props.token && prevProps.token !== this.props.token){
+     this.props.setCurrentBoard(this.props.token, this.props.match.params.corkboardId)
+    }
    }
 
   contentChange(e, EID){

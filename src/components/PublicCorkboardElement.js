@@ -3,19 +3,22 @@ import Draggable from 'react-draggable';
 import FontAwesome from 'react-fontawesome';
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateElement  } from '../actions'
+import { updateElement, addError } from '../actions'
 import {CirclePicker} from 'react-color'
 import Dropzone from 'react-dropzone'
 
 
 class PublicCorkboardElement extends React.Component {
+  message(){
+    this.props.addError("Please login to do that!")
+    setTimeout(()=>{this.props.addError("")}, 2000)
+  }
 
   render(){
     let {width, height} = this.props.element
 
     let elementwidth = (typeof width === "string") ? parseInt(width.slice(0,-2))+20 : width+20
     let elementheight = (typeof height === "string") ? parseInt(height.slice(0,-2)) : height
-    console.log(elementwidth)
 
     let stickyStyle={
       position: "absolute",
@@ -40,19 +43,8 @@ class PublicCorkboardElement extends React.Component {
       marginRight: 5,
       fontSize: "18px",
       width: this.props.element.width,
-      height: this.props.element.height
-    }
-
-    let dropzoneStyle={
-      position: "absolute",
-      background: "rgba(255,255,255,0.3)",
-      outline: "none",
-      border: "1px dashed #000",
-      margin: 5,
-      padding: 5,
-      width: elementwidth-17,
-      height: elementheight-25,
-      marginBottom: 10
+      height: this.props.element.height,
+      resize: "none"
     }
 
     return (
@@ -65,19 +57,19 @@ class PublicCorkboardElement extends React.Component {
         zIndex={1}>
         <div ref={this.props.element.EID} style={stickyStyle}>
           <div style={{minHeight: 20, width: "100%"}}>
-            <button className="icon-button" style={{float: "left"}}>
+            <button className="icon-button" style={{float: "left"}} onClick={this.message.bind(this)}>
               <FontAwesome name="close" />
             </button>
 
-            <button className="icon-button" style={{float: "right"}}>
+            <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
               <FontAwesome name="thumb-tack" />
             </button>
 
-            <button className="icon-button" style={{float: "right"}}>
+            <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
               <FontAwesome name="image" />
             </button>
 
-            <button className="icon-button" style={{float: "right"}}>
+            <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
               <FontAwesome name="paint-brush" />
             </button>
           </div>
@@ -95,7 +87,8 @@ class PublicCorkboardElement extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    updateElement: updateElement
+    updateElement: updateElement,
+    addError: addError
   }, dispatch)
 }
 
