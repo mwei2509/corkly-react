@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { Link, Route, Redirect} from 'react-router-dom'
 import { newBoard, changeBoardAttributes, changeBoardColor } from './actions'
 import {push} from 'react-router-redux'
-
+import ReactTooltip from 'react-tooltip'
 import {CirclePicker} from 'react-color'
 import marbleImage from './imgs/marble.jpg'
 
@@ -48,7 +48,6 @@ class App extends Component {
     }
 
     toggleSidebar(){
-      console.log(this.props.boardAttributes.sidebarActive)
       this.props.changeBoardAttributes({
         sidebarActive: !this.props.boardAttributes.sidebarActive
       })
@@ -105,28 +104,24 @@ class App extends Component {
 
     return (
         <div className="App">
+          <ReactTooltip id="sidebar-operations" place="right" type="dark" effect="solid"/>
+          <ReactTooltip id="corkboard-operations" place="bottom" type="dark" effect="solid"/>
           {this.props.boardAttributes.error ? errorDiv : null}
           {this.state.colorOn ? colorPicker : null}
           <div id="sidebar-wrapper" style={this.props.boardAttributes.sidebarActive ? sidebarActive : sidebarInactive}>
             <div style={{width: 40, textAlign:"center", padding: 0, margin: 0, float: "right", color: "#000"}} >
-              <span className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
+              <span data-tip="View Menu" data-for="sidebar-operations" className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />
               </span>
-              <span className="operation-buttons" onClick={this.newBoard.bind(this)}>
+              <span data-tip="New Board" data-for="sidebar-operations" className="operation-buttons" onClick={this.newBoard.bind(this)}>
                 <FontAwesome name="file" />
               </span>
               <span
                 className="operation-buttons"
                 onClick={this.toggleColorPicker.bind(this)} >
-                <button className="highlight-button" style={{background: this.props.board.currentColor,
+                <button data-tip="Change default sticky color" data-for="sidebar-operations" className="highlight-button" style={{background: this.props.board.currentColor,
                   width: 14, height: 14, borderRadius: 7,
                   border: "1px solid #000", outline: 0}}/>
-              </span>
-              <span className="operation-buttons">
-                <FontAwesome name="font" />
-              </span>
-              <span className="operation-buttons">
-                <FontAwesome name="users" />
               </span>
             </div>
             <div id="sidebar" style={{background: `url(${marbleImage})`}}>

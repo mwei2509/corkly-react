@@ -38,8 +38,8 @@ class AccountInfo extends React.Component {
 
       <div>
         <div style={{position: "relative", paddingLeft: 10, paddingRight: 10, textAlign: "left"}}>
-          <span style={{width: "100%", fontSize: 20}}>welcome, {account.username}
-            <button style={{float: "right", fontSize: 20, background: "none", color: "#fff", border: 0, outline: 0}} onClick={this.logOut.bind(this)}>
+          <span style={{width: "100%", fontSize: 20}}>Welcome, {account.username.charAt(0).toUpperCase() + account.username.slice(1)}
+            <button data-tip="Log out" data-for="sidebar" style={{float: "right", fontSize: 20, background: "none", color: "#fff", border: 0, outline: 0}} onClick={this.logOut.bind(this)}>
               <FontAwesome name="power-off"/>
             </button>
           </span>
