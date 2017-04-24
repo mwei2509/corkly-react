@@ -12,7 +12,8 @@ class About extends React.Component {
     this.state={
       holt: false,
       jeff: false,
-      melissa: false
+      melissa: false,
+      corkly: false
     }
   }
 
@@ -90,9 +91,9 @@ class About extends React.Component {
         className="title-text"
         type="text" value="About Corkly"
         />
-        <div style={stickyStyle}>
-          {operations}
-          <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />
+      <div onMouseEnter={this.handleHover.bind(this, "corkly")} onMouseLeave={this.handleHover.bind(this, "corkly")} style={{...stickyStyle, width: 500, height: 400}}>
+        {operations}
+        {this.state.corkly ? <span style={{padding: 10, fontSize: 20}}>Corkly is the final project of blah blah</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
       </div>
       <div onMouseEnter={this.handleHover.bind(this, "holt")} onMouseLeave={this.handleHover.bind(this, "holt")} style={{...stickyStyle, position: "absolute", top: 350, left: 400, zIndex: 1, background: "#ff9800", height: 250, width: 250}}>
         {operations}

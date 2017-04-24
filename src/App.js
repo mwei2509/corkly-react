@@ -128,6 +128,9 @@ class App extends Component {
             </div>
             <div id="sidebar" style={{background: `url(${marbleImage})`}}>
               <Account />
+              <Link to="/about">
+                <span className="meta" style={{fontFamily: "Lobster", color: "#fff"}}>Behind the Cork</span>
+              </Link>
             </div>
 
           </div>

@@ -132,6 +132,11 @@ font-style: italic;
   color: #fff !important;
 }
 
+.meta:hover{
+  color: #008C9D !important;
+  transition: all .3s ease 0s;
+}
+
 .highlight-button:hover{
   border: 1px solid #fff !important;
   transition: all .3s ease 0s;
