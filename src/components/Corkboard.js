@@ -3,7 +3,7 @@ import CorkboardElement from './CorkboardElement'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Image from 'react-image-file'
-
+import {CorklyReact} from './constants.js'
 import { push } from 'react-router-redux'
 import {
   changeBoardAttributes,
@@ -171,8 +171,8 @@ class Corkboard extends React.Component {
     const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none"}}
-      value={`http://troubled-offer.surge.sh${this.props.board.url}`} />
-    <CopyToClipboard text={`http://troubled-offer.surge.sh${this.props.board.url}`}>
+      value={`${CorklyReact}${this.props.board.url}`} />
+    <CopyToClipboard text={`${CorklyReact}${this.props.board.url}`}>
         <button data-tip="Share link to public board!" data-for="corkboard-operations" className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
