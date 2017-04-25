@@ -217,6 +217,7 @@ class Corkboard extends React.Component {
           />
         {this.props.token ? (this.props.boardId ? <span style={{display: "block", position: "relative"}}>{saveButton}{deleteButton}{addUser}{this.props.board.public ? shareLink : publishButton}</span> : (this.props.board.title ? createButton : enterTitle)) : pleaseLogin}
         {this.props.boardAttributes.showCollabForm ? <Collaborator /> : null}
+        {!this.props.token && !this.props.board.public && this.props.board.boardElements.length === 0 ? <h1 style={{fontFamily: "Lobster", color: "rgba(0,0,0, 0.7)", marginTop: "20%"}}>Double Click To Add Sticky</h1> : null}
         {showElements}
       </div>
     );
