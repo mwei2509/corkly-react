@@ -25,13 +25,6 @@ class App extends Component {
     }
   }
 
-  componentWillMount(){
-    // if(this.props.token && !this.props.match){
-    //   this.props.history.push(`/${this.props.account.username}`)
-    // }
-
-  }
-
     toggleColorPicker(){
       this.setState({
         colorOn: !this.state.colorOn
