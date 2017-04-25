@@ -93,7 +93,7 @@ class About extends React.Component {
         />
       <div onMouseEnter={this.handleHover.bind(this, "corkly")} onMouseLeave={this.handleHover.bind(this, "corkly")} style={{...stickyStyle, width: 500, height: 400}}>
         {operations}
-        {this.state.corkly ? <span style={{padding: 10, fontSize: 20}}>Corkly is the final project of Holt, Melissa, & Jeff.</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
+        {this.state.corkly ? <span style={{padding: 10, fontSize: 20}}>Corkly is a place for fun, productivity, and sharing ideas. Place a sticky, import images, make collaboration easy!</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
       </div>
       <div onMouseEnter={this.handleHover.bind(this, "holt")} onMouseLeave={this.handleHover.bind(this, "holt")} style={{...stickyStyle, position: "absolute", top: "50%", left: "21%", zIndex: 1, background: "#ff9800", height: 250, width: 250}}>
         {operations}
@@ -101,7 +101,7 @@ class About extends React.Component {
       </div>
       <div onMouseEnter={this.handleHover.bind(this, "melissa")} onMouseLeave={this.handleHover.bind(this, "melissa")} style={{...stickyStyle, position: "absolute", top: "60%", left: "40%", zIndex: 2, background: "#9c27b0", height: 250, width: 250}}>
         {operations}
-        {this.state.melissa ? <span style={{padding: 10, fontSize: 20}}>Her?  Is she funny?</span> : <img src="https://i.imgur.com/zE4cGfn.jpg" style={{width: 250, height: 230}} className="postit-image" />}
+        {this.state.melissa ? <span style={{padding: 10, fontSize: 20}}>Her? Is she funny?</span> : <img src="https://i.imgur.com/zE4cGfn.jpg" style={{width: 250, height: 230}} className="postit-image" />}
       </div>
       <div onMouseEnter={this.handleHover.bind(this, "jeff")} onMouseLeave={this.handleHover.bind(this, "jeff")} style={{...stickyStyle, position: "absolute", top: "50%", left: "59%", background: "#4caf50", height: 250, width: 250}}>
         {operations}
