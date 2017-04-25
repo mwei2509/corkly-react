@@ -112,3 +112,44 @@ div#sidebar-menu {
   padding: 0px;
   font-size: 10px;
 }
+
+#collab-wrapper {
+  background: #000;
+  position: relative;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  z-index: 1000;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  display: inline-block;
+}
+
+#collab-form {
+  margin-top: 5px;
+}
+
+#collab-input {
+  background: #fff;
+  border: 0px;
+  outline: 0px;
+  padding: 10px;
+  color: #00bcd4;
+}
+
+#collab-heading {
+  font-family: "Lobster";
+  font-size: 20px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.collab-button {
+  background: #00bcd4;
+  border: 0px;
+  outline: 0px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 5px;
+  color: #fff;
+}

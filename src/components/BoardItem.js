@@ -33,7 +33,7 @@ class BoardItem extends React.Component{
         onMouseLeave={this.hoverOff.bind(this)}>
         <span>{board.public ? "public":"private"}</span>
         <h4>{board.title}</h4>
-        <p>Created: {board.created_at}<br />
+        <p>Created: {board.created_at}<br/>
         Updated: {board.updated_at}</p>
       </div>
     )
