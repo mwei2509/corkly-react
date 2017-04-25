@@ -13,6 +13,7 @@ import FontAwesome from 'react-fontawesome';
 import corkboardImage from '../imgs/corkboard.jpg'
 import CopyToClipboard from 'react-copy-to-clipboard';
 import ReactTooltip from 'react-tooltip'
+import { CorklyReact } from './constants'
 
 class PublicCorkboard extends React.Component {
 
@@ -37,8 +38,8 @@ class PublicCorkboard extends React.Component {
     const shareLink=<span data-tip="Share public board link"  style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
       background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
       style={{border: 0, outline: 0, background: "none", width: 275}}
-      value={`http://troubled-offer.surge.sh${this.props.board.url}`} />
-    <CopyToClipboard text={`http://troubled-offer.surge.sh${this.props.board.url}`}>
+      value={`${CorklyReact}${this.props.board.url}`} />
+    <CopyToClipboard text={`${CorklyReact}${this.props.board.url}`}>
         <button className="icon-button"><FontAwesome name="clipboard" /></button>
       </CopyToClipboard>
     </span>
