@@ -37,15 +37,15 @@ class AccountInfo extends React.Component {
       return (
 
       <div>
-        <div style={{position: "relative", paddingLeft: 10, paddingRight: 10, textAlign: "left"}}>
-          <span style={{width: "100%", fontSize: 20}}>Welcome, {account.username.charAt(0).toUpperCase() + account.username.slice(1)}
-            <button data-tip="Log out" data-for="sidebar" style={{float: "right", fontSize: 20, background: "none", color: "#fff", border: 0, outline: 0}} onClick={this.logOut.bind(this)}>
+        <div id="left-column-sidebar">
+          <span id="welcome-msg">Welcome, {account.username.charAt(0).toUpperCase() + account.username.slice(1)}
+            <button id="log-out-button" data-tip="Log out" data-for="sidebar" onClick={this.logOut.bind(this)}>
               <FontAwesome name="power-off"/>
             </button>
           </span>
         </div>
       <hr />
-      <h2 style={{fontFamily: "Lobster", border: 0, margin: 0}}>Your Boards</h2>
+      <h2 id="your-boards">Your Boards</h2>
         {account.boards.map((board, index)=>{
           let boardUrl = `/${this.props.account.username}/b/${board.id}`
           return (

@@ -17,3 +17,98 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#behind-the-cork {
+  font-family: "Lobster";
+  color: #fff;
+}
+
+#behind-the-cork-link {
+  height: 50px;
+}
+
+#left-column-sidebar {
+  position: relative;
+  padding-left: 10;
+  padding-right: 10;
+  text-align: left;
+}
+
+#welcome-msg {
+  width: 100%;
+  font-size: 20px;
+}
+
+#log-out-button {
+  float: right;
+  font-size: 20px;
+  background: none;
+  color: #fff;
+  border: 0;
+  outline: 0;
+}
+
+#your-boards {
+  font-family: "Lobster";
+  border: 0;
+  margin: 0;
+}
+
+.highlight-button {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    border: 1px solid #000;
+    outline: 0;
+}
+
+div#sidebar-menu {
+  width: 40px;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+  float: right;
+  color: #000;
+}
+
+#sidebar-wrapper {
+  color: #fff;
+  position: absolute;
+  top: 0px;
+  width: 300px;
+  z-index: 1000;
+  height: 100%;
+}
+
+#color-picker {
+  position: absolute;
+  top: 50px;
+  border-left: 2px solid #fff;
+  padding-left: 10px;
+}
+
+.board-list-items {
+  border-radius: 5px;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 7px;
+  color: #000;
+}
+
+.board-list-items span{
+  float: right;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.board-list-items h4{
+  margin: 0px;
+  padding: 0px;
+}
+
+.board-list-items p{
+  margin: 0px;
+  padding: 0px;
+  font-size: 10px;
+}
