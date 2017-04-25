@@ -62,7 +62,8 @@ class App extends Component {
       top: 0,
       left: 0,
       width: 300,
-      zIndex: 1000
+      zIndex: 1000,
+      height: "100%"
     }
 
     const sidebarInactive={
@@ -121,9 +122,12 @@ class App extends Component {
             </div>
             <div id="sidebar" style={{background: `url(${marbleImage})`}}>
               <Account />
-              <Link to="/about">
-                <span className="meta" style={{fontFamily: "Lobster", color: "#fff"}}>Behind the Cork</span>
-              </Link>
+              <div style={{height: 50}}>
+                <Link to="/about">
+                  <span className="meta" style={{fontFamily: "Lobster", color: "#fff"}}>Behind the Cork</span>
+                </Link>
+              </div>
+
             </div>
 
           </div>
