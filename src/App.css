@@ -248,6 +248,20 @@ div#sidebar-menu {
   height: 10px;
 }
 
+.ReactFlipCard__Back{
+  outline: none;
+}
+
+.ReactFlipCard__Front{
+  outline: none;
+}
+
+#jeff-flipcard {
+  border: none !important;
+  outline: none !important;
+  background: #ddd;
+}
+
 #jeff-img{
   background: url("https://i.imgur.com/sStyVGj.png");
   background-size: cover;
@@ -280,5 +294,22 @@ div#sidebar-menu {
 }
 
 .socialIcons {
+  margin: auto;
+}
 
+.socialIcons .iconItem{
+  padding: 10px;
+}
+
+.socialIcons a{
+  cursor: pointer;
+  transition: color .4s ease-in-out;
+ -webkit-transition: color .4s ease-in-out;
+ -moz-transition: color .4s ease-in-out;
+ -o-transition: color .4s ease-in-out;
+ -ms-transition: color .4s ease-in-out;
+}
+
+.socialIcons a:hover{
+  color: #fff;
 }

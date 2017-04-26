@@ -36,6 +36,10 @@ class About extends React.Component {
     setTimeout(()=>{this.props.addError("")}, 2000)
   }
 
+  handleLink(e){
+    e.stopPropagation()
+  }
+
   render() {
     const corkboardStyle={
       background: `url(${corkboardImage})`,
@@ -86,6 +90,10 @@ class About extends React.Component {
         <div onMouseEnter={this.handleHover.bind(this, "corkly")} onMouseLeave={this.handleHover.bind(this, "corkly")} className="about-sticky" style={{width: 500, height: 400}}>
           {operationsMain}
           {this.state.corkly ? <span>Corkly is a place for fun, productivity, and sharing ideas. Place a sticky, import images, make collaboration easy!</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
+          <div className="socialIcons">
+            <a target="_blank" onClick={this.handleLink.bind(this)} href="https://github.com/mwei2509/corkly-react"><FontAwesome className="iconItem" name="github" size="2x"/></a>
+            <a target="_blank" onClick={this.handleLink.bind(this)} href="https://github.com/jef4490/corklyapi"><FontAwesome className="iconItem" name="github" size="2x"/></a>
+          </div>
         </div>
 
         <div id="melissa-flipcard" style={{position: "absolute", top: "50%", left: "20%"}}>
@@ -101,6 +109,10 @@ class About extends React.Component {
               {operations}
               <div className="about-author-text">
                 <span>Holt enjoys writing code, dancing, and the weird things in life</span>
+              </div>
+              <div className="socialIcons">
+                <a target="_blank" onClick={this.handleLink.bind(this)} href="https://github.com/hwalborn"><FontAwesome className="iconItem" name="github" size="2x"/></a>
+                <a target="_blank" onClick={this.handleLink.bind(this)} href="https://www.linkedin.com/in/holt-walborn-666183129/"><FontAwesome className="iconItem" name="linkedin" size="2x"/></a>
               </div>
             </div>
           </FlipCard>
@@ -119,6 +131,10 @@ class About extends React.Component {
             {operations}
             <div className="about-author-text">
               <span>Her? Is she funny?</span>
+            </div>
+            <div className="socialIcons">
+              <a target="_blank" onClick={this.handleLink.bind(this)} href="https://github.com/mwei2509"><FontAwesome className="iconItem" name="github" size="2x"/></a>
+              <a target="_blank" onClick={this.handleLink.bind(this)} href="https://www.linkedin.com/in/melissa-wei"><FontAwesome className="iconItem" name="linkedin" size="2x"/></a>
             </div>
           </div>
         </FlipCard>
@@ -140,7 +156,8 @@ class About extends React.Component {
               <span>Jeff loves coding, writing music, and the normal thing in life.</span>
             </div>
             <div className="socialIcons">
-              LinkedIn
+              <a target="_blank" onClick={this.handleLink.bind(this)} href="https://github.com/jef4490"><FontAwesome className="iconItem" name="github" size="2x"/></a>
+              <a target="_blank" onClick={this.handleLink.bind(this)} href="https://www.linkedin.com/in/jeffrey-hechler"><FontAwesome className="iconItem" name="linkedin" size="2x"/></a>
             </div>
           </div>
         </FlipCard>
