@@ -167,7 +167,7 @@ class CorkboardElement extends React.Component {
         ref="dropzone" onDrop={this.onDrop.bind(this)} >
         <div className="sticky-dropzone" style={dropzoneStyle} id="dragdrop"
           onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)}>
-          <span style={{fontSize: 12}}>Drag and drop (or click to upload) photos to this sticky</span><br />
+          <span style={{fontSize: 12}}>Drag and drop (or click to upload) photos to this sticky</span><br/>
         </div>
       </Dropzone>
     return (
