@@ -25,6 +25,12 @@ class About extends React.Component {
     })
   }
 
+  handleClick(card){
+    this.setState({
+      [card]: !this.state[card]
+    })
+  }
+
   message(){
     this.props.addError("Thanks for visiting Corkly!")
     setTimeout(()=>{this.props.addError("")}, 2000)
@@ -39,7 +45,24 @@ class About extends React.Component {
       <button className="icon-button" style={{float: "left"}} onClick={this.message.bind(this)}>
         <FontAwesome name="close" />
       </button>
+      <span className="click-to-flip">Click to Flip</span>
+      <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
+        <FontAwesome name="thumb-tack" />
+      </button>
 
+      <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
+        <FontAwesome name="image" />
+      </button>
+
+      <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
+        <FontAwesome name="paint-brush" />
+      </button>
+    </div>
+
+    const operationsMain=<div style={{minHeight: 20, width: "100%"}}>
+      <button className="icon-button" style={{float: "left"}} onClick={this.message.bind(this)}>
+        <FontAwesome name="close" />
+      </button>
       <button className="icon-button" style={{float: "right"}} onClick={this.message.bind(this)}>
         <FontAwesome name="thumb-tack" />
       </button>
@@ -61,39 +84,64 @@ class About extends React.Component {
         />
 
         <div onMouseEnter={this.handleHover.bind(this, "corkly")} onMouseLeave={this.handleHover.bind(this, "corkly")} className="about-sticky" style={{width: 500, height: 400}}>
-          {operations}
+          {operationsMain}
           {this.state.corkly ? <span>Corkly is a place for fun, productivity, and sharing ideas. Place a sticky, import images, make collaboration easy!</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
         </div>
 
-      <div id="holt-flipcard" style={{position: "absolute", top: "50%", left: "20%"}}>
-        <FlipCard>
-          <div className="about-sticky" style={{zIndex: 1, background: "#ff9800"}}>
-            Holt
+        <div id="melissa-flipcard" style={{position: "absolute", top: "50%", left: "20%"}}>
+          <FlipCard
+            disabled={true}
+            flipped={this.state.holt}
+            onFlip={this.handleOnFlip}>
+            <div className="about-sticky" onClick={this.handleClick.bind(this, "holt")} style={{zIndex: 1, background: "#ff9800"}}>
+              {operations}
+              <div id="holt-img" className="postit-image"></div>
+            </div>
+            <div className="about-sticky" onClick={this.handleClick.bind(this, "holt")} style={{zIndex: 1, background: "#ff9800"}}>
+              {operations}
+              <div className="about-author-text">
+                <span>Holt enjoys writing code, dancing, and the weird things in life</span>
+              </div>
+            </div>
+          </FlipCard>
+        </div>
+
+      <div id="melissa-flipcard" style={{position: "absolute", top: "50%", left: "40%"}}>
+        <FlipCard
+          disabled={true}
+          flipped={this.state.melissa}
+          onFlip={this.handleOnFlip}>
+          <div className="about-sticky" onClick={this.handleClick.bind(this, "melissa")} style={{zIndex: 1, background: "#9c27b0"}}>
+            {operations}
+            <div id="melissa-img" className="postit-image"></div>
           </div>
-          <div className="about-sticky" style={{zIndex: 1, background: "#ff9800"}}>
-            Yo
-          </div>
-        </FlipCard>
-      </div>
-      <div id="melissa-flipcard" style={{position: "absolute", top: "60%", left: "40%"}}>
-        <FlipCard>
-          <div className="about-sticky" style={{zIndex: 1, background: "#9c27b0"}}>
-            Melissa
-          </div>
-          <div className="about-sticky" style={{zIndex: 1, background: "#9c27b0"}}>
-            Yo
+          <div className="about-sticky" onClick={this.handleClick.bind(this, "melissa")} style={{zIndex: 1, background: "#9c27b0"}}>
+            {operations}
+            <div className="about-author-text">
+              <span>Her? Is she funny?</span>
+            </div>
           </div>
         </FlipCard>
       </div>
 
 
       <div id="jeff-flipcard" style={{position: "absolute", top: "50%", left: "60%"}}>
-        <FlipCard>
-          <div className="about-sticky" style={{zIndex: 1, background: "#4caf50"}}>
-            Jeff
+        <FlipCard
+          disabled={true}
+          flipped={this.state.jeff}
+          onFlip={this.handleOnFlip}>
+          <div className="about-sticky" onClick={this.handleClick.bind(this, "jeff")} style={{zIndex: 1, background: "#4caf50"}}>
+            {operations}
+            <div id="jeff-img" className="postit-image"></div>
           </div>
-          <div className="about-sticky" style={{zIndex: 1, background: "#4caf50"}}>
-            Yo
+          <div className="about-sticky" onClick={this.handleClick.bind(this, "jeff")} style={{zIndex: 1, background: "#4caf50"}}>
+            {operations}
+            <div className="about-author-text">
+              <span>Jeff loves coding, writing music, and the normal thing in life.</span>
+            </div>
+            <div className="socialIcons">
+              LinkedIn
+            </div>
           </div>
         </FlipCard>
       </div>
