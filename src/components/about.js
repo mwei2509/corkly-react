@@ -3,6 +3,7 @@ import corkboardImage from '../imgs/corkboard.jpg'
 import {  bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addError } from '../actions'
+import FlipCard from 'react-flipcard';
 
 import FontAwesome from 'react-fontawesome';
 
@@ -58,23 +59,46 @@ class About extends React.Component {
         className="title-text"
         type="text" value="About Corkly"
         />
-      <div onMouseEnter={this.handleHover.bind(this, "corkly")} onMouseLeave={this.handleHover.bind(this, "corkly")} className="about-sticky" style={{width: 500, height: 400}}>
-        {operations}
-        {this.state.corkly ? <span>Corkly is a place for fun, productivity, and sharing ideas. Place a sticky, import images, make collaboration easy!</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
+
+        <div onMouseEnter={this.handleHover.bind(this, "corkly")} onMouseLeave={this.handleHover.bind(this, "corkly")} className="about-sticky" style={{width: 500, height: 400}}>
+          {operations}
+          {this.state.corkly ? <span>Corkly is a place for fun, productivity, and sharing ideas. Place a sticky, import images, make collaboration easy!</span> : <img src="https://i.imgur.com/RrHf6rL.png" style={{width: 500}} className="postit-image" />}
+        </div>
+
+      <div id="holt-flipcard" style={{position: "absolute", top: "50%", left: "20%"}}>
+        <FlipCard>
+          <div className="about-sticky" style={{zIndex: 1, background: "#ff9800"}}>
+            Holt
+          </div>
+          <div className="about-sticky" style={{zIndex: 1, background: "#ff9800"}}>
+            Yo
+          </div>
+        </FlipCard>
       </div>
-      <div onMouseEnter={this.handleHover.bind(this, "holt")} onMouseLeave={this.handleHover.bind(this, "holt")} className="about-sticky" style={{position: "absolute", top: "50%", left: "20%", zIndex: 1, background: "#ff9800"}}>
-        {operations}
-        {this.state.holt ? <span>Holt enjoys writing code, dancing, and the weird things in life</span> : <img src="https://i.imgur.com/l4IHDh3.png" className="postit-image" />}
+      <div id="melissa-flipcard" style={{position: "absolute", top: "60%", left: "40%"}}>
+        <FlipCard>
+          <div className="about-sticky" style={{zIndex: 1, background: "#9c27b0"}}>
+            Melissa
+          </div>
+          <div className="about-sticky" style={{zIndex: 1, background: "#9c27b0"}}>
+            Yo
+          </div>
+        </FlipCard>
       </div>
-      <div onMouseEnter={this.handleHover.bind(this, "melissa")} onMouseLeave={this.handleHover.bind(this, "melissa")} className="about-sticky" style={{position: "absolute", top: "60%", left: "40%", zIndex: 2, background: "#9c27b0"}}>
-        {operations}
-        {this.state.melissa ? <span>Her? Is she funny?</span> : <img src="https://i.imgur.com/zE4cGfn.jpg" className="postit-image" />}
-      </div>
-      <div onMouseEnter={this.handleHover.bind(this, "jeff")} onMouseLeave={this.handleHover.bind(this, "jeff")} className="about-sticky" style={{position: "absolute", top: "50%", left: "60%", background: "#4caf50", zIndex: 1}}>
-        {operations}
-        {this.state.jeff ? <span>Jeff loves coding, writing music, and the normal thing in life.</span> : <img src="https://i.imgur.com/sStyVGj.png" className="postit-image" />}
+
+
+      <div id="jeff-flipcard" style={{position: "absolute", top: "50%", left: "60%"}}>
+        <FlipCard>
+          <div className="about-sticky" style={{zIndex: 1, background: "#4caf50"}}>
+            Jeff
+          </div>
+          <div className="about-sticky" style={{zIndex: 1, background: "#4caf50"}}>
+            Yo
+          </div>
+        </FlipCard>
       </div>
     </div>
+
     )
   }
 }
