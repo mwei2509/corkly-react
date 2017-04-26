@@ -226,3 +226,90 @@ div#sidebar-menu {
   padding: 5px;
   margin-bottom: 10px;
 }
+
+.about-sticky{
+  width: 250px;
+  height: 250px;
+  margin: auto;
+  margin-top: 25px;
+  padding: 0px !important;
+  background: #03a9f4;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.4);
+  border-radius: 5px;
+}
+
+.about-sticky span{
+  padding: 10;
+  font-size: 20;
+}
+
+.postit-image {
+  width: 250px;
+  height: 10px;
+}
+
+.ReactFlipCard__Back{
+  outline: none;
+}
+
+.ReactFlipCard__Front{
+  outline: none;
+}
+
+#jeff-flipcard {
+  border: none !important;
+  outline: none !important;
+  background: #ddd;
+}
+
+#jeff-img{
+  background: url("https://i.imgur.com/sStyVGj.png");
+  background-size: cover;
+  height: 230px;
+  width: 250px;
+}
+
+#melissa-img{
+  background: url("https://i.imgur.com/zE4cGfn.jpg");
+  background-size: cover;
+  height: 230px;
+  width: 250px;
+}
+
+#holt-img{
+  background: url("https://i.imgur.com/l4IHDh3.png");
+  background-size: cover;
+  height: 230px;
+  width: 250px;
+}
+
+.click-to-flip {
+  font-size: 14px;
+}
+
+.about-author-text {
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.socialIcons {
+  margin: auto;
+}
+
+.socialIcons .iconItem{
+  padding: 10px;
+}
+
+.socialIcons a{
+  cursor: pointer;
+  transition: color .4s ease-in-out;
+ -webkit-transition: color .4s ease-in-out;
+ -moz-transition: color .4s ease-in-out;
+ -o-transition: color .4s ease-in-out;
+ -ms-transition: color .4s ease-in-out;
+}
+
+.socialIcons a:hover{
+  color: #fff;
+}
