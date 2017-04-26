@@ -226,3 +226,24 @@ div#sidebar-menu {
   padding: 5px;
   margin-bottom: 10px;
 }
+
+.about-sticky{
+  width: 250px;
+  height: 250px;
+  margin: auto;
+  margin-top: 25px;
+  padding: 0px !important;
+  background: #03a9f4;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.4);
+  border-radius: 5px;
+}
+
+.about-sticky span{
+  padding: 10;
+  font-size: 20;
+}
+
+.postit-image {
+  width: 250px;
+  height: 230px;
+}
