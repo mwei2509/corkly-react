@@ -60,53 +60,18 @@ class Collaborator extends React.Component{
   }
 
   render(){
-    const style={
-      div: {
-        background: "#000",
-        position: "relative",
-        margin: "auto",
-        padding: 20,
-        borderRadius: 10,
-        color: "#fff",
-        zIndex: 1000,
-        boxShadow: "1px 1px 1px rgba(0,0,0,0.3)",
-        display: "inline-block"
-      }, form: {
-        marginTop: 5
-      }, h2: {
-        fontFamily: "Lobster",
-        fontSize: 20,
-        padding: 0,
-        margin: 0
-      }, input: {
-        background: "#fff",
-        border: 0,
-        outline: 0,
-        padding: 10,
-        color: "#00bcd4",
-      }, button: {
-        background: "#00bcd4",
-        border: 0,
-        outline: 0,
-        padding: 10,
-        borderRadius: 5,
-        marginLeft: 5,
-        color: "#fff"
-      }
-    }
-
-    let findcollab=<div><input style={style.input} placeholder="Collaborator Email" className="collaborator-input" type="email" onChange={this.handleChange.bind(this)} />
-    <button style={style.button} type="submit">Search</button></div>
+    let findcollab=<div><input id="collab-input" placeholder="Collaborator Email" className="collaborator-input" type="email" onChange={this.handleChange.bind(this)} />
+    <button className="collab-button" type="submit">Search</button></div>
 
     let verifycollab=<div>{this.state.collaboratorName}
-      <button style={style.button} onClick={this.addCollab.bind(this)}>ADD</button></div>
+      <button className="collab-button" onClick={this.addCollab.bind(this)}>ADD</button></div>
     return (
-      <div style={style.div}>
+      <div id="collab-wrapper">
         <button onClick={this.toggleCollabForm.bind(this)}
           style={{float: "right", background: "none", color: "#fff", border: "none", outline: "none", padding: 0, margin: 0, marginTop: -10, marginRight: -10 }}>
           <FontAwesome name="close" /></button>
-        <h2 style={style.h2}>Add a Collaborator</h2>
-        <form style={style.form} onSubmit={this.handleSubmit.bind(this)}>
+        <h2 id="collab-heading">Add a Collaborator</h2>
+        <form id="collab-form" onSubmit={this.handleSubmit.bind(this)}>
           {this.props.boardAttributes.error ? <div>{this.props.boardAttributes.error}</div>: null}
           {!!this.state.collaboratorName ? verifycollab : findcollab}
         </form>

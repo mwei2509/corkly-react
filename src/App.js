@@ -57,31 +57,17 @@ class App extends Component {
   }
   render() {
     const sidebarActive={
-      color: "#fff",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: 300,
-      zIndex: 1000,
-      height: "100%"
+      left: 0
     }
 
     const sidebarInactive={
-      color: "#fff",
-      position: "absolute",
-      top: 0,
-      left: -260,
-      width: 300,
-      zIndex: 1000
+      left: -260
     }
 
 
     const colorPicker=(
       <div id="color-picker"
-        style={{position: "absolute",
-          top: 50, borderLeft: "2px solid #fff",
-          paddingLeft: 10,
-          left: this.props.boardAttributes.sidebarActive? 300 : 50}}>
+        style={{left: this.props.boardAttributes.sidebarActive? 300 : 50}}>
         <CirclePicker
           width={100}
           circleSize={15}
@@ -105,7 +91,7 @@ class App extends Component {
           {this.props.boardAttributes.error ? errorDiv : null}
           {this.state.colorOn ? colorPicker : null}
           <div id="sidebar-wrapper" style={this.props.boardAttributes.sidebarActive ? sidebarActive : sidebarInactive}>
-            <div style={{width: 40, textAlign:"center", padding: 0, margin: 0, float: "right", color: "#000"}} >
+            <div id="sidebar-menu">
               <span data-tip="View Menu" data-for="sidebar-operations" className="operation-buttons" onClick={this.toggleSidebar.bind(this)}>
                 <FontAwesome name="reorder" />
               </span>
@@ -115,16 +101,14 @@ class App extends Component {
               <span
                 className="operation-buttons"
                 onClick={this.toggleColorPicker.bind(this)} >
-                <button data-tip="Change default sticky color" data-for="sidebar-operations" className="highlight-button" style={{background: this.props.board.currentColor,
-                  width: 14, height: 14, borderRadius: 7,
-                  border: "1px solid #000", outline: 0}}/>
+                <button data-tip="Change default sticky color" data-for="sidebar-operations" className="highlight-button" style={{background: this.props.board.currentColor}}/>
               </span>
             </div>
             <div id="sidebar" style={{background: `url(${marbleImage})`}}>
               <Account />
-              <div style={{height: 50}}>
+              <div id="behind-the-cork-link">
                 <Link to="/about">
-                  <span className="meta" style={{fontFamily: "Lobster", color: "#fff"}}>Behind the Cork</span>
+                  <span className="meta" id="behind-the-cork">Behind the Cork</span>
                 </Link>
               </div>
 

@@ -26,19 +26,14 @@ class BoardItem extends React.Component{
   render(){
     const {board} = this.props
     return(
-      <div style={{borderRadius: 5,
-          textAlign: "left",
-          padding: 10,
-          marginBottom: 7,
-          background: board.currentcolor,
-          opacity: (this.state.hoverState || this.props.boardId === board.id) ? 1: .4,
-          color: "#000"}}
+      <div style={{background: board.currentcolor,
+          opacity: (this.state.hoverState || this.props.boardId === board.id) ? 1: .4,}}
         className="board-list-items"
         onMouseEnter={this.hoverOn.bind(this)}
         onMouseLeave={this.hoverOff.bind(this)}>
-        <span style={{float: "right", fontSize: 10, fontWeight: "bold", color: "#fff"}}>{board.public ? "public":"private"}</span>
-        <h4 style={{margin: 0, padding: 0}}>{board.title}</h4>
-        <p style={{margin: 0, padding: 0, fontSize: 10}}>Created: {board.created_at}<br />
+        <span>{board.public ? "public":"private"}</span>
+        <h4>{board.title}</h4>
+        <p>Created: {board.created_at}<br/>
         Updated: {board.updated_at}</p>
       </div>
     )

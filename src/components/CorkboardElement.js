@@ -149,46 +149,23 @@ class CorkboardElement extends React.Component {
       </div>
     )
     let stickyStyle={
-      position: "absolute",
-      top: 0,
-      left: 0,
-      margin: 0,
-      padding: "0 !important",
       background: this.props.element.bgcolor,
-      boxShadow: "0px 2px 2px rgba(0,0,0,0.4)",
-      borderRadius: 5,
       zIndex: this.props.zIndex
     }
 
     let inputStyle={
-      background: "none",
-      outline: "none",
-      border: "none",
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingBottom: 0,
-      paddingTop: 0,
-      marginRight: 5,
-      fontSize: "18px",
       width: this.props.element.width,
       height: this.props.element.height
     }
 
     let dropzoneStyle={
-      position: "absolute",
-      background: "rgba(255,255,255,0.3)",
-      outline: "none",
-      border: "1px dashed #000",
-      margin: 5,
-      padding: 5,
       width: elementwidth-17,
       height: elementheight-25,
-      marginBottom: 10
     }
 
     const imageForm=<Dropzone style={{}} accept="image/jpeg, image/jpg, image/png, image/gif"
         ref="dropzone" onDrop={this.onDrop.bind(this)} >
-        <div style={dropzoneStyle} id="dragdrop"
+        <div className="sticky-dropzone" style={dropzoneStyle} id="dragdrop"
           onMouseUp={this.resizeSticky.bind(this, `textarea-${this.props.element.EID}`)}>
           <span style={{fontSize: 12}}>Drag and drop (or click to upload) photos to this sticky</span><br />
         </div>
@@ -203,7 +180,7 @@ class CorkboardElement extends React.Component {
         zIndex={1}
         onStop={this.onStop.bind(this)}
         onStart={this.onStart.bind(this)}>
-        <div ref={this.props.element.EID} style={stickyStyle}>
+        <div ref={this.props.element.EID} className="sticky-wrapper" style={stickyStyle}>
           <div className="handle" style={{minHeight: 20, width: "100%"}}>
             <button className="icon-button" onClick={this.props.deleteSticky} style={{float: "left"}}>
               <FontAwesome name="close" />
@@ -230,7 +207,7 @@ class CorkboardElement extends React.Component {
               <img
                 src={this.props.element.image_blob}
                 style={{width: elementwidth+20}} className="postit-image" /></div> :
-                <textarea
+                <textarea className="sticky-input"
                   autoFocus
                   onFocus={this.onFocus.bind(this)}
                   ref={`textarea-${this.props.element.EID}`}
