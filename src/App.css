@@ -153,3 +153,76 @@ div#sidebar-menu {
   margin-left: 5px;
   color: #fff;
 }
+
+.share-link {
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 4px;
+  padding-left: 5px;
+  background: rgba(255,255,255,0.3);
+  top: -10px;
+}
+
+.share-link-input {
+  border: 0px;
+  outline: 0px;
+  background: none;
+}
+
+.corkboard-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  user-select: none;
+  z-index: -1;
+}
+
+.title-text {
+  font-size: 30px;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-bottom: 2px solid #000;
+  font-family: "Lobster";
+  text-shadow: 1px 1px 1px #000;
+  text-align: center;
+  position: relative;
+  z-index: 1000;
+}
+.sticky-wrapper {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  padding: 0px !important;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.4);
+  border-radius: 5px;
+}
+
+.sticky-input{
+  background: none;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  margin-right: 5px;
+  font-size: 18px;
+}
+
+.sticky-dropzone{
+  position: absolute;
+  background: rgba(255,255,255,0.3);
+  outline: none;
+  border: 1px dashed #000;
+  margin: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+}

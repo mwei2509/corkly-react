@@ -168,9 +168,7 @@ class Corkboard extends React.Component {
       <FontAwesome name="user" /></button>
     const publishButton=<button data-tip="Publish board!" data-for="corkboard-operations" style={{fontSize: "20px"}} className="icon-button" onClick={this.publish.bind(this)}>
       <FontAwesome name="share" /></button>
-    const shareLink=<span style={{ borderRadius: 5, fontSize: 12, padding: 4, paddingLeft: 5,
-      background: "rgba(255,255,255,0.3)", top: -10 }}><input type="text"
-      style={{border: 0, outline: 0, background: "none"}}
+    const shareLink=<span className="share-link"><input className="share-link-input"type="text"
       value={`${CorklyReact}${this.props.board.url}`} />
     <CopyToClipboard text={`${CorklyReact}${this.props.board.url}`}>
         <button data-tip="Share link to public board!" data-for="corkboard-operations" className="icon-button"><FontAwesome name="clipboard" /></button>
@@ -181,35 +179,12 @@ class Corkboard extends React.Component {
     const pleaseLogin=<span style={{display: "block"}}><strong>Must be logged in to save or edit this board</strong></span>
 
     const corkboardStyle={
-      width: "100vw",
-      height: "100vh",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      padding: 0,
-      margin: 0,
-      background: `url(${corkboardImage})`,
-      overflow: 'hidden',
-      userSelect: 'none',
-      zIndex: -1
+      background: `url(${corkboardImage})`
     }
 
     return (
       <div onDoubleClick={this.addSticky} style={corkboardStyle} className="corkboard-container">
         <input
-          style={{
-            fontSize: "30px",
-            background: "none",
-            border: "none",
-            outline: "none",
-            color: "#fff",
-            borderBottom: "2px solid #000",
-            fontFamily: "Lobster",
-            textShadow: "1px 1px 1px #000",
-            textAlign: "center",
-            position: "relative",
-            zIndex: "1000"
-          }}
           className="title-text"
           placeholder="title your corkly"
           type="text" value={this.props.board.title}

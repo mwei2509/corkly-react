@@ -48,40 +48,16 @@ class PublicCorkboard extends React.Component {
       <FontAwesome name="edit" /></button></Link>
 
     const corkboardStyle={
-      width: "100vw",
-      height: "100vh",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      padding: 0,
-      margin: 0,
       background: `url(${corkboardImage})`,
-      overflow: 'hidden',
-      userSelect: 'none',
-      zIndex: -1
     }
 
     return (
       <div style={corkboardStyle} className="corkboard-container">
         <input
-          style={{
-            fontSize: "30px",
-            background: "none",
-            border: "none",
-            outline: "none",
-            color: "#fff",
-            borderBottom: "2px solid #000",
-            fontFamily: "Lobster",
-            textShadow: "1px 1px 1px #000",
-            textAlign: "center",
-            position: "relative",
-            zIndex: "1000"
-          }}
           className="title-text"
           placeholder="title your corkly"
           type="text" value={this.props.board.title}
           />
-
         <span style={{display: "block", position: "relative"}}>{this.props.token ? (this.props.boardAccounts.filter((account)=>{return account.id==this.props.account.id}).length>0 ? <span>{viewPrivate}</span>:null):null}{shareLink}</span>
         <ReactTooltip place="bottom" type="dark" effect="float"/>
 
