@@ -153,7 +153,7 @@ class About extends React.Component {
           <div className="about-sticky" onClick={this.handleClick.bind(this, "jeff")} style={{zIndex: 1, background: "#4caf50"}}>
             {operations}
             <div className="about-author-text">
-              <span>Jeff loves coding, writing music, and the normal thing in life.</span>
+              <span>Jeff loves coding, writing music, and the normal things in life.</span>
             </div>
             <div className="socialIcons">
               <a target="_blank" onClick={this.handleLink.bind(this)} href="https://github.com/jef4490"><FontAwesome className="iconItem" name="github" size="2x"/></a>
