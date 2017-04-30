@@ -14,4 +14,4 @@ Features include:
 
 - Dynamic and adjustable styling for Board Elements
 
-- Support for Images: links & uploads
+- Support for images- links & uploads
